@@ -995,6 +995,147 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 
 /* Sur desktop : masquer la barre de nav bas */
 .bottom-nav { display: none; }
+
+/* ════════════════════════════════════════
+   BANDEAU COMPACT AU SCROLL
+════════════════════════════════════════ */
+.score-banner.is-compact {
+  padding: 10px 18px;
+}
+.score-banner.is-compact .rolling-wrap { display: none; }
+.score-banner.is-compact .score-num { font-size: 1.6rem; }
+.score-banner.is-compact .score-bar-bg { height: 7px; }
+.score-banner.is-compact .score-mention { font-size: 0.75rem; }
+.score-banner.is-compact .score-sep { min-height: 60px; }
+
+/* ════════════════════════════════════════
+   3 PILIERS
+════════════════════════════════════════ */
+.pillars-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.pillar {
+  flex: 1;
+  min-width: 80px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.pillar-icon { font-size: 1.2rem; flex-shrink: 0; }
+.pillar-text { line-height: 1.3; }
+.pillar-text strong { display: block; font-size: 0.78rem; }
+.pillar-text span { opacity: 0.8; font-size: 0.62rem; font-weight: 500; }
+.p-sleep   { background: linear-gradient(135deg, #2c3e8c, #4a6cf7); }
+.p-food    { background: linear-gradient(135deg, #1a6e3c, #27ae60); }
+.p-sport   { background: linear-gradient(135deg, #7d2c8c, #a855f7); }
+
+/* ════════════════════════════════════════
+   CONSEIL SANTÉ
+════════════════════════════════════════ */
+.tip-card {
+  background: linear-gradient(135deg, #0d1b3e 0%, #162550 60%, #1a3a6e 100%);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 24px rgba(10,25,70,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.tip-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(126,200,227,0.1) 0%, transparent 70%);
+}
+.tip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tip-theme {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #7ec8e3;
+}
+.tip-date {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.3);
+}
+.tip-text {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.tip-source {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.tip-save-btn {
+  background: rgba(126,200,227,0.15);
+  border: 1px solid rgba(126,200,227,0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  color: #7ec8e3;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.tip-save-btn:hover, .tip-save-btn.saved {
+  background: rgba(126,200,227,0.3);
+  border-color: #7ec8e3;
+}
+.tip-save-btn.saved { color: #2ecc71; border-color: #2ecc71; background: rgba(46,204,113,0.15); }
+
+/* ── Bibliothèque ── */
+.library-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.lib-item {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-left: 3px solid #5ba8d4;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.lib-item-body { flex: 1; }
+.lib-item-theme { font-size: 0.6rem; font-weight: 700; color: #5ba8d4; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.lib-item-text  { font-size: 0.8rem; color: #2a3050; line-height: 1.5; font-weight: 500; }
+.lib-item-date  { font-size: 0.58rem; color: #b0b8cc; margin-top: 3px; }
+.lib-del-btn {
+  background: none; border: none; cursor: pointer;
+  color: #c8cdd8; font-size: 1rem; padding: 2px 4px;
+  flex-shrink: 0; transition: color 0.15s;
+}
+.lib-del-btn:hover { color: #e74c3c; }
+.lib-empty { text-align: center; color: #b0b8cc; font-size: 0.8rem; padding: 20px; }
+
 </style>
 </head>
 <body>
@@ -1043,6 +1184,22 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   <div class="rolling-wrap">
     <div class="rolling-label">📅 10 derniers jours — % de réussite par jour</div>
     <div class="rolling-strip" id="rollingStrip"></div>
+  </div>
+</div>
+
+<!-- ══ 3 PILIERS ══ -->
+<div class="pillars-bar">
+  <div class="pillar p-sleep">
+    <span class="pillar-icon">😴</span>
+    <div class="pillar-text"><strong>Sommeil</strong><span>7–9h / nuit</span></div>
+  </div>
+  <div class="pillar p-food">
+    <span class="pillar-icon">🥗</span>
+    <div class="pillar-text"><strong>Alimentation</strong><span>Naturel, varié</span></div>
+  </div>
+  <div class="pillar p-sport">
+    <span class="pillar-icon">💪</span>
+    <div class="pillar-text"><strong>Mouvement</strong><span>Chaque jour</span></div>
   </div>
 </div>
 
@@ -1341,6 +1498,22 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 <!-- ══ NOTES QUOTIDIENNES ══ -->
 <div class="sec">🗒️ Leçon / réflexion du jour</div>
 <div class="daily-notes" id="dailyNotes"></div>
+
+<!-- ══ CONSEIL SANTÉ DU JOUR ══ -->
+<div class="sec">💡 Conseil santé du jour</div>
+<div class="tip-card" id="tipCard">
+  <div class="tip-header">
+    <span class="tip-theme" id="tipTheme">—</span>
+    <span class="tip-date" id="tipDate">—</span>
+  </div>
+  <div class="tip-text" id="tipText">Chargement...</div>
+  <div class="tip-source" id="tipSource"></div>
+  <button class="tip-save-btn" id="tipSaveBtn" onclick="saveTip()">📌 Garder dans ma bibliothèque</button>
+</div>
+
+<!-- ══ BIBLIOTHÈQUE SANTÉ ══ -->
+<div class="sec">📚 Ma bibliothèque santé</div>
+<div class="library-grid" id="libraryGrid"></div>
 
 <!-- ══ BILAN COACH ══ -->
 <div class="sec">💬 Bilan de semaine</div>
@@ -1894,12 +2067,163 @@ function addTask() {
 }
 
 // ── INIT ──
+loadTip();
+renderLibrary();
 buildNotes();
 loadWeekData();
 updateWeekLabel();
 highlightDay();
 calc();
 document.querySelectorAll('table:not(.tasks-table)').forEach(t => t.setAttribute('data-col', VIEW_DAY));
+
+// ════════════════════════════════════════
+//  BANDEAU COMPACT AU SCROLL
+// ════════════════════════════════════════
+(function() {
+  const banner = document.querySelector('.score-banner');
+  if (!banner) return;
+  window.addEventListener('scroll', () => {
+    banner.classList.toggle('is-compact', window.scrollY > 60);
+  }, { passive: true });
+})();
+
+// ════════════════════════════════════════
+//  CONSEILS SANTÉ
+// ════════════════════════════════════════
+const TIPS = [
+  // 😴 SOMMEIL
+  { theme:'😴 Sommeil', text:'Couche-toi et lève-toi à la même heure chaque jour, même le week-end. La régularité du rythme circadien améliore la qualité du sommeil profond.', source:'Sleep Foundation' },
+  { theme:'😴 Sommeil', text:'Évite les écrans 1h avant de dormir. La lumière bleue bloque la mélatonine et retarde l\'endormissement de 30 à 60 minutes en moyenne.', source:'Harvard Medical School' },
+  { theme:'😴 Sommeil', text:'La chambre doit être fraîche (17–19°C). Le corps doit baisser sa température centrale pour initier le sommeil profond.', source:'Matthew Walker — Why We Sleep' },
+  { theme:'😴 Sommeil', text:'Un seul verre d\'alcool réduit le sommeil REM de 20%. Tu dors mais tu ne récupères pas vraiment.', source:'Walker, 2017' },
+  { theme:'😴 Sommeil', text:'20 minutes de sieste entre 13h et 15h améliorent vigilance et performance cognitive sans perturber le sommeil nocturne.', source:'NASA Research' },
+  { theme:'😴 Sommeil', text:'Ne reste pas au lit éveillé plus de 20 minutes. Lève-toi, fais quelque chose de calme, reviens quand tu as sommeil. Ça renforce l\'association lit = sommeil.', source:'Thérapie cognitive TCC-I' },
+
+  // 🥗 ALIMENTATION
+  { theme:'🥗 Alimentation', text:'Mange des aliments que ta grand-mère reconnaîtrait. Plus la liste d\'ingrédients est courte, meilleur c\'est pour toi.', source:'Michael Pollan' },
+  { theme:'🥗 Alimentation', text:'Les fibres nourrissent ton microbiome intestinal. Vise 30 g/jour : légumes, légumineuses, fruits entiers, céréales complètes.', source:'Tim Spector — The Diet Myth' },
+  { theme:'🥗 Alimentation', text:'Manger lentement et mâcher 20 fois par bouchée réduit les calories ingérées de 15% et améliore la digestion.', source:'American Journal of Clinical Nutrition' },
+  { theme:'🥗 Alimentation', text:'Le petit-déjeuner riche en protéines (œufs, fromage blanc) réduit les fringales de l\'après-midi et stabilise la glycémie.', source:'University of Missouri' },
+  { theme:'🥗 Alimentation', text:'Évite de manger les 2h avant de dormir. La digestion nocturne fragmente le sommeil et favorise la prise de graisse abdominale.', source:'Chrononutrition' },
+  { theme:'🥗 Alimentation', text:'Les oméga-3 (poissons gras, noix, graines de lin) réduisent l\'inflammation et améliorent la plasticité cérébrale. Vise 2 portions de poisson gras par semaine.', source:'INSERM' },
+  { theme:'🥗 Alimentation', text:'Commencer le repas par des légumes réduit la réponse glycémique du repas entier de 30%. L\'ordre compte autant que le contenu.', source:'Pr. Jessie Inchauspé' },
+
+  // 💪 MOUVEMENT
+  { theme:'💪 Mouvement', text:'150 minutes d\'activité modérée par semaine réduisent le risque de mortalité toutes causes de 35%. C\'est 22 min/jour.', source:'OMS 2020' },
+  { theme:'💪 Mouvement', text:'La musculation après 40 ans est prioritaire. On perd 3 à 8% de masse musculaire par décennie sans entraînement de résistance.', source:'American College of Sports Medicine' },
+  { theme:'💪 Mouvement', text:'Marcher 7 000 pas/jour est associé à une réduction de 50% du risque de mortalité cardiovasculaire. Les 10 000 pas sont un mythe marketing.', source:'JAMA Internal Medicine, 2021' },
+  { theme:'💪 Mouvement', text:'Une séance de sport de 20 minutes augmente les BDNF (facteur de croissance neuronal) pendant 2h. C\'est le meilleur boost cognitif naturel.', source:'John Ratey — Spark' },
+  { theme:'💪 Mouvement', text:'Le gilet lesté pendant la marche ou les exercices augmente la densité osseuse et brûle 15% de calories supplémentaires.', source:'Journal of Strength and Conditioning' },
+  { theme:'💪 Mouvement', text:'La zone 2 (conversation possible, fréquence cardiaque 60–70%) pendant 45 min améliore la santé mitochondriale plus que le HIIT intense.', source:'Iñigo San Millán, Stanford' },
+  { theme:'💪 Mouvement', text:'Se lever et marcher 2 minutes toutes les heures compense en partie les effets néfastes de la position assise prolongée.', source:'British Journal of Sports Medicine' },
+
+  // 🧠 MENTAL & STRESS
+  { theme:'🧠 Mental', text:'La méditation de pleine conscience 7 min/jour pendant 8 semaines modifie physiquement la structure du cortex préfrontal.', source:'Harvard, Sara Lazar 2005' },
+  { theme:'🧠 Mental', text:'Écrire 3 choses positives de ta journée avant de dormir recâble progressivement le biais de négativité du cerveau.', source:'Martin Seligman — Positive Psychology' },
+  { theme:'🧠 Mental', text:'Le stress chronique élève le cortisol qui détruit les neurones de l\'hippocampe (mémoire). La gestion du stress est une protection cérébrale.', source:'Robert Sapolsky — Why Zebras Don\'t Get Ulcers' },
+  { theme:'🧠 Mental', text:'Une exposition de 20 minutes à la nature réduit le cortisol de 21%. Pas besoin de forêt — un parc urbain suffit.', source:'Frontiers in Psychology, 2019' },
+  { theme:'🧠 Mental', text:'Le contact social régulier est l\'un des meilleurs prédicteurs de longévité — plus que l\'alimentation ou le sport selon l\'étude Harvard de 80 ans.', source:'Harvard Study of Adult Development' },
+  { theme:'🧠 Mental', text:'La rumination mentale active le réseau par défaut (DMN). L\'activité physique et les tâches engageantes le désactivent — c\'est le meilleur anti-broyer.', source:'Neuroscience Letters' },
+
+  // 💧 HYDRATATION
+  { theme:'💧 Hydratation', text:'Une déshydratation de 1% du poids corporel réduit les performances cognitives de 10% et augmente la perception de fatigue.', source:'Journal of Nutrition' },
+  { theme:'💧 Hydratation', text:'Boire 500 ml d\'eau froide le matin active le métabolisme de 30% pendant 40 minutes (thermogenèse).', source:'Journal of Clinical Endocrinology' },
+  { theme:'💧 Hydratation', text:'La sensation de soif est en retard sur la déshydratation réelle. Ne t\'y fie pas, bois régulièrement tout au long de la journée.', source:'European Food Safety Authority' },
+  { theme:'💧 Hydratation', text:'Urine jaune pâle = bonne hydratation. Jaune foncé = bois. Incolore = peut-être trop. C\'est le test le plus simple et le plus fiable.', source:'Mayo Clinic' },
+
+  // 🌿 BIEN-ÊTRE
+  { theme:'🌿 Bien-être', text:'L\'exposition à la lumière naturelle le matin dans les 30 minutes après le réveil synchronise l\'horloge interne et améliore l\'énergie de la journée.', source:'Andrew Huberman, Stanford' },
+  { theme:'🌿 Bien-être', text:'Les douches froides (15–30 sec à la fin) augmentent la noradrénaline de 300% et la dopamine de 250%. Effet durable plusieurs heures.', source:'Huberman Lab / NEJM' },
+  { theme:'🌿 Bien-être', text:'Arrêter les cigarettes améliore la circulation sanguine en 2h, le goût et l\'odorat en 48h, la capacité pulmonaire en 2 semaines.', source:'NHS UK' },
+  { theme:'🌿 Bien-être', text:'La gratitude pratiquée régulièrement augmente la dopamine et la sérotonine — les mêmes neurotransmetteurs ciblés par les antidépresseurs.', source:'UCLA Mindfulness Research Center' },
+  { theme:'🌿 Bien-être', text:'Passer du temps avec un animal de compagnie réduit la pression artérielle et le cortisol de manière mesurable en quelques minutes.', source:'Human-Animal Bond Research Institute' },
+
+  // 🫁 RESPIRATION
+  { theme:'🫁 Respiration', text:'La respiration 4-7-8 (inspirer 4s, retenir 7s, expirer 8s) active le système parasympathique et réduit l\'anxiété en quelques cycles.', source:'Dr. Andrew Weil' },
+  { theme:'🫁 Respiration', text:'La respiration nasale filtre, humidifie et réchauffe l\'air. Elle produit aussi du monoxyde d\'azote qui dilate les vaisseaux — respire par le nez autant que possible.', source:'James Nestor — Breath' },
+  { theme:'🫁 Respiration', text:'La cohérence cardiaque (6 respirations/minute pendant 5 min) est la technique de gestion du stress la mieux documentée cliniquement en France.', source:'Dr. David Servan-Schreiber' },
+];
+
+let _todayTip = null;
+let _todayTipIdx = -1;
+
+function getDayIndex() {
+  const d = new Date();
+  const start = new Date(d.getFullYear(), 0, 0);
+  const diff = d - start;
+  const oneDay = 1000 * 60 * 60 * 24;
+  return Math.floor(diff / oneDay) % TIPS.length;
+}
+
+function loadTip() {
+  _todayTipIdx = getDayIndex();
+  _todayTip = TIPS[_todayTipIdx];
+
+  const d = new Date();
+  const dateStr = String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+
+  document.getElementById('tipTheme').textContent = _todayTip.theme;
+  document.getElementById('tipDate').textContent = dateStr;
+  document.getElementById('tipText').textContent = _todayTip.text;
+  document.getElementById('tipSource').textContent = _todayTip.source ? '— Source : ' + _todayTip.source : '';
+
+  // Vérifier si déjà sauvegardé
+  const lib = getLibrary();
+  const already = lib.some(t => t.idx === _todayTipIdx);
+  const btn = document.getElementById('tipSaveBtn');
+  if (already) { btn.textContent = '✅ Dans ta bibliothèque'; btn.classList.add('saved'); }
+  else { btn.textContent = '📌 Garder dans ma bibliothèque'; btn.classList.remove('saved'); }
+}
+
+function getLibrary() {
+  try { return JSON.parse(localStorage.getItem('cockpit_tip_library') || '[]'); } catch { return []; }
+}
+
+function saveLibrary(lib) {
+  try { localStorage.setItem('cockpit_tip_library', JSON.stringify(lib)); } catch {}
+}
+
+function saveTip() {
+  const lib = getLibrary();
+  const already = lib.some(t => t.idx === _todayTipIdx);
+  if (already) return;
+  const d = new Date();
+  lib.unshift({
+    idx: _todayTipIdx,
+    theme: _todayTip.theme,
+    text: _todayTip.text,
+    date: String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0')
+  });
+  saveLibrary(lib);
+  const btn = document.getElementById('tipSaveBtn');
+  btn.textContent = '✅ Dans ta bibliothèque';
+  btn.classList.add('saved');
+  renderLibrary();
+}
+
+function deleteTip(idx) {
+  const lib = getLibrary().filter((_, i) => i !== idx);
+  saveLibrary(lib);
+  renderLibrary();
+}
+
+function renderLibrary() {
+  const grid = document.getElementById('libraryGrid');
+  const lib = getLibrary();
+  if (lib.length === 0) {
+    grid.innerHTML = '<div class="lib-empty">📭 Aucun conseil sauvegardé.<br>Utilise le bouton 📌 pour en garder.</div>';
+    return;
+  }
+  grid.innerHTML = lib.map((t, i) => `
+    <div class="lib-item">
+      <div class="lib-item-body">
+        <div class="lib-item-theme">${t.theme}</div>
+        <div class="lib-item-text">${t.text}</div>
+        <div class="lib-item-date">${t.date}</div>
+      </div>
+      <button class="lib-del-btn" onclick="deleteTip(${i})" title="Supprimer">✕</button>
+    </div>`).join('');
+}
 
 // ── SERVICE WORKER ──
 if ('serviceWorker' in navigator) {
