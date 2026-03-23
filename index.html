@@ -594,9 +594,50 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   line-height: 1.4;
 }
 .w5  { background: #c0392b; color: white; }
+.w4  { background: #e74c3c; color: white; }
 .w3  { background: #fde8e8; color: #c0392b; }
+.w2  { background: #dce8fd; color: #2255aa; }
 .w15 { background: #fef3cd; color: #856404; }
 .w1  { background: #e8f5e9; color: #276749; }
+
+/* Morning routine sub-rows */
+.habit-group-header td {
+  background: rgba(91,168,212,0.07);
+  font-weight: 800;
+  font-size: 0.72rem;
+  color: #4a90c4;
+  padding: 7px 12px 5px;
+  border-bottom: none;
+}
+.sub-habit td:first-child {
+  padding-left: 22px;
+  font-size: 0.82rem;
+  color: #5a6278;
+}
+.sub-habit { background: rgba(91,168,212,0.02); }
+
+/* King banner */
+.king-banner {
+  display: none;
+  background: linear-gradient(135deg, #8e44ad 0%, #e67e22 50%, #c0392b 100%);
+  background-size: 200% 200%;
+  animation: kingShift 3s ease infinite;
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-align: center;
+  color: white;
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  margin-top: 6px;
+  box-shadow: 0 4px 16px rgba(142,68,173,0.35);
+}
+.king-banner.show { display: block; }
+@keyframes kingShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 /* ════════════════════════════════════════
    TÂCHES
@@ -1028,24 +1069,49 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 .bottom-nav { display: none; }
 
 /* ════════════════════════════════════════
-   BANDEAU COMPACT AU SCROLL
+   STICKY — SCORE DU JOUR SEULEMENT
 ════════════════════════════════════════ */
-.score-banner.is-compact {
-  padding: 6px 14px;
-  gap: 8px;
-  margin-bottom: 4px;
+.sticky-day-bar {
+  display: flex;
   align-items: center;
-  flex-wrap: nowrap;
+  gap: 12px;
+  background: white;
+  border-radius: 14px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.05);
+  border-left: 4px solid #5ba8d4;
+  margin-bottom: 8px;
 }
-.score-banner.is-compact .rolling-wrap { display: none; }
-.score-banner.is-compact .score-block:first-child { display: none; }
-.score-banner.is-compact .score-sep { display: none; }
-.score-banner.is-compact .score-mention { display: none; }
-.score-banner.is-compact .score-bar-bg { display: none; }
-.score-banner.is-compact .score-block-nav .day-nav-btn { display: none; }
-.score-banner.is-compact .score-block { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
-.score-banner.is-compact .score-bar-label { font-size: 0.62rem; white-space: nowrap; }
-.score-banner.is-compact .score-num { font-size: 1.6rem; letter-spacing: -0.5px; line-height: 1; }
+.sdb-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #6b7899;
+  flex: 1;
+  white-space: nowrap;
+}
+.sdb-num {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #0d1b3e;
+  line-height: 1;
+  letter-spacing: -1px;
+  min-width: 68px;
+  text-align: center;
+}
+.sdb-mention {
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* Carte 10j glissants (scrollable, pas sticky) */
+.scores-scroll-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px 20px 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  border-left: 4px solid #5ba8d4;
+}
 
 /* Mobile : rolling strip caché par défaut, compact dès le début */
 @media (max-width: 700px) {
@@ -1273,39 +1339,33 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   </div>
 </div>
 
-<!-- ══ STICKY WRAPPER : SCORE + RECAP ══ -->
-<div class="sticky-top">
-
-<!-- ══ SCORE ══ -->
-<div class="score-banner">
-  <!-- ── BLOC 10J GLISSANTS ── -->
-  <div class="score-block">
-    <div class="score-bar-label">📊 Score 10j glissants</div>
-    <div class="score-num" id="scoreDisplay">—</div>
-    <div class="score-bar-bg"><div class="score-bar-fill" id="scoreBar"></div></div>
-    <div class="score-mention" id="scoreMention" style="color:#aaa">—</div>
-  </div>
-  <!-- Séparateur vertical -->
-  <div class="score-sep"></div>
-  <!-- ── BLOC SCORE DU JOUR ── -->
-  <div class="score-block">
-    <div class="score-block-nav">
-      <button class="day-nav-btn" id="btnPrevDay" onclick="changeDay(-1)">‹</button>
-      <div class="score-bar-label" id="scoreDayLabel" style="flex:1;text-align:center;">🗓️ Score du jour</div>
-      <button class="day-nav-btn" id="btnNextDay" onclick="changeDay(1)">›</button>
+<!-- ══ SCORES 10J GLISSANTS (scrollable) ══ -->
+<div class="scores-scroll-card">
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;">
+    <div class="score-block" style="flex:1;min-width:130px;">
+      <div class="score-bar-label">📊 Score 10j glissants</div>
+      <div class="score-num" id="scoreDisplay">—</div>
+      <div class="score-bar-bg"><div class="score-bar-fill" id="scoreBar"></div></div>
+      <div class="score-mention" id="scoreMention" style="color:#aaa">—</div>
     </div>
-    <div class="score-num" id="scoreDayDisplay">—</div>
-    <div class="score-bar-bg"><div class="score-bar-fill" id="scoreDayBar"></div></div>
-    <div class="score-mention" id="scoreDayMention" style="color:#aaa">—</div>
-  </div>
-  <!-- ── BANDE 10 JOURS GLISSANTS ── -->
-  <div class="rolling-wrap">
-    <div class="rolling-label">📅 10 derniers jours — % de réussite par jour</div>
-    <div class="rolling-strip" id="rollingStrip"></div>
+    <div class="rolling-wrap" style="flex:2;min-width:180px;display:block!important;">
+      <div class="rolling-label">📅 10 derniers jours</div>
+      <div class="rolling-strip" id="rollingStrip"></div>
+    </div>
   </div>
 </div>
 
-
+<!-- ══ STICKY : SCORE DU JOUR UNIQUEMENT ══ -->
+<div class="sticky-top">
+  <div class="sticky-day-bar">
+    <button class="day-nav-btn" id="btnPrevDay" onclick="changeDay(-1)">‹</button>
+    <span class="sdb-label" id="scoreDayLabel">🗓️ Score jour</span>
+    <div class="sdb-num" id="scoreDayDisplay">—</div>
+    <span class="sdb-mention" id="scoreDayMention" style="color:#aaa">—</span>
+    <button class="day-nav-btn" id="btnNextDay" onclick="changeDay(1)">›</button>
+  </div>
+  <div class="king-banner" id="kingBanner">👑 TU ES UN KING AUJOURD'HUI 👑</div>
+  <div style="display:none"><div id="scoreDayBar"></div></div>
 </div><!-- /sticky-top -->
 
 <!-- ══ 3 PILIERS ══ -->
@@ -1466,16 +1526,41 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
       </tr>
     </thead>
     <tbody>
-      <tr data-habit="h1">
-        <td>🌅 Morning routine <span class="w-badge w5">×8</span><br><span style="font-size:0.62rem;color:#9ba3b8;font-weight:400">🧘 Méditation · 🏋️ WOD · 📖 Lecture</span></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
-        <td class="pct-cell" id="pct-h1">—</td>
+      <tr class="habit-group-header">
+        <td colspan="9">🌅 Morning routine — <span style="font-weight:400;color:#7a90aa">8 pts total</span></td>
+      </tr>
+      <tr class="sub-habit" data-habit="h1a">
+        <td>🏋️ WOD <span class="w-badge w4">×4</span></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
+        <td class="pct-cell" id="pct-h1a">—</td>
+      </tr>
+      <tr class="sub-habit" data-habit="h1b">
+        <td>🧘 Méditation <span class="w-badge w2">×2</span></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
+        <td class="pct-cell" id="pct-h1b">—</td>
+      </tr>
+      <tr class="sub-habit" data-habit="h1c">
+        <td>📖 Lecture <span class="w-badge w2">×2</span></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
+        <td class="pct-cell" id="pct-h1c">—</td>
       </tr>
       <tr data-habit="h2">
         <td>👟 7 000 pas <span class="w-badge w15">×1.5</span></td>
@@ -1499,19 +1584,19 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td><input type="checkbox" data-habit="h5" onchange="calc(this)"></td>
         <td class="pct-cell" id="pct-h5">—</td>
       </tr>
-      <tr data-habit="h6">
-        <td>🌿 Weed maîtrisée <span class="w-badge w3">×3</span></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
-        <td class="pct-cell" id="pct-h6">—</td>
+      <tr>
+        <td>🌿 Weed <span style="font-size:0.67rem;color:#bbb;font-weight:400">(joints)</span> <span class="w-badge w3">−1/joint &gt;3</span></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td><input type="number" class="num-input" min="0" max="30" step="1" placeholder="0" data-weed onchange="calc(this)"></td>
+        <td class="pct-cell" id="pct-weed">—</td>
       </tr>
       <tr>
-        <td>🏃 Course <span style="font-size:0.7rem;color:#999;font-weight:400">(km)</span> <span class="w-badge w15">+1 >0km</span> <span class="w-badge w3">+2 ≥5km</span> <span style="font-size:0.6rem;color:#bbb;font-weight:400">· requis pour 100%</span></td>
+        <td>🏃 Course <span style="font-size:0.7rem;color:#999;font-weight:400">(km)</span> <span class="w-badge w1">+1.5 bonus ≥5km</span> <span style="font-size:0.6rem;color:#bbb;font-weight:400">· neutre sinon</span></td>
         <td><input type="number" class="num-input" min="0" max="99" step="0.5" placeholder="0" data-km onchange="calc(this)"></td>
         <td><input type="number" class="num-input" min="0" max="99" step="0.5" placeholder="0" data-km onchange="calc(this)"></td>
         <td><input type="number" class="num-input" min="0" max="99" step="0.5" placeholder="0" data-km onchange="calc(this)"></td>
@@ -1522,14 +1607,14 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="pct-cell" id="pct-km">—</td>
       </tr>
       <tr>
-        <td>💼 Travail productif <span style="font-size:0.7rem;color:#999;font-weight:400">(h)</span> <span class="w-badge w15">+1 ≥3h</span> <span class="w-badge w3">+2 ≥6h</span> <span style="font-size:0.6rem;color:#bbb;font-weight:400">· requis pour 100%</span></td>
+        <td>💼 Travail <span style="font-size:0.7rem;color:#999;font-weight:400">(h, Lun–Ven)</span> <span class="w-badge w3">−2 &lt;3h</span> <span class="w-badge w1">+2 &gt;7h</span></td>
         <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
         <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
         <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
         <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
         <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
-        <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
-        <td><input type="number" class="num-input" min="0" max="24" step="0.5" placeholder="0" data-work onchange="calc(this)"></td>
+        <td class="day-off">WE</td>
+        <td class="day-off">WE</td>
         <td class="pct-cell" id="pct-work">—h</td>
       </tr>
     </tbody>
@@ -1570,15 +1655,15 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="prio-h">🔴</td>
         <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
         <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
+        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
       </tr>
       <tr>
-        <td><input class="inline-input" type="text" placeholder="Ex: Carte grise"></td>
+        <td><input class="inline-input" type="text" placeholder="Ex: Carte grise" oninput="saveWeekData()"></td>
         <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#e74c3c;">Admin</span></td>
         <td class="prio-h">🔴</td>
         <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
         <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
+        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
       </tr>
       <tr>
         <td><input class="inline-input" type="text" placeholder="Ex: Prévisionnel Q2"></td>
@@ -1586,7 +1671,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="prio-m">🟡</td>
         <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
         <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
+        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
       </tr>
     </tbody>
   </table>
@@ -1617,6 +1702,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   <span style="color:#dce0ed">·</span>
   <button onclick="exportData()" style="background:none;border:1px solid #dce0ed;border-radius:8px;padding:4px 12px;font-size:0.65rem;font-weight:700;color:#8a95ae;cursor:pointer;font-family:inherit;letter-spacing:0.5px;">💾 Exporter</button>
   <button onclick="importData()" style="background:none;border:1px solid #dce0ed;border-radius:8px;padding:4px 12px;font-size:0.65rem;font-weight:700;color:#8a95ae;cursor:pointer;font-family:inherit;letter-spacing:0.5px;">📂 Importer</button>
+  <button onclick="resetHistory()" style="background:none;border:1px solid #f5c0c0;border-radius:8px;padding:4px 12px;font-size:0.65rem;font-weight:700;color:#e07070;cursor:pointer;font-family:inherit;letter-spacing:0.5px;">🗑️ Réinitialiser</button>
 </div>
 <div class="pts-flash" id="ptsFlash"></div>
 
@@ -1631,14 +1717,12 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 </div>
 
 <script>
-// ── VERSION — efface le localStorage périmé si version change ──
-const COCKPIT_VERSION = '6';
-(function clearStaleData() {
+// ── VERSION — NE JAMAIS effacer les données utilisateur lors d'une mise à jour ──
+const COCKPIT_VERSION = '7';
+(function migrateVersion() {
   try {
-    if (localStorage.getItem('cockpit_version') !== COCKPIT_VERSION) {
-      Object.keys(localStorage).forEach(k => { if (k.startsWith('cockpit_')) localStorage.removeItem(k); });
-      localStorage.setItem('cockpit_version', COCKPIT_VERSION);
-    }
+    // On note simplement la version — jamais d'effacement des données
+    localStorage.setItem('cockpit_version', COCKPIT_VERSION);
   } catch(e) {}
 })();
 
@@ -1690,11 +1774,16 @@ function animCb(cb) {
 }
 
 // ── HABITUDES & POIDS ──
+// Morning routine sous-habitudes
+const MR_HABITS = [
+  { id:'h1a', w:4 }, // sport       ×4
+  { id:'h1b', w:2 }, // méditation  ×2
+  { id:'h1c', w:2 }, // lecture     ×2
+];
+// Autres habitudes
 const HABITS = [
-  { id:'h1', w:8   }, // morning routine   ×8
-  { id:'h2', w:1.5 }, // 7000 pas          ×1.5
-  { id:'h5', w:1   }, // escaliers         ×1
-  { id:'h6', w:3   }, // weed maîtrisée    ×3
+  { id:'h2', w:1.5 }, // 7000 pas   ×1.5
+  { id:'h5', w:1   }, // escaliers  ×1
 ];
 
 function calc(triggerEl) {
@@ -1704,13 +1793,18 @@ function calc(triggerEl) {
   const workInputs = document.querySelectorAll('[data-work]');
 
   // ── AFFICHAGE LIGNES HABITUDES (X/7) ──
-  HABITS.forEach(({id}) => {
-    const boxes = document.querySelectorAll(`[data-habit="${id}"]`);
+  [...MR_HABITS, ...HABITS].forEach(({id}) => {
+    const boxes = document.querySelectorAll(`input[data-habit="${id}"]`);
     let done = 0; boxes.forEach(cb => { if (cb.checked) done++; });
     const pct = Math.round(done/7*100);
     const cell = document.getElementById('pct-' + id);
     if (cell) { cell.textContent = done+'/7'; cell.style.color = pct>=70?'#27ae60':pct>=40?'#f39c12':'#e74c3c'; }
   });
+  // Weed — affichage total semaine
+  const weedInputs = document.querySelectorAll('[data-weed]');
+  let totalWeed = 0; weedInputs.forEach(i => { totalWeed += parseFloat(i.value||0); });
+  const weedCell = document.getElementById('pct-weed');
+  if (weedCell) { weedCell.textContent = totalWeed > 0 ? totalWeed+'j' : '—'; weedCell.style.color = totalWeed > 21 ? '#e74c3c' : totalWeed > 14 ? '#f39c12' : '#27ae60'; }
 
   // ── AFFICHAGE LIGNES RÈGLES ──
   let ruleRespTotal = 0;
@@ -1758,9 +1852,9 @@ function calc(triggerEl) {
   const recapWork = document.getElementById('recapWork');
   if (recapWork) recapWork.textContent = totalWork.toFixed(1) + ' h';
 
-  // ── RECAP SPORT ──
+  // ── RECAP MORNING ROUTINE (sport) ──
   let sportDone = 0;
-  document.querySelectorAll('[data-habit="h1"]').forEach(b => { if (b.checked) sportDone++; });
+  document.querySelectorAll('input[data-habit="h1a"]').forEach(b => { if (b.checked) sportDone++; });
   const recapRout = document.getElementById('recapRoutine');
   if (recapRout) recapRout.textContent = sportDone + '/7';
 
@@ -1934,8 +2028,13 @@ function saveWeekData() {
   document.querySelectorAll('input[type="checkbox"]').forEach((cb,i) => data[`cb${i}`] = cb.checked);
   document.querySelectorAll('input[type="number"]:not(.exo-input)').forEach((n,i) => data[`n${i}`] = n.value);
   document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => data[`ta${i}`] = t.value);
-  // Tâches (textes)
+  // Tâches (textes + dates)
   document.querySelectorAll('.tasks-table input[type="text"], .tasks-table input[type="date"]').forEach((t,i) => data[`tk${i}`] = t.value);
+  // Statuts select (À faire / En cours / Fait ✓ / Bloqué)
+  document.querySelectorAll('.tasks-table select').forEach((s,i) => data[`sel${i}`] = s.selectedIndex);
+  // Bilan coach
+  const coach = document.querySelector('.coach-textarea');
+  if (coach) data['coach'] = coach.value;
   // Sauvegarde scores journaliers pour le calcul glissant inter-semaines
   _dayScores.forEach((r,i) => { if (r) { data[`score${i}`] = r.score; data[`hasData${i}`] = r.hasData; } });
   try { localStorage.setItem(getWeekKey(), JSON.stringify(data)); } catch(e) {}
@@ -1947,9 +2046,17 @@ function loadWeekData() {
   if (saved) {
     const data = JSON.parse(saved);
     document.querySelectorAll('input[type="checkbox"]').forEach((cb,i) => cb.checked = !!data[`cb${i}`]);
-    document.querySelectorAll('input[type="number"]:not(.exo-input)').forEach((n,i) => n.value = data[`n${i}`] || '');
+    document.querySelectorAll('input[type="number"]:not(.exo-input)').forEach((n,i) => n.value = data[`n${i}`] ?? '');
     document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => t.value = data[`ta${i}`] || '');
     document.querySelectorAll('.tasks-table input[type="text"], .tasks-table input[type="date"]').forEach((t,i) => t.value = data[`tk${i}`] || '');
+    // Restaure les statuts select
+    document.querySelectorAll('.tasks-table select').forEach((s,i) => {
+      const idx = data[`sel${i}`];
+      if (idx !== undefined && idx !== null) { s.selectedIndex = idx; s.className = 'status-sel s' + idx; }
+    });
+    // Restaure le bilan coach
+    const coach = document.querySelector('.coach-textarea');
+    if (coach && data['coach'] !== undefined) coach.value = data['coach'];
   } else {
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
     document.querySelectorAll('input[type="number"]').forEach(n => n.value = '');
@@ -2059,17 +2166,14 @@ function changeDay(delta) {
 }
 
 // ── SCORE JOURNALIER ──
-// Retourne {score, hasData} pour permettre à calc() de calculer la moyenne hebdo
 function calcDayScore(d) {
-  // ── FIX: utiliser input[data-rule] pour éviter de sélectionner les <tr> ──
-
-  // Règles : r1 + r3 tous les jours · r2 + r4 Lun–Jeu seulement
-  let rRespected = 0, rDayMax = 2; // r1 + r3 toujours
+  // Règles : r1 + r3 tous les jours · r2 + r4 Lun–Jeu
+  let rRespected = 0, rDayMax = 2;
   ['r1','r3'].forEach(r => {
     const boxes = document.querySelectorAll(`input[data-rule="${r}"]`);
     if (boxes[d] && boxes[d].checked) rRespected++;
   });
-  if (d < 4) { // Lun–Jeu : r2 + r4 s'appliquent
+  if (d < 4) {
     rDayMax += 2;
     ['r2','r4'].forEach(r => {
       const boxes = document.querySelectorAll(`input[data-rule="${r}"]`);
@@ -2077,12 +2181,19 @@ function calcDayScore(d) {
     });
   }
 
-  // r5 — 7h de sommeil ×5 (tous les jours)
+  // r5 — sommeil ×5
   let r5Earned = 0;
   const r5b = document.querySelectorAll('input[data-rule="r5"]');
   if (r5b[d] && r5b[d].checked) r5Earned = 5;
 
-  // Habitudes pondérées
+  // Morning routine (h1a ×4, h1b ×2, h1c ×2)
+  let mrEarned = 0;
+  MR_HABITS.forEach(({id, w}) => {
+    const boxes = document.querySelectorAll(`input[data-habit="${id}"]`);
+    if (boxes[d] && boxes[d].checked) mrEarned += w;
+  });
+
+  // Autres habitudes (h2, h5)
   let hEarned = 0, hMax = 0;
   HABITS.forEach(({id, w}) => {
     const boxes = document.querySelectorAll(`input[data-habit="${id}"]`);
@@ -2090,73 +2201,84 @@ function calcDayScore(d) {
     if (boxes[d] && boxes[d].checked) hEarned += w;
   });
 
-  // Course — intégrée au dénominateur (requis pour 100%)
-  // +1 si >0km · +2 si ≥5km
+  // Weed — neutre ≤3, pénalité -1 pt / joint au-delà de 3
+  const weedInputs = document.querySelectorAll('[data-weed]');
+  const joints = parseFloat((weedInputs[d] && weedInputs[d].value) || 0);
+  const weedPenalty = joints > 3 ? (joints - 3) : 0;
+
+  // Course — bonus +1.5 pts si ≥5km, neutre sinon
   const kmInputs = document.querySelectorAll('[data-km]');
   const km = parseFloat((kmInputs[d] && kmInputs[d].value) || 0);
-  const kmBonus = km >= 5 ? 2 : km > 0 ? 1 : 0;
+  const kmBonus = km >= 5 ? 1.5 : 0;
 
-  // Travail — intégré au dénominateur (requis pour 100%)
-  // +1 si ≥3h · +2 si ≥6h
+  // Travail — Lun–Ven seulement · <3h = -2pts · >7h = +2pts · vide ou WE = neutre
   const workInputs = document.querySelectorAll('[data-work]');
-  const h = parseFloat((workInputs[d] && workInputs[d].value) || 0);
-  const workBonus = h >= 6 ? 2 : h >= 3 ? 1 : 0;
-
-  const dayHasData = hEarned > 0 || rRespected > 0 || r5Earned > 0 || km > 0 || h > 0;
-  let dayScore = 0;
-
-  if (dayHasData) {
-    // 100% = toutes habitudes + toutes règles + sommeil(×5) + ≥5km + ≥6h boulot
-    const dayTotal = hMax + rDayMax * 2 + 5 + 4;
-    dayScore = dayTotal > 0
-      ? Math.min(100, Math.max(0, Math.round((hEarned + rRespected * 2 + r5Earned + kmBonus + workBonus) / dayTotal * 100)))
-      : 0;
+  const hRaw = (workInputs[d] && workInputs[d].value) || '';
+  const h = hRaw !== '' ? parseFloat(hRaw) : null;
+  let workEffect = 0;
+  if (d < 5 && h !== null) {
+    if (h < 3) workEffect = -2;
+    else if (h > 7) workEffect = 2;
   }
 
-  const dsClass = !dayHasData ? 'ds-empty' : dayScore >= 80 ? 'ds-great' : dayScore >= 50 ? 'ds-good' : 'ds-low';
+  const dayHasData = mrEarned > 0 || hEarned > 0 || rRespected > 0 || r5Earned > 0
+    || joints > 0 || km > 0 || (h !== null && h > 0);
 
-  // Pill % dans le tfoot du tableau
+  let dayScore = 0;
+  if (dayHasData) {
+    // Dénominateur fixe (max sans bonus)
+    const dayMax = 8 + hMax + rDayMax * 2 + 5; // morning(8) + h2+h5 + règles + sommeil
+    const rawPts = mrEarned + hEarned + rRespected * 2 + r5Earned;
+    const baseScore = dayMax > 0 ? rawPts / dayMax * 100 : 0;
+    // Bonus/pénalités en % (1 pt = 1 % du score)
+    dayScore = Math.round(baseScore - weedPenalty + kmBonus + workEffect);
+    // Pas de clamp — peut être >100 ou <0
+  }
+
+  const dsClass = !dayHasData ? 'ds-empty' : dayScore > 100 ? 'ds-boss' : dayScore >= 80 ? 'ds-great' : dayScore >= 50 ? 'ds-good' : 'ds-low';
+  const scoreLabel = dayHasData ? dayScore + '%' : '—';
+
+  // Pill % dans le tfoot
   const pill = document.getElementById('ds-' + d);
-  if (pill) { pill.textContent = dayHasData ? dayScore + '%' : '—'; pill.className = 'day-score-pill ' + dsClass; }
+  if (pill) { pill.textContent = scoreLabel; pill.className = 'day-score-pill ' + dsClass; }
 
-  // ── Badges % dans les en-têtes de colonnes (les deux tableaux) ──
-  const csbClass = !dayHasData ? 'csb-empty' : dayScore >= 80 ? (dayScore === 100 ? 'csb-boss' : 'csb-great') : dayScore >= 50 ? 'csb-good' : 'csb-low';
+  // Badges colonnes
+  const csbClass = !dayHasData ? 'csb-empty' : dayScore > 100 ? 'csb-boss' : dayScore >= 80 ? 'csb-great' : dayScore >= 50 ? 'csb-good' : 'csb-low';
   document.querySelectorAll(`.th-day-score[data-d="${d}"]`).forEach(el => {
-    el.textContent = dayHasData ? dayScore + '%' : '—';
+    el.textContent = scoreLabel;
     el.className = `col-score-badge ${csbClass} th-day-score`;
   });
 
-  // Badge dans les notes journalières
+  // Badge notes
   const notePill = document.getElementById('dns-' + d);
-  if (notePill) { notePill.textContent = dayHasData ? dayScore + '%' : '—'; notePill.className = 'day-note-score ' + dsClass; }
+  if (notePill) { notePill.textContent = scoreLabel; notePill.className = 'day-note-score ' + dsClass; }
 
-  // Score du jour dans le banner (jour sélectionné)
+  // ── Sticky : score du jour (toujours visible) ──
   if (d === VIEW_DAY) {
-    const el  = document.getElementById('scoreDayDisplay');
-    const bar = document.getElementById('scoreDayBar');
-    const men = document.getElementById('scoreDayMention');
-    const lbl = document.getElementById('scoreDayLabel');
+    const el   = document.getElementById('scoreDayDisplay');   // sdb-num
+    const men  = document.getElementById('scoreDayMention');   // sdb-mention
+    const lbl  = document.getElementById('scoreDayLabel');     // sdb-label
+    const king = document.getElementById('kingBanner');
     const viewDate = new Date(WEEK_START); viewDate.setDate(WEEK_START.getDate() + d);
     const dd2 = String(viewDate.getDate()).padStart(2,'0');
     const mm2 = String(viewDate.getMonth()+1).padStart(2,'0');
-    if (lbl) lbl.textContent = 'Score ' + DAY_NAMES[d] + ' ' + dd2 + '/' + mm2;
+    if (lbl) lbl.textContent = DAY_NAMES[d] + ' ' + dd2 + '/' + mm2;
     if (!dayHasData) {
       if (el)  el.textContent = '—';
-      if (bar) bar.style.width = '0%';
-      if (men) { men.textContent = '—'; men.style.color = '#aaa'; }
+      if (men) { men.textContent = ''; men.style.color = '#aaa'; }
+      if (king) king.classList.remove('show');
     } else {
-      if (el)  el.textContent  = dayScore + '%';
-      if (bar) { bar.style.width = dayScore + '%'; bar.style.backgroundPosition = ((1 - dayScore/100)*100) + '% 0'; }
+      if (el) el.textContent = dayScore + '%';
       if (men) {
         let m='', c='';
-        if      (dayScore === 100) { m='👑 Le Boss';      c='#8e44ad'; }
-        else if (dayScore >= 80)   { m='✅ Bonne journée';c='#27ae60'; }
-        else if (dayScore >= 50)   { m='⚠️ Moyen';        c='#f39c12'; }
-        else                       { m='🔴 Mauvaise j.';  c='#e74c3c'; }
+        if      (dayScore > 100) { m='👑 KING';          c='#8e44ad'; }
+        else if (dayScore >= 80) { m='✅ Bonne journée'; c='#27ae60'; }
+        else if (dayScore >= 50) { m='⚠️ Moyen';         c='#f39c12'; }
+        else                     { m='🔴 Dur…';          c='#e74c3c'; }
         men.textContent = m; men.style.color = c;
       }
+      if (king) king.classList.toggle('show', dayScore > 100);
     }
-    // Règles OK recap → jour sélectionné (X/4 ou X/3)
     const recapR = document.getElementById('recapRules');
     if (recapR) recapR.textContent = rRespected + '/' + rDayMax;
   }
@@ -2174,7 +2296,7 @@ function addTask() {
     <td class="prio-m">🟡</td>
     <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
     <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-    <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>`;
+    <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>`;
   tbody.appendChild(tr);
   tr.querySelector('input').focus();
 }
@@ -2190,16 +2312,7 @@ highlightDay();
 calc();
 document.querySelectorAll('table:not(.tasks-table)').forEach(t => t.setAttribute('data-col', VIEW_DAY));
 
-// ════════════════════════════════════════
-//  BANDEAU COMPACT AU SCROLL
-// ════════════════════════════════════════
-(function() {
-  const banner = document.querySelector('.score-banner');
-  if (!banner) return;
-  window.addEventListener('scroll', () => {
-    banner.classList.toggle('is-compact', window.scrollY > 60);
-  }, { passive: true });
-})();
+// (scroll compact supprimé — sticky affiche uniquement le score du jour)
 
 // ════════════════════════════════════════
 //  MORNING OPTIMIZATION — ARTICLES LONGS
@@ -3102,6 +3215,39 @@ function importData() {
     reader.readAsText(file);
   };
   input.click();
+}
+
+function resetHistory() {
+  // 1. Sauvegarde automatique de TOUT avant de toucher quoi que ce soit
+  const backup = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('cockpit_')) backup[k] = localStorage.getItem(k);
+  }
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const d = new Date();
+  a.download = `cockpit_avant_reset_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.json`;
+  a.click();
+
+  // 2. Supprimer uniquement les semaines passées (clés type cockpit_YYYY_MM_DD)
+  // Garder : cockpit_tip_library · cockpit_routine · semaine courante
+  const currentKey = getWeekKey();
+  const toDelete = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k || !k.startsWith('cockpit_')) continue;
+    if (k === 'cockpit_tip_library') continue; // bibliothèque articles
+    if (k === 'cockpit_routine') continue;      // programme sportif
+    if (k === currentKey) continue;             // semaine en cours
+    // Clé de semaine passée : format cockpit_YYYY_MM_DD
+    if (/^cockpit_\d{4}_\d{2}_\d{2}$/.test(k)) toDelete.push(k);
+  }
+  toDelete.forEach(k => localStorage.removeItem(k));
+
+  alert('✅ Sauvegarde téléchargée + historique effacé.\nTa semaine en cours, ta bibliothèque et ton programme sont intacts.');
+  location.reload();
 }
 </script>
 </body>
