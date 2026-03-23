@@ -1,5 +1,5 @@
 // ── SERVICE WORKER — Cockpit Personnel ──
-const CACHE_NAME = 'cockpit-v1';
+const CACHE_NAME = 'cockpit-v2';
 const FILES_TO_CACHE = [
   './index.html',
   './manifest.json',
