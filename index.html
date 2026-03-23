@@ -202,28 +202,26 @@ th.col-today  { border-bottom: 3px solid #7ec8e3 !important; }
 }
 .recap-card {
   background: white;
-  border-radius: 14px;
-  padding: 16px 14px;
+  border-radius: 10px;
+  padding: 9px 8px;
   text-align: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   position: relative;
   overflow: hidden;
-  transition: transform 0.15s, box-shadow 0.15s;
 }
-.recap-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
 .recap-card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  border-radius: 14px 14px 0 0;
+  border-radius: 10px 10px 0 0;
 }
 .recap-card.c-green::before  { background: linear-gradient(90deg, #27ae60, #2ecc71); }
 .recap-card.c-blue::before   { background: linear-gradient(90deg, #2980b9, #7ec8e3); }
 .recap-card.c-orange::before { background: linear-gradient(90deg, #e67e22, #f39c12); }
 .recap-card.c-purple::before { background: linear-gradient(90deg, #8e44ad, #bb8fce); }
-.recap-val  { font-size: 1.7rem; font-weight: 900; color: #0d1b3e; line-height: 1; margin-bottom: 5px; letter-spacing: -0.5px; }
-.recap-lbl  { font-size: 0.63rem; font-weight: 700; color: #b0b8cc; text-transform: uppercase; letter-spacing: 0.8px; }
+.recap-val  { font-size: 1.2rem; font-weight: 900; color: #0d1b3e; line-height: 1; margin-bottom: 3px; letter-spacing: -0.3px; }
+.recap-lbl  { font-size: 0.56rem; font-weight: 700; color: #b0b8cc; text-transform: uppercase; letter-spacing: 0.6px; }
 
 /* ════════════════════════════════════════
    SECTION TITLES
@@ -510,6 +508,39 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 }
 .exo-name { color: rgba(255,255,255,0.75); font-size: 0.78rem; font-weight: 600; }
 .exo-val  { color: #7ec8e3; font-size: 0.9rem; font-weight: 900; }
+.exo-input {
+  width: 54px;
+  background: rgba(126,200,227,0.1);
+  border: 1.5px solid rgba(126,200,227,0.3);
+  border-radius: 8px;
+  color: #7ec8e3;
+  font-size: 0.9rem;
+  font-weight: 900;
+  font-family: inherit;
+  text-align: center;
+  padding: 3px 6px;
+  outline: none;
+  -moz-appearance: textfield;
+}
+.exo-input::-webkit-inner-spin-button,
+.exo-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.exo-input:focus { border-color: #7ec8e3; background: rgba(126,200,227,0.18); }
+.save-routine-btn {
+  margin-top: 12px;
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 7px 18px;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(46,204,113,0.3);
+  transition: opacity 0.2s;
+}
+.save-routine-btn:hover { opacity: 0.85; }
 .routine-info {
   background: rgba(126,200,227,0.1);
   border: 1px solid rgba(126,200,227,0.2);
@@ -1000,13 +1031,32 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
    BANDEAU COMPACT AU SCROLL
 ════════════════════════════════════════ */
 .score-banner.is-compact {
-  padding: 10px 18px;
+  padding: 6px 14px;
+  gap: 8px;
+  margin-bottom: 4px;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 .score-banner.is-compact .rolling-wrap { display: none; }
-.score-banner.is-compact .score-num { font-size: 1.6rem; }
-.score-banner.is-compact .score-bar-bg { height: 7px; }
-.score-banner.is-compact .score-mention { font-size: 0.75rem; }
-.score-banner.is-compact .score-sep { min-height: 60px; }
+.score-banner.is-compact .score-block:first-child { display: none; }
+.score-banner.is-compact .score-sep { display: none; }
+.score-banner.is-compact .score-mention { display: none; }
+.score-banner.is-compact .score-bar-bg { display: none; }
+.score-banner.is-compact .score-block-nav .day-nav-btn { display: none; }
+.score-banner.is-compact .score-block { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+.score-banner.is-compact .score-bar-label { font-size: 0.62rem; white-space: nowrap; }
+.score-banner.is-compact .score-num { font-size: 1.6rem; letter-spacing: -0.5px; line-height: 1; }
+
+/* Mobile : rolling strip caché par défaut, compact dès le début */
+@media (max-width: 700px) {
+  .rolling-wrap { display: none; }
+  .score-banner { padding: 10px 14px; gap: 10px; margin-bottom: 8px; }
+  .score-num { font-size: 1.7rem; }
+  .score-mention { font-size: 0.75rem; }
+  .score-bar-bg { height: 7px; }
+  .score-sep { min-height: 65px; }
+  .score-bar-label { font-size: 0.6rem; }
+}
 
 /* ════════════════════════════════════════
    3 PILIERS
@@ -1039,72 +1089,140 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 .p-sport   { background: linear-gradient(135deg, #7d2c8c, #a855f7); }
 
 /* ════════════════════════════════════════
-   CONSEIL SANTÉ
+   CONSEIL SANTÉ — NOUVEAU FORMAT
 ════════════════════════════════════════ */
+.tips-wrap { display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
+
 .tip-card {
-  background: linear-gradient(135deg, #0d1b3e 0%, #162550 60%, #1a3a6e 100%);
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 14px;
-  box-shadow: 0 6px 24px rgba(10,25,70,0.25);
+  background: linear-gradient(160deg, #0d1b3e 0%, #162550 55%, #1a3a6e 100%);
+  border-radius: 18px;
+  padding: 20px 20px 16px;
+  box-shadow: 0 8px 28px rgba(10,25,70,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
   position: relative;
   overflow: hidden;
 }
 .tip-card::before {
   content: '';
   position: absolute;
-  top: -40px; right: -40px;
-  width: 140px; height: 140px;
+  top: -50px; right: -50px;
+  width: 160px; height: 160px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(126,200,227,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(126,200,227,0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
 .tip-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 .tip-theme {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: #7ec8e3;
+}
+.tip-date { font-size: 0.58rem; color: rgba(255,255,255,0.25); white-space: nowrap; }
+.tip-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.tip-theme-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: #7ec8e3;
+  flex-shrink: 0;
+}
+.tip-date-badge { font-size: 0.58rem; color: rgba(255,255,255,0.25); white-space: nowrap; margin-left: auto; }
+.tip-title-text {
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Contenu long-form */
+.tip-body { color: rgba(255,255,255,0.82); font-size: 0.85rem; line-height: 1.72; }
+.tip-body h4 {
+  font-size: 0.65rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #7ec8e3;
+  margin: 16px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.tip-date {
-  font-size: 0.6rem;
-  color: rgba(255,255,255,0.3);
-}
-.tip-text {
-  color: rgba(255,255,255,0.9);
-  font-size: 0.9rem;
-  line-height: 1.65;
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-.tip-source {
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.35);
+.tip-body h4::after { content:''; flex:1; height:1px; background: rgba(126,200,227,0.2); }
+.tip-body p { margin-bottom: 10px; }
+.tip-body ul { padding-left: 0; list-style: none; margin-bottom: 10px; }
+.tip-body ul li { padding: 4px 0 4px 18px; position: relative; }
+.tip-body ul li::before { content:'→'; position:absolute; left:0; color:#7ec8e3; font-weight:700; }
+.tip-body strong { color: white; font-weight: 700; }
+.tip-body .tip-quote {
+  background: rgba(126,200,227,0.08);
+  border-left: 3px solid rgba(126,200,227,0.4);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin: 14px 0;
   font-style: italic;
-  margin-bottom: 12px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.83rem;
+  line-height: 1.6;
 }
+.tip-body .tip-action {
+  background: rgba(46,204,113,0.12);
+  border: 1px solid rgba(46,204,113,0.25);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 14px 0 0;
+}
+.tip-body .tip-action strong { color: #2ecc71; display: block; margin-bottom: 4px; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Toggle collapse */
+.tip-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  cursor: pointer;
+}
+.tip-toggle-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); font-weight: 600; }
+.tip-toggle-arrow { font-size: 0.8rem; color: rgba(255,255,255,0.3); transition: transform 0.2s; }
+.tip-body-wrap { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+.tip-body-wrap.open { max-height: 2000px; }
+.tip-card.expanded .tip-toggle-arrow { transform: rotate(180deg); }
+
+.tip-source-label { font-size: 0.6rem; color: rgba(255,255,255,0.25); font-style: italic; }
 .tip-save-btn {
-  background: rgba(126,200,227,0.15);
-  border: 1px solid rgba(126,200,227,0.3);
+  background: rgba(126,200,227,0.12);
+  border: 1px solid rgba(126,200,227,0.25);
   border-radius: 20px;
-  padding: 6px 16px;
+  padding: 5px 14px;
   color: #7ec8e3;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.2s;
+  white-space: nowrap;
+  margin-top: 4px;
 }
-.tip-save-btn:hover, .tip-save-btn.saved {
-  background: rgba(126,200,227,0.3);
-  border-color: #7ec8e3;
-}
-.tip-save-btn.saved { color: #2ecc71; border-color: #2ecc71; background: rgba(46,204,113,0.15); }
+.tip-save-btn.saved { color: #2ecc71; border-color: rgba(46,204,113,0.4); background: rgba(46,204,113,0.1); }
+.tip-footer { font-size: 0.6rem; color: rgba(255,255,255,0.25); font-style: italic; margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.07); }
 
 /* ── Bibliothèque ── */
 .library-grid {
@@ -1255,7 +1373,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
     </thead>
     <tbody>
       <tr data-rule="r1">
-        <td>🚬 Pas fumer avant 14h</td>
+        <td>🚬 Pas fumer avant 13h</td>
         <td><input type="checkbox" class="rule-cb" data-rule="r1" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r1" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r1" onchange="calc(this)"></td>
@@ -1266,14 +1384,14 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="pct-cell" id="pct-r1">—</td>
       </tr>
       <tr data-rule="r2">
-        <td>🥃 Pas d'alcool fort en semaine</td>
+        <td>🥃 Pas d'alcool fort <span style="font-size:0.67rem;color:#bbb;font-weight:400">(Lun–Jeu)</span></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
-        <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
-        <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
-        <td><input type="checkbox" class="rule-cb" data-rule="r2" onchange="calc(this)"></td>
+        <td class="day-off">WE</td>
+        <td class="day-off">WE</td>
+        <td class="day-off">WE</td>
         <td class="pct-cell" id="pct-r2">—</td>
       </tr>
       <tr data-rule="r3">
@@ -1288,43 +1406,44 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="pct-cell" id="pct-r3">—</td>
       </tr>
       <tr data-rule="r4">
-        <td>🍻 Max 2 pintes / jour <span style="font-size:0.67rem;color:#bbb;font-weight:400">(Lun–Ven)</span></td>
+        <td>🍻 Max 2 pintes / jour <span style="font-size:0.67rem;color:#bbb;font-weight:400">(Lun–Jeu)</span></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r4" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r4" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r4" onchange="calc(this)"></td>
         <td><input type="checkbox" class="rule-cb" data-rule="r4" onchange="calc(this)"></td>
-        <td><input type="checkbox" class="rule-cb" data-rule="r4" onchange="calc(this)"></td>
+        <td class="day-off">WE</td>
         <td class="day-off">WE</td>
         <td class="day-off">WE</td>
         <td class="pct-cell" id="pct-r4">—</td>
+      </tr>
+      <tr data-rule="r5">
+        <td>😴 7h de sommeil <span class="w-badge w5">×5</span></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td><input type="checkbox" class="rule-cb" data-rule="r5" onchange="calc(this)"></td>
+        <td class="pct-cell" id="pct-r5">—</td>
       </tr>
     </tbody>
   </table>
 </div>
 
 <!-- ══ PROGRAMME SPORTIF ══ -->
-<div class="sec">💪 Programme sportif — paliers semaine</div>
+<div class="sec">💪 Programme sportif <span style="font-weight:400;font-size:0.6rem;color:#bbb;margin-left:4px">modifie les valeurs et sauvegarde</span></div>
 <div class="routine-detail">
   <div class="routine-exos">
-    <h4>Routine — 4 tours</h4>
+    <h4>WOD — 4 tours</h4>
     <div class="exo-grid">
-      <div class="exo-item"><span class="exo-name">💥 Pompes</span><span class="exo-val" id="ex-pompes">15</span></div>
-      <div class="exo-item"><span class="exo-name">🦵 Squats</span><span class="exo-val" id="ex-squats">10</span></div>
-      <div class="exo-item"><span class="exo-name">🔝 Tractions</span><span class="exo-val" id="ex-tractions">5</span></div>
-      <div class="exo-item"><span class="exo-name">🔥 Crunchs</span><span class="exo-val" id="ex-crunchs">12</span></div>
+      <div class="exo-item"><span class="exo-name">💥 Pompes</span><input class="exo-input" id="ex-pompes" type="number" min="1" max="999" value="15" oninput="markRoutineDirty()"></div>
+      <div class="exo-item"><span class="exo-name">🦵 Squats</span><input class="exo-input" id="ex-squats" type="number" min="1" max="999" value="10" oninput="markRoutineDirty()"></div>
+      <div class="exo-item"><span class="exo-name">🔝 Tractions</span><input class="exo-input" id="ex-tractions" type="number" min="1" max="999" value="5" oninput="markRoutineDirty()"></div>
+      <div class="exo-item"><span class="exo-name">🔥 Crunchs</span><input class="exo-input" id="ex-crunchs" type="number" min="1" max="999" value="12" oninput="markRoutineDirty()"></div>
     </div>
     <div class="routine-info">⏱ 1 min repos · Dernier tour avec gilet lesté 6 kg · Progression par petits paliers</div>
-  </div>
-  <div class="routine-note">
-    <h4>Objectif de la semaine</h4>
-    <div class="week-target">
-      <label>Palier visé</label>
-      <input type="text" placeholder="Ex : +1 pompe / tour">
-    </div>
-    <div class="week-target" style="margin-top:8px;">
-      <label>Distance course objectif</label>
-      <input type="text" placeholder="Ex : 5 km × 2">
-    </div>
+    <button class="save-routine-btn" id="saveRoutineBtn" onclick="saveRoutine()" style="display:none">💾 Sauvegarder mes paliers</button>
   </div>
 </div>
 
@@ -1347,7 +1466,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
     </thead>
     <tbody>
       <tr data-habit="h1">
-        <td>💪 Routine sportive <span class="w-badge w5">×5</span></td>
+        <td>🌅 Morning routine <span class="w-badge w5">×8</span><br><span style="font-size:0.62rem;color:#9ba3b8;font-weight:400">🧘 Méditation · 🏋️ WOD · 📖 Lecture</span></td>
         <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1" onchange="calc(this)"></td>
@@ -1367,28 +1486,6 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td><input type="checkbox" data-habit="h2" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h2" onchange="calc(this)"></td>
         <td class="pct-cell" id="pct-h2">—</td>
-      </tr>
-      <tr data-habit="h3">
-        <td>📖 Lecture 20 min <span class="w-badge w15">×1.5</span></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h3" onchange="calc(this)"></td>
-        <td class="pct-cell" id="pct-h3">—</td>
-      </tr>
-      <tr data-habit="h4">
-        <td>🧘 Méditation 7 min <span class="w-badge w15">×1.5</span></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td><input type="checkbox" data-habit="h4" onchange="calc(this)"></td>
-        <td class="pct-cell" id="pct-h4">—</td>
       </tr>
       <tr data-habit="h5">
         <td>🏢 Escaliers 1× <span class="w-badge w1">×1</span></td>
@@ -1467,27 +1564,27 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
     </thead>
     <tbody id="tasksBody">
       <tr>
-        <td><input class="inline-input" type="text" placeholder="Ex: Vente scooter"></td>
+        <td><input class="inline-input" type="text" placeholder="Ex: Vente scooter" oninput="saveWeekData()"></td>
         <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#7ec8e3;">Perso</span></td>
         <td class="prio-h">🔴</td>
-        <td><input class="inline-input" type="text" placeholder="Action suivante..."></td>
-        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%"></td>
+        <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
+        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
         <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
       </tr>
       <tr>
         <td><input class="inline-input" type="text" placeholder="Ex: Carte grise"></td>
         <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#e74c3c;">Admin</span></td>
         <td class="prio-h">🔴</td>
-        <td><input class="inline-input" type="text" placeholder="Action suivante..."></td>
-        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%"></td>
+        <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
+        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
         <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
       </tr>
       <tr>
         <td><input class="inline-input" type="text" placeholder="Ex: Prévisionnel Q2"></td>
         <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#27ae60;">Finance</span></td>
         <td class="prio-m">🟡</td>
-        <td><input class="inline-input" type="text" placeholder="Action suivante..."></td>
-        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%"></td>
+        <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
+        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
         <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
       </tr>
     </tbody>
@@ -1500,16 +1597,8 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 <div class="daily-notes" id="dailyNotes"></div>
 
 <!-- ══ CONSEIL SANTÉ DU JOUR ══ -->
-<div class="sec">💡 Conseil santé du jour</div>
-<div class="tip-card" id="tipCard">
-  <div class="tip-header">
-    <span class="tip-theme" id="tipTheme">—</span>
-    <span class="tip-date" id="tipDate">—</span>
-  </div>
-  <div class="tip-text" id="tipText">Chargement...</div>
-  <div class="tip-source" id="tipSource"></div>
-  <button class="tip-save-btn" id="tipSaveBtn" onclick="saveTip()">📌 Garder dans ma bibliothèque</button>
-</div>
+<div class="sec">💡 Morning Optimization</div>
+<div class="tips-wrap" id="tipsWrap"></div>
 
 <!-- ══ BIBLIOTHÈQUE SANTÉ ══ -->
 <div class="sec">📚 Ma bibliothèque santé</div>
@@ -1601,10 +1690,8 @@ function animCb(cb) {
 
 // ── HABITUDES & POIDS ──
 const HABITS = [
-  { id:'h1', w:5   }, // routine sportive  ×5
+  { id:'h1', w:8   }, // morning routine   ×8
   { id:'h2', w:1.5 }, // 7000 pas          ×1.5
-  { id:'h3', w:1.5 }, // lecture           ×1.5
-  { id:'h4', w:1.5 }, // méditation        ×1.5
   { id:'h5', w:1   }, // escaliers         ×1
   { id:'h6', w:3   }, // weed maîtrisée    ×3
 ];
@@ -1624,22 +1711,38 @@ function calc(triggerEl) {
     if (cell) { cell.textContent = done+'/7'; cell.style.color = pct>=70?'#27ae60':pct>=40?'#f39c12':'#e74c3c'; }
   });
 
-  // ── AFFICHAGE LIGNES RÈGLES (X/7 ou X/5) ──
+  // ── AFFICHAGE LIGNES RÈGLES ──
   let ruleRespTotal = 0;
-  ['r1','r2','r3'].forEach(r => {
-    const boxes = document.querySelectorAll(`[data-rule="${r}"]`);
+  // r1, r3 : 7 jours
+  ['r1','r3'].forEach(r => {
+    const boxes = document.querySelectorAll(`input[data-rule="${r}"]`);
     let ok = 0; boxes.forEach(cb => { if (cb.checked) ok++; });
     const pct = Math.round(ok/7*100);
     const cell = document.getElementById('pct-' + r);
     if (cell) { cell.textContent = ok+'/7'; cell.style.color = pct>=80?'#27ae60':pct>=50?'#f39c12':'#e74c3c'; }
     ruleRespTotal += ok;
   });
-  const r4boxes = document.querySelectorAll('[data-rule="r4"]');
+  // r2 : Lun–Jeu (4 jours)
+  const r2boxes = document.querySelectorAll('input[data-rule="r2"]');
+  let r2ok = 0; r2boxes.forEach(cb => { if (cb.checked) r2ok++; });
+  const r2pct = Math.round(r2ok/4*100);
+  const r2cell = document.getElementById('pct-r2');
+  if (r2cell) { r2cell.textContent = r2ok+'/4'; r2cell.style.color = r2pct>=80?'#27ae60':r2pct>=50?'#f39c12':'#e74c3c'; }
+  ruleRespTotal += r2ok;
+  // r4 : Lun–Jeu (4 jours)
+  const r4boxes = document.querySelectorAll('input[data-rule="r4"]');
   let r4ok = 0; r4boxes.forEach(cb => { if (cb.checked) r4ok++; });
-  const r4pct = Math.round(r4ok/5*100);
+  const r4pct = Math.round(r4ok/4*100);
   const r4cell = document.getElementById('pct-r4');
-  if (r4cell) { r4cell.textContent = r4ok+'/5'; r4cell.style.color = r4pct>=80?'#27ae60':r4pct>=50?'#f39c12':'#e74c3c'; }
+  if (r4cell) { r4cell.textContent = r4ok+'/4'; r4cell.style.color = r4pct>=80?'#27ae60':r4pct>=50?'#f39c12':'#e74c3c'; }
   ruleRespTotal += r4ok;
+
+  // r5 — 7h de sommeil (×5, tous les jours)
+  const r5boxes = document.querySelectorAll('[data-rule="r5"]');
+  let r5ok = 0; r5boxes.forEach(cb => { if (cb.checked) r5ok++; });
+  const r5pct = Math.round(r5ok/7*100);
+  const r5cell = document.getElementById('pct-r5');
+  if (r5cell) { r5cell.textContent = r5ok+'/7'; r5cell.style.color = r5pct>=80?'#27ae60':r5pct>=50?'#f39c12':'#e74c3c'; }
 
   // ── TOTAUX KM + TRAVAIL pour affichage ──
   let totalKm = 0, totalWork = 0;
@@ -1828,8 +1931,10 @@ function getWeekKey() {
 function saveWeekData() {
   const data = {};
   document.querySelectorAll('input[type="checkbox"]').forEach((cb,i) => data[`cb${i}`] = cb.checked);
-  document.querySelectorAll('input[type="number"]').forEach((n,i) => data[`n${i}`] = n.value);
+  document.querySelectorAll('input[type="number"]:not(.exo-input)').forEach((n,i) => data[`n${i}`] = n.value);
   document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => data[`ta${i}`] = t.value);
+  // Tâches (textes)
+  document.querySelectorAll('.tasks-table input[type="text"], .tasks-table input[type="date"]').forEach((t,i) => data[`tk${i}`] = t.value);
   // Sauvegarde scores journaliers pour le calcul glissant inter-semaines
   _dayScores.forEach((r,i) => { if (r) { data[`score${i}`] = r.score; data[`hasData${i}`] = r.hasData; } });
   try { localStorage.setItem(getWeekKey(), JSON.stringify(data)); } catch(e) {}
@@ -1841,8 +1946,9 @@ function loadWeekData() {
   if (saved) {
     const data = JSON.parse(saved);
     document.querySelectorAll('input[type="checkbox"]').forEach((cb,i) => cb.checked = !!data[`cb${i}`]);
-    document.querySelectorAll('input[type="number"]').forEach((n,i) => n.value = data[`n${i}`] || '');
+    document.querySelectorAll('input[type="number"]:not(.exo-input)').forEach((n,i) => n.value = data[`n${i}`] || '');
     document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => t.value = data[`ta${i}`] || '');
+    document.querySelectorAll('.tasks-table input[type="text"], .tasks-table input[type="date"]').forEach((t,i) => t.value = data[`tk${i}`] || '');
   } else {
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
     document.querySelectorAll('input[type="number"]').forEach(n => n.value = '');
@@ -1956,17 +2062,24 @@ function changeDay(delta) {
 function calcDayScore(d) {
   // ── FIX: utiliser input[data-rule] pour éviter de sélectionner les <tr> ──
 
-  // Règles (coché = respecté = +2pts · max 4 pts Lun–Ven, 3 pts Sam–Dim)
-  let rRespected = 0, rDayMax = 3;
-  ['r1','r2','r3'].forEach(r => {
+  // Règles : r1 + r3 tous les jours · r2 + r4 Lun–Jeu seulement
+  let rRespected = 0, rDayMax = 2; // r1 + r3 toujours
+  ['r1','r3'].forEach(r => {
     const boxes = document.querySelectorAll(`input[data-rule="${r}"]`);
     if (boxes[d] && boxes[d].checked) rRespected++;
   });
-  if (d < 5) {
-    rDayMax++;
-    const r4b = document.querySelectorAll('input[data-rule="r4"]');
-    if (r4b[d] && r4b[d].checked) rRespected++;
+  if (d < 4) { // Lun–Jeu : r2 + r4 s'appliquent
+    rDayMax += 2;
+    ['r2','r4'].forEach(r => {
+      const boxes = document.querySelectorAll(`input[data-rule="${r}"]`);
+      if (boxes[d] && boxes[d].checked) rRespected++;
+    });
   }
+
+  // r5 — 7h de sommeil ×5 (tous les jours)
+  let r5Earned = 0;
+  const r5b = document.querySelectorAll('input[data-rule="r5"]');
+  if (r5b[d] && r5b[d].checked) r5Earned = 5;
 
   // Habitudes pondérées
   let hEarned = 0, hMax = 0;
@@ -1988,15 +2101,14 @@ function calcDayScore(d) {
   const h = parseFloat((workInputs[d] && workInputs[d].value) || 0);
   const workBonus = h >= 6 ? 2 : h >= 3 ? 1 : 0;
 
-  const dayHasData = hEarned > 0 || rRespected > 0 || km > 0 || h > 0;
+  const dayHasData = hEarned > 0 || rRespected > 0 || r5Earned > 0 || km > 0 || h > 0;
   let dayScore = 0;
 
   if (dayHasData) {
-    // 100% = toutes habitudes + toutes règles + ≥5km + ≥6h boulot
-    // km(max 2) + work(max 2) sont dans le dénominateur
-    const dayTotal = hMax + rDayMax * 2 + 4;
+    // 100% = toutes habitudes + toutes règles + sommeil(×5) + ≥5km + ≥6h boulot
+    const dayTotal = hMax + rDayMax * 2 + 5 + 4;
     dayScore = dayTotal > 0
-      ? Math.min(100, Math.max(0, Math.round((hEarned + rRespected * 2 + kmBonus + workBonus) / dayTotal * 100)))
+      ? Math.min(100, Math.max(0, Math.round((hEarned + rRespected * 2 + r5Earned + kmBonus + workBonus) / dayTotal * 100)))
       : 0;
   }
 
@@ -2056,21 +2168,22 @@ function addTask() {
   const tbody = document.getElementById('tasksBody');
   const tr = document.createElement('tr');
   tr.innerHTML = `
-    <td><input class="inline-input" type="text" placeholder="Nouvelle tâche..."></td>
+    <td><input class="inline-input" type="text" placeholder="Nouvelle tâche..." oninput="saveWeekData()"></td>
     <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#7ec8e3;">Perso</span></td>
     <td class="prio-m">🟡</td>
-    <td><input class="inline-input" type="text" placeholder="Action suivante..."></td>
-    <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%"></td>
+    <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
+    <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
     <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>`;
   tbody.appendChild(tr);
   tr.querySelector('input').focus();
 }
 
 // ── INIT ──
-loadTip();
+loadTips();
 renderLibrary();
 buildNotes();
 loadWeekData();
+loadRoutine();
 updateWeekLabel();
 highlightDay();
 calc();
@@ -2088,25 +2201,694 @@ document.querySelectorAll('table:not(.tasks-table)').forEach(t => t.setAttribute
 })();
 
 // ════════════════════════════════════════
-//  CONSEILS SANTÉ
+//  MORNING OPTIMIZATION — ARTICLES LONGS
 // ════════════════════════════════════════
-const TIPS = [
-  // 😴 SOMMEIL
-  { theme:'😴 Sommeil', text:'Couche-toi et lève-toi à la même heure chaque jour, même le week-end. La régularité du rythme circadien améliore la qualité du sommeil profond.', source:'Sleep Foundation' },
-  { theme:'😴 Sommeil', text:'Évite les écrans 1h avant de dormir. La lumière bleue bloque la mélatonine et retarde l\'endormissement de 30 à 60 minutes en moyenne.', source:'Harvard Medical School' },
-  { theme:'😴 Sommeil', text:'La chambre doit être fraîche (17–19°C). Le corps doit baisser sa température centrale pour initier le sommeil profond.', source:'Matthew Walker — Why We Sleep' },
-  { theme:'😴 Sommeil', text:'Un seul verre d\'alcool réduit le sommeil REM de 20%. Tu dors mais tu ne récupères pas vraiment.', source:'Walker, 2017' },
-  { theme:'😴 Sommeil', text:'20 minutes de sieste entre 13h et 15h améliorent vigilance et performance cognitive sans perturber le sommeil nocturne.', source:'NASA Research' },
-  { theme:'😴 Sommeil', text:'Ne reste pas au lit éveillé plus de 20 minutes. Lève-toi, fais quelque chose de calme, reviens quand tu as sommeil. Ça renforce l\'association lit = sommeil.', source:'Thérapie cognitive TCC-I' },
+const ARTICLES = [
 
-  // 🥗 ALIMENTATION
-  { theme:'🥗 Alimentation', text:'Mange des aliments que ta grand-mère reconnaîtrait. Plus la liste d\'ingrédients est courte, meilleur c\'est pour toi.', source:'Michael Pollan' },
-  { theme:'🥗 Alimentation', text:'Les fibres nourrissent ton microbiome intestinal. Vise 30 g/jour : légumes, légumineuses, fruits entiers, céréales complètes.', source:'Tim Spector — The Diet Myth' },
-  { theme:'🥗 Alimentation', text:'Manger lentement et mâcher 20 fois par bouchée réduit les calories ingérées de 15% et améliore la digestion.', source:'American Journal of Clinical Nutrition' },
-  { theme:'🥗 Alimentation', text:'Le petit-déjeuner riche en protéines (œufs, fromage blanc) réduit les fringales de l\'après-midi et stabilise la glycémie.', source:'University of Missouri' },
-  { theme:'🥗 Alimentation', text:'Évite de manger les 2h avant de dormir. La digestion nocturne fragmente le sommeil et favorise la prise de graisse abdominale.', source:'Chrononutrition' },
-  { theme:'🥗 Alimentation', text:'Les oméga-3 (poissons gras, noix, graines de lin) réduisent l\'inflammation et améliorent la plasticité cérébrale. Vise 2 portions de poisson gras par semaine.', source:'INSERM' },
-  { theme:'🥗 Alimentation', text:'Commencer le repas par des légumes réduit la réponse glycémique du repas entier de 30%. L\'ordre compte autant que le contenu.', source:'Pr. Jessie Inchauspé' },
+  // ─── ARTICLE 1 ───
+  {
+    theme: '😴 Sommeil & Cerveau',
+    title: 'Le système glymphatique : comment ton cerveau se nettoie la nuit',
+    source: 'Matthew Walker — Why We Sleep · Maiken Nedergaard, University of Rochester 2013',
+    content: `
+<h4>🔬 La découverte qui change tout</h4>
+<p>En 2013, la neuroscientifique Maiken Nedergaard publie une étude qui révolutionne notre compréhension du sommeil. Elle découvre le <strong>système glymphatique</strong> — un réseau de canaux microscopiques dans le cerveau qui s'activent presque exclusivement la nuit, pendant le sommeil profond.</p>
+<p>Pendant que tu dors, les cellules gliales du cerveau rétrécissent d'environ <strong>60%</strong>, créant des espaces entre elles. Le liquide céphalorachidien s'y engouffre et évacue les déchets métaboliques accumulés pendant la journée — dont la <strong>protéine bêta-amyloïde</strong>, directement liée à la maladie d'Alzheimer, et la <strong>protéine tau</strong>, associée à Parkinson.</p>
+<h4>🧠 Ce qui se passe concrètement</h4>
+<p>Ton cerveau consomme une quantité énorme d'énergie — 20% de l'énergie totale du corps pour seulement 2% de sa masse. Cette activité intense produit des sous-produits toxiques. Sans évacuation nocturne, ces toxines s'accumulent, créant une inflammation chronique de bas grade qui détériore lentement les connexions neuronales.</p>
+<p>Une seule nuit de mauvais sommeil augmente le taux de bêta-amyloïde dans le cerveau de <strong>5%</strong>. Une semaine de restriction de sommeil (6h au lieu de 8h) génère une accumulation visible au scanner cérébral. Des études longitudinales montrent que les personnes dormant moins de 6h par nuit pendant des années ont un risque <strong>30% plus élevé</strong> de développer une démence avant 65 ans.</p>
+<h4>💤 Les phases du sommeil qui comptent</h4>
+<p>Le nettoyage glymphatique se produit principalement pendant le <strong>sommeil lent profond (N3)</strong> — les stades 3 et 4 du cycle. Ce sommeil est dominant en début de nuit (22h–2h). Si tu te couches tard, tu sacrifies précisément la phase la plus restauratrice pour le cerveau.</p>
+<p>Le sommeil REM (rêves), lui, joue un rôle différent mais tout aussi crucial : il consolide les apprentissages émotionnels, "élagage" des connexions synaptiques inutiles, et régule la réponse émotionnelle. Priver quelqu'un de REM augmente l'agressivité, la réactivité émotionnelle et réduit l'empathie de façon mesurable.</p>
+<h4>📊 Les chiffres clés</h4>
+<ul>
+<li><strong>17h sans sommeil</strong> = performance cognitive équivalente à 0,5g/L d'alcool dans le sang</li>
+<li><strong>24h sans sommeil</strong> = équivalent à 1g/L — légalement ivre</li>
+<li><strong>7–9h</strong> : la fenêtre optimale validée pour 95% des adultes</li>
+<li><strong>6h de sommeil</strong> pendant 10 nuits = déficits cognitifs identiques à 24h sans dormir</li>
+<li>Récupérer un week-end ne compense pas la dette de sommeil — c'est un mythe</li>
+</ul>
+<h4>⚡ Protocole optimisation sommeil</h4>
+<ul>
+<li>Couche-toi et lève-toi à la même heure 7j/7 — la régularité prime sur la durée</li>
+<li>Chambre à <strong>17–19°C</strong> : la baisse de température corporelle déclenche l'endormissement</li>
+<li>Obscurité totale — même la lumière d'un réveil perturbe la mélatonine</li>
+<li>Dernière caféine avant <strong>14h</strong> : demi-vie de 5-7h, encore active à minuit</li>
+<li>Pas d'alcool — il détruit le sommeil REM même en petite quantité</li>
+<li>Exposition à la lumière naturelle dans les <strong>30 min après le réveil</strong> — synchronise l'horloge biologique</li>
+</ul>
+<div class="tip-quote">"La privation de sommeil est la plus grande épidémie de santé publique du 21e siècle. Nous sommes une espèce qui a oublié qu'elle avait besoin de dormir." — Matthew Walker</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Décide d'une heure de coucher fixe ce soir. Même si tu n'as pas sommeil — couche-toi et reste dans l'obscurité. Ton cerveau apprendra.</div>`
+  },
+
+  // ─── ARTICLE 2 ───
+  {
+    theme: '⚡ Testostérone & Vitalité',
+    title: 'La testostérone : bien plus qu\'une hormone sexuelle',
+    source: 'Peter Attia — Outlive · Andrew Huberman, Stanford · Shawn Talbott PhD',
+    content: `
+<h4>🔬 Comprendre l'hormone maîtresse</h4>
+<p>La testostérone est souvent réduite à sa dimension sexuelle. C'est une erreur profonde. C'est une <strong>hormone anabolisante systémique</strong> qui régule la composition corporelle, la densité osseuse, la production d'énergie cellulaire, l'humeur, la cognition, la motivation et la réponse au stress.</p>
+<p>Elle est produite principalement dans les testicules (95%) et les glandes surrénales (5%), sous contrôle de l'axe hypothalamo-hypophysaire. Son niveau naturel peak entre 20 et 25 ans, puis décline de <strong>1 à 2% par an</strong> à partir de 30 ans. À 50 ans, un homme moyen a 30% de testostérone en moins qu'à 25 ans.</p>
+<h4>🧠 Ce qu'elle fait dans ton corps</h4>
+<p><strong>Masse musculaire :</strong> Elle stimule la synthèse protéique et inhibe le catabolisme musculaire. Sans elle, même avec l'entraînement, la construction musculaire est fortement limitée. Elle agit directement sur les cellules satellites qui réparent et construisent les fibres musculaires.</p>
+<p><strong>Graisse abdominale :</strong> Un taux bas de testostérone favorise le stockage de graisse viscérale (autour des organes), qui elle-même contient l'enzyme <strong>aromatase</strong> — qui convertit la testostérone restante en œstrogène, créant un cycle vicieux difficile à briser.</p>
+<p><strong>Cerveau et cognition :</strong> Les récepteurs à testostérone sont présents dans tout le cerveau — amygdale, hippocampe, cortex préfrontal. Elle module la confiance, la prise de risque calculée, la dominance sociale, la concentration et la résistance à la dépression.</p>
+<p><strong>Os et longévité :</strong> Elle stimule les ostéoblastes (cellules qui construisent l'os). Un taux bas est directement corrélé à l'ostéoporose chez l'homme après 60 ans, et augmente le risque de fractures invalidantes.</p>
+<h4>📊 Les tueurs de testostérone modernes</h4>
+<ul>
+<li><strong>Manque de sommeil</strong> — une semaine à 5h/nuit réduit la testostérone de 10 à 15%</li>
+<li><strong>Stress chronique</strong> — le cortisol est antagoniste direct de la testostérone</li>
+<li><strong>Alcool</strong> — l'éthanol est toxique pour les cellules de Leydig qui produisent la T</li>
+<li><strong>Obésité</strong> — la graisse viscérale convertit la T en œstrogène via l'aromatase</li>
+<li><strong>Perturbateurs endocriniens</strong> — plastiques (BPA), pesticides, produits cosmétiques industriels</li>
+<li><strong>Sédentarité</strong> — l'absence de stress mécanique supprime la production hormonale</li>
+</ul>
+<h4>⚡ Protocole boost naturel — validé scientifiquement</h4>
+<ul>
+<li><strong>Entraînement en résistance</strong> 3–5x/semaine : les grands exercices polyarticulaires (squat, deadlift, tractions) sont les plus efficaces</li>
+<li><strong>Sprint et HIIT</strong> : augmentent la T et l'hormone de croissance en combinaison</li>
+<li><strong>Zinc et magnésium</strong> : déficiences très fréquentes, directement liées à une T basse</li>
+<li><strong>Vitamine D</strong> : agit comme une hormone stéroïde, corrélée positivement à la T</li>
+<li><strong>Graisses saturées et mono-insaturées</strong> : le cholestérol est le précurseur direct de la T</li>
+<li><strong>Limiter le soja</strong> et les perturbateurs endocriniens</li>
+<li><strong>Exposition solaire quotidienne</strong> sans crème au début — 15–20 min sur le torse</li>
+<li><strong>Compétition et victoires</strong> — même de petites victoires augmentent la T à court terme</li>
+</ul>
+<div class="tip-quote">"La testostérone n'est pas ce qui fait un homme violent. C'est ce qui fait un homme vitalement engagé dans sa vie." — Dr. Andrew Huberman</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Fais 3 séries de tractions ou de pompes à jeun. L'exercice à jeun le matin optimise la réponse hormonale anabolisante. Note ton nombre pour battre demain.</div>`
+  },
+
+  // ─── ARTICLE 3 ───
+  {
+    theme: '⚡ Énergie & Mitochondries',
+    title: 'Tes mitochondries : les centrales énergétiques que tu négligies',
+    source: 'Peter Attia — Outlive · Iñigo San Millán, Stanford · Dr. Mark Hyman',
+    content: `
+<h4>🔬 La centrale énergétique de chaque cellule</h4>
+<p>Tes mitochondries sont des organites présents dans presque toutes tes cellules — entre 1 000 et 2 500 par cellule musculaire. Elles produisent <strong>l'ATP (adénosine triphosphate)</strong>, la monnaie énergétique universelle de ton corps. Sans elles, tu mourrais en quelques secondes.</p>
+<p>Fait fascinant : les mitochondries ont leur propre ADN, distinct de ton ADN nucléaire. Elles descendent d'une bactérie qui a fusionné avec une cellule ancestrale il y a 1,5 milliard d'années. Elles se reproduisent de façon autonome — et tu peux en augmenter le nombre et la qualité. C'est la <strong>biogenèse mitochondriale</strong>.</p>
+<h4>🧠 Pourquoi ça change tout</h4>
+<p>La santé mitochondriale est LE marqueur central de longévité et de performance selon Peter Attia. Des mitochondries dysfonctionnelles sont impliquées dans pratiquement toutes les maladies chroniques : diabète de type 2, maladies cardiaques, neurodégénérescence, cancer, et le simple vieillissement accéléré.</p>
+<p>Quand tes mitochondries sont saines et nombreuses, tu brûles les graisses efficacement, tu as une énergie stable sans pics ni crashes, ta récupération sportive est rapide, ta cognition est nette, et tu résistes mieux au stress. Ce n'est pas de la magie — c'est de la biochimie.</p>
+<h4>📊 Les ennemis des mitochondries</h4>
+<ul>
+<li><strong>Sédentarité</strong> — sans signal de demande énergétique, le corps élimine les mitochondries inutiles (principe de parcimonie)</li>
+<li><strong>Sucres et glucides raffinés</strong> — surchargent la chaîne respiratoire mitochondriale</li>
+<li><strong>Stress oxydatif excessif</strong> — les radicaux libres endommagent l'ADN mitochondrial</li>
+<li><strong>Manque de sommeil</strong> — la récupération mitochondriale se fait principalement la nuit</li>
+<li><strong>Alcool</strong> — directement toxique pour les membranes mitochondriales</li>
+<li><strong>Pollution et toxines</strong> — perturbent la chaîne de transport d'électrons</li>
+</ul>
+<h4>⚡ Protocole activation mitochondriale</h4>
+<ul>
+<li><strong>Zone 2 cardio</strong> : 45 min à intensité modérée (tu peux tenir une conversation) — le stimulus le plus puissant pour la biogenèse mitochondriale. Vise 3–4x/semaine</li>
+<li><strong>Jeûne intermittent</strong> : les périodes sans nourriture activent l'autophagie mitochondriale — les vieilles mitochondries sont recyclées, remplacées par de nouvelles</li>
+<li><strong>Exposition au froid</strong> : active les mitochondries des cellules graisseuses brunes, augmente leur nombre dans les muscles</li>
+<li><strong>Oméga-3</strong> : composants essentiels des membranes mitochondriales</li>
+<li><strong>CoQ10 et PQQ</strong> : nutriments directement impliqués dans la production d'ATP</li>
+<li><strong>Magnésium</strong> : cofacteur dans plus de 300 réactions enzymatiques mitochondriales</li>
+<li><strong>Résistance musculaire</strong> : les muscles sont les tissus les plus riches en mitochondries — les entraîner multiplie leur nombre</li>
+</ul>
+<div class="tip-quote">"La capacité aérobie maximale (VO2max) est le prédicteur de mortalité toutes causes le plus puissant que nous connaissons — plus que le tabac, le diabète ou les maladies cardiaques." — Peter Attia</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Marche 30 minutes à un rythme où tu peux parler mais es légèrement essoufflé. C'est la zone 2. Répété 3–4 fois par semaine, c'est la chose la plus puissante que tu puisses faire pour ta longévité.</div>`
+  },
+
+  // ─── ARTICLE 4 ───
+  {
+    theme: '🧠 Dopamine & Motivation',
+    title: 'Maîtriser ta dopamine : le vrai carburant de la motivation',
+    source: 'Andrew Huberman, Stanford · Anna Lembke — Dopamine Nation · Robert Sapolsky',
+    content: `
+<h4>🔬 La dopamine n'est pas le plaisir</h4>
+<p>L'idée reçue : la dopamine = plaisir. La réalité neuroscientifique : la dopamine est le neurotransmetteur de la <strong>motivation, de l'anticipation et de la recherche</strong>. Ce n'est pas ce que tu ressens quand tu obtiens quelque chose — c'est ce qui te pousse à aller le chercher.</p>
+<p>Comprendre cette distinction change tout. Les activités qui génèrent les plus grosses poussées de dopamine ne sont pas forcément les plus plaisantes — ce sont celles qui promettent une récompense potentielle. C'est pourquoi les jeux d'argent, les réseaux sociaux et la pornographie sont si addictifs : ils jouent sur l'incertitude de la récompense, qui amplifie le signal dopaminergique.</p>
+<h4>🔄 Le principe de balance hédonique</h4>
+<p>Le système dopaminergique fonctionne comme une balance. Chaque plaisir intense crée un creux compensatoire égal et opposé. Ton cerveau cherche toujours l'homéostasie — si tu le bombardes de dopamine artificielle (sucre, alcool, réseaux sociaux, porn), il compense en réduisant ses récepteurs et en abaissant ta ligne de base.</p>
+<p>Résultat : tu as besoin de <strong>plus pour ressentir la même chose</strong>, et sans stimulation tu te sens dans un état de manque chronique. Les personnes les plus malheureuses ne le sont pas parce qu'elles n'ont pas assez de plaisirs — c'est souvent parce qu'elles en ont trop, de mauvais.</p>
+<h4>📊 Niveaux de dopamine selon les activités</h4>
+<ul>
+<li><strong>Ligne de base</strong> : 100% (état de repos sain)</li>
+<li><strong>Exercice physique</strong> : +200% — et améliore la sensibilité des récepteurs</li>
+<li><strong>Exposition au froid</strong> : +250% — libération durable de 2–3h</li>
+<li><strong>Réseaux sociaux / likes</strong> : pic court, suivi d'une chute sous la baseline</li>
+<li><strong>Alcool</strong> : +200% suivi d'une chute prolongée — source de la dépression post-alcool</li>
+<li><strong>Cocaïne</strong> : +1000% — destruction rapide des récepteurs</li>
+<li><strong>Victoire après effort</strong> : pic modéré mais récepteurs intacts — satisfaction durable</li>
+</ul>
+<h4>⚡ Protocole optimisation dopaminergique</h4>
+<ul>
+<li><strong>Dopamine fast</strong> : 24h sans stimulation artificielle (réseaux, jeux, sucre raffiné) pour resensibiliser tes récepteurs</li>
+<li><strong>Ne jamais mélanger plaisir et effort</strong> : écouter de la musique motivante pendant l'effort te prive du pic de dopamine de la victoire</li>
+<li><strong>Croix-de-croissance</strong> : cherche des activités difficiles dont la récompense est différée — elles maintiennent la dopamine haute sans créer de crash</li>
+<li><strong>Tyrosine alimentaire</strong> : précurseur de la dopamine — viande, œufs, fromage, légumineuses</li>
+<li><strong>Exposition solaire matinale</strong> : augmente la densité des récepteurs dopaminergiques</li>
+<li><strong>Exposition au froid</strong> : libère une vague de dopamine 2–3 fois supérieure à la baseline, pendant 2–3 heures</li>
+<li><strong>Célèbre tes victoires</strong> mais cherche rapidement le prochain objectif — rester dans la zone d'anticipation</li>
+</ul>
+<div class="tip-quote">"Ce n'est pas la drogue que les gens cherchent à fuir. C'est la douleur d'une vie sans dopamine naturelle." — Anna Lembke</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Identifie une activité numérique que tu fais par réflexe (Instagram, YouTube, news). Supprime-la pendant 24h. Observe ce que tu ressens — c'est le creux dopaminergique. Il disparaît en 48–72h.</div>`
+  },
+
+  // ─── ARTICLE 5 ───
+  {
+    theme: '🕐 Jeûne & Autophagie',
+    title: 'Le jeûne intermittent : activer le nettoyage cellulaire profond',
+    source: 'Yoshinori Ohsumi (Nobel 2016) · Peter Attia · Dr. Jason Fung — The Obesity Code',
+    content: `
+<h4>🔬 Qu'est-ce que l'autophagie ?</h4>
+<p>En 2016, le Japonais Yoshinori Ohsumi reçoit le Prix Nobel de Médecine pour avoir élucidé le mécanisme de l'autophagie — littéralement "se manger soi-même". C'est le processus par lequel les cellules dégradent et recyclent leurs propres composants endommagés : protéines mal repliées, organites dysfonctionnels, pathogènes intracellulaires.</p>
+<p>L'autophagie est le programme de maintenance cellulaire le plus fondamental qui existe. Sans elle, les cellules accumulent des "déchets" qui perturbent leur fonctionnement et accélèrent le vieillissement. Elle est également un mécanisme anticancéreux puissant — elle détecte et élimine les cellules précancéreuses avant qu'elles ne prolifèrent.</p>
+<h4>⏰ Quand l'autophagie s'active ?</h4>
+<p>L'autophagie est <strong>inhibée par l'insuline et les acides aminés</strong>. Chaque fois que tu manges — même un peu — tu l'arrêtes. Elle commence à s'activer significativement après <strong>12 à 16 heures</strong> de jeûne, et atteint son pic après 24–48h.</p>
+<p>C'est le paradoxe de notre alimentation moderne : manger toutes les 2–3h (comme le recommandaient les nutritionnistes des années 90) supprime chroniquement l'autophagie, empêchant la maintenance cellulaire essentielle.</p>
+<h4>📊 Les bénéfices documentés du jeûne</h4>
+<ul>
+<li><strong>Autophagie</strong> : nettoyage cellulaire profond, recyclage des protéines endommagées</li>
+<li><strong>Sensibilité à l'insuline</strong> : amélioration significative dès 3 semaines de 16:8</li>
+<li><strong>Inflammation</strong> : réduction des marqueurs inflammatoires (CRP, IL-6)</li>
+<li><strong>Clarté mentale</strong> : les corps cétoniques produits pendant le jeûne sont un carburant cérébral supérieur au glucose</li>
+<li><strong>Longévité</strong> : activation des sirtuines et de AMPK — les gènes de la longévité</li>
+<li><strong>Composition corporelle</strong> : préserve la masse musculaire tout en brûlant les graisses (à l'inverse des régimes hypocaloriques)</li>
+</ul>
+<h4>⚡ Protocoles selon l'objectif</h4>
+<ul>
+<li><strong>16:8 quotidien</strong> : manger entre 12h et 20h, jeûner le reste. Le plus accessible. Idéal pour la gestion du poids et la sensibilité à l'insuline</li>
+<li><strong>18:6</strong> : manger entre 13h et 19h. Niveau intermédiaire, autophagie plus profonde</li>
+<li><strong>24h une fois/semaine</strong> : dîner → dîner le lendemain. Puissant pour l'autophagie et la régulation hormonale</li>
+<li><strong>Café noir et thé</strong> : n'interrompent pas l'autophagie, peuvent supprimer la faim</li>
+<li><strong>Eau, sel, magnésium</strong> : essentiels pendant le jeûne pour éviter les déséquilibres électrolytiques</li>
+</ul>
+<div class="tip-quote">"Le jeûne est l'une des pratiques de santé les plus anciennes et les plus puissantes. Nous l'avons oubliée parce qu'elle ne génère aucun profit." — Dr. Jason Fung</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Si tu n'as pas encore mangé, repousse ton premier repas d'1h de plus que d'habitude. C'est l'entrée en douceur dans le jeûne intermittent. L'eau et le café noir t'aideront.</div>`
+  },
+
+  // ─── ARTICLE 6 ───
+  {
+    theme: '🧊 Exposition au Froid',
+    title: 'Le protocole froid : dopamine, résilience et performance',
+    source: 'Andrew Huberman, Stanford · Wim Hof · Susanna Søberg — études 2021–2023',
+    content: `
+<h4>🔬 Ce qui se passe dans ton corps au contact du froid</h4>
+<p>L'exposition au froid (eau froide, douche froide, bain de glace) déclenche une cascade de réponses physiologiques puissantes. En quelques secondes, ton système nerveux sympathique s'active, libérant de la <strong>noradrénaline</strong> dans le cerveau et dans le corps entier.</p>
+<p>La recherche de Susanna Søberg publiée en 2021 montre qu'une exposition régulière au froid augmente la noradrénaline de <strong>300%</strong> et la dopamine de <strong>250%</strong>. Contrairement aux drogues, ce pic dopaminergique ne crée pas de crash compensatoire — il revient progressivement à la baseline, laissant un état de bien-être stable pendant 2 à 3 heures.</p>
+<h4>🧬 Les 3 mécanismes principaux</h4>
+<p><strong>1. Graisse brune (BAT) :</strong> L'exposition au froid active la graisse brune — un tissu adipeux spécialisé qui brûle les calories pour produire de la chaleur. Elle est riche en mitochondries. Activer régulièrement la BAT améliore la composition corporelle et la sensibilité à l'insuline de façon durable.</p>
+<p><strong>2. Récupération musculaire :</strong> L'eau froide après l'effort réduit l'inflammation aiguë, élimine les déchets métaboliques (lactate) et réduit les douleurs musculaires de 20 à 30%. Attention : ne pas faire cela directement après une séance de musculation (bloque l'hypertrophie) — attendre 4h minimum.</p>
+<p><strong>3. Résilience mentale :</strong> Entrer volontairement dans l'inconfort et le gérer avec la respiration recâble le cerveau. Tu entraînes littéralement ton cortex préfrontal à contrôler l'amygdale. Ceux qui pratiquent régulièrement rapportent une réduction significative de l'anxiété et une meilleure tolérance au stress quotidien.</p>
+<h4>📊 Dosage recommandé</h4>
+<ul>
+<li><strong>Douche froide</strong> : 30 à 90 secondes à la fin d'une douche chaude — efficace et accessible quotidiennement</li>
+<li><strong>Bain de glace</strong> : 57–60°F (14–16°C), 2–5 minutes, 2–3x/semaine pour les bénéfices maximaux sur la BAT</li>
+<li><strong>Total hebdomadaire</strong> : Søberg recommande 11 minutes/semaine en eau froide pour les bénéfices métaboliques documentés</li>
+<li>Le froid le matin amplifie l'éveil et l'énergie de la journée</li>
+</ul>
+<h4>⚡ La méthode Wim Hof — respiration + froid</h4>
+<ul>
+<li>30 respirations profondes rapides (hyperventilation contrôlée)</li>
+<li>Expiration et rétention de souffle (30 à 90 secondes)</li>
+<li>Inspiration profonde, rétention 15 secondes</li>
+<li>Répéter 3 cycles avant l'exposition au froid</li>
+<li>Augmente l'alcalinité du sang, réduit la perception du froid, booste l'adrénaline</li>
+</ul>
+<div class="tip-quote">"La douche froide n'est pas une punition. C'est un entraînement. Chaque matin tu choisis l'inconfort volontaire — tu envoies un signal à ton cerveau que tu es en contrôle." — Andrew Huberman</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Termine ta douche avec 30 secondes d'eau froide. Concentre-toi sur ton souffle — expire lentement. La première fois est la pire. La deuxième fois est déjà différente.</div>`
+  },
+
+  // ─── ARTICLE 7 ───
+  {
+    theme: '☀️ Lumière & Horloge Biologique',
+    title: 'La lumière du matin : le signal maître de toute ta biologie',
+    source: 'Andrew Huberman, Stanford · Russell Foster, Oxford · Circadian Biology, Nature 2022',
+    content: `
+<h4>🔬 L'horloge biologique — maître du corps</h4>
+<p>Ton corps possède une <strong>horloge circadienne maîtresse</strong> dans le noyau suprachiasmatique (SCN) de l'hypothalamus. Elle régule des milliers de gènes, la sécrétion de toutes les hormones, la température corporelle, le métabolisme, le système immunitaire et le sommeil — sur un cycle de précisément 24,2 heures.</p>
+<p>Ce cycle légèrement supérieur à 24h doit être <strong>recalibré chaque matin</strong> par la lumière naturelle. Sans ce signal, l'horloge dérive — et avec elle, l'ensemble de la cascade hormonale de la journée.</p>
+<h4>👁️ Le mécanisme de la lumière matinale</h4>
+<p>La rétine contient des cellules photoréceptrices spécialisées — les <strong>cellules ganglionnaires à mélanopsine (ipRGC)</strong> — particulièrement sensibles à la lumière bleue de basse altitude (angle bas du soleil, matin et soir). Elles envoient un signal direct au SCN qui déclenche :</p>
+<ul>
+<li>L'arrêt de la mélatonine (hormone du sommeil)</li>
+<li>La montée du cortisol matinal (Cortisol Awakening Response — CAR)</li>
+<li>La montée de la sérotonine (précurseur de la mélatonine nocturne)</li>
+<li>La synchronisation de tous les organes sur le cycle lumière/obscurité</li>
+</ul>
+<h4>📊 Ce que dit la science</h4>
+<ul>
+<li>Exposition dans les <strong>30–60 min après le réveil</strong> : synchronise l'horloge, augmente l'énergie de la journée</li>
+<li><strong>2 à 10 minutes</strong> de lumière directe (pas à travers une vitre) suffisent par temps ensoleillé</li>
+<li>Par temps nuageux : 15–30 min nécessaires (la lumière diffuse reste puissante)</li>
+<li>La lumière à travers une vitre perd <strong>50% de son efficacité</strong> circadienne</li>
+<li>La lumière artificielle le matin est 50 à 100x moins puissante que la lumière naturelle</li>
+</ul>
+<h4>🌙 La lumière le soir — l'ennemi du sommeil</h4>
+<p>Entre 22h et 4h, même une lumière faible (40 lux — une bougie suffit) supprime la mélatonine et perturbe le sommeil profond. Les LED et écrans modernes émettent précisément la lumière bleue la plus perturbante.</p>
+<ul>
+<li>Après 21h : passe les écrans en mode chaud (f.lux, Night Shift)</li>
+<li>Lumières d'ambiance basses et chaudes le soir</li>
+<li>Chambre en obscurité totale — même un LED de veille suffit à perturber le sommeil</li>
+<li>Lunettes à filtre lumière bleue après 20h si tu utilises des écrans</li>
+</ul>
+<h4>⚡ Protocole lumière optimal</h4>
+<ul>
+<li>Lever du soleil ou dès que possible : sortir <strong>dehors</strong>, yeux vers le ciel (pas directement le soleil), 10–30 minutes</li>
+<li>Si ce n'est pas possible : lampe de luminothérapie 10 000 lux, 20–30 minutes</li>
+<li>Vers 12h–13h : 5–10 min de lumière naturelle (stabilise l'horloge en milieu de journée)</li>
+<li>Coucher du soleil : re-regarder le ciel — signal à l'horloge que la nuit approche</li>
+</ul>
+<div class="tip-quote">"La lumière est l'outil de régulation biologique le plus puissant qui existe. Gratuite, naturelle, et largement ignorée." — Andrew Huberman</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Sors dehors dans les 20 minutes qui suivent cette lecture. Regarde le ciel, sans lunettes de soleil, 5 à 10 minutes. Bois ton café dehors. C'est gratuit et c'est l'acte le plus impactant sur ton énergie de la journée.</div>`
+  },
+
+  // ─── ARTICLE 8 ───
+  {
+    theme: '🧬 BDNF & Neuroplasticité',
+    title: 'Le BDNF : le fertilisant de ton cerveau que le sport génère',
+    source: 'John Ratey — Spark · Fernando Gomez-Pinilla, UCLA · Nature Neuroscience',
+    content: `
+<h4>🔬 Qu'est-ce que le BDNF ?</h4>
+<p>Le <strong>Brain-Derived Neurotrophic Factor (BDNF)</strong> est une protéine produite par les neurones qui agit comme un fertilisant pour le cerveau. Il stimule la croissance de nouveaux neurones (<strong>neurogenèse</strong>), renforce les connexions synaptiques existantes, protège les neurones contre l'apoptose (mort cellulaire programmée), et joue un rôle central dans l'apprentissage et la mémoire.</p>
+<p>John Ratey de Harvard l'appelle "le miracle-gro du cerveau". Des niveaux élevés de BDNF sont associés à une meilleure mémoire, une humeur plus stable, une résilience au stress accrue, et un vieillissement cérébral ralenti. Des niveaux bas sont corrélés à la dépression, l'anxiété, les troubles cognitifs et la maladie d'Alzheimer.</p>
+<h4>🏃 L'exercice comme médicament pour le cerveau</h4>
+<p>L'activité physique est le stimulant le plus puissant du BDNF connu. Une séance de 20 minutes augmente le BDNF de 200 à 300% dans les heures qui suivent. Les effets sont particulièrement marqués avec :</p>
+<ul>
+<li><strong>Cardio en zone 2</strong> : la libération de BDNF est proportionnelle à la durée</li>
+<li><strong>Sprint et HIIT</strong> : pics de BDNF très élevés mais courts</li>
+<li><strong>Musculation</strong> : libère de l'IGF-1 qui amplifie les effets du BDNF</li>
+<li><strong>Exercice à jeun</strong> : la combinaison cétones + BDNF amplifie la neuroplasticité</li>
+</ul>
+<h4>📊 Autres modulateurs du BDNF</h4>
+<ul>
+<li><strong>Sommeil profond</strong> : majeur pour la synthèse du BDNF</li>
+<li><strong>Oméga-3 (DHA)</strong> : composant essentiel des membranes neuronales, amplifie les effets du BDNF</li>
+<li><strong>Curcuma (curcumine)</strong> : augmente le BDNF, validé dans plusieurs études</li>
+<li><strong>Jeûne intermittent</strong> : active les sirtuines qui stimulent le BDNF</li>
+<li><strong>Nouveauté et apprentissage</strong> : apprendre quelque chose de nouveau est le deuxième stimulus le plus puissant après l'exercice</li>
+<li><strong>Stress chronique et sucre</strong> : les deux ennemis principaux du BDNF</li>
+</ul>
+<h4>⚡ Protocole cerveau haute performance</h4>
+<ul>
+<li>Fais de l'exercice le matin <strong>avant</strong> les tâches cognitives importantes</li>
+<li>Combine cardio et musculation dans la même semaine pour des effets synergiques</li>
+<li>Apprends quelque chose de nouveau régulièrement — langue, instrument, compétence</li>
+<li>Supplémente en DHA (oméga-3) : 1 à 2g/jour</li>
+<li>Intègre curcumine avec poivre noir (pipérine) pour l'absorption</li>
+</ul>
+<div class="tip-quote">"Faire de l'exercice, c'est construire et conditionner le cerveau. L'effet sur le cerveau est bien plus important que l'effet sur le corps." — John Ratey</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Fais 20 minutes de cardio avant une tâche importante (lecture, travail, apprentissage). Tu augmentes ta capacité d'absorption de 30 à 40%. Le BDNF est à son pic dans les 2h suivantes.</div>`
+  },
+
+  // ─── ARTICLE 9 ───
+  {
+    theme: '🌿 Microbiome & Intestin',
+    title: 'Ton intestin : le deuxième cerveau qui gouverne ton humeur',
+    source: 'Tim Spector — The Diet Myth · Giulia Enders — Le Charme Discret de l\'Intestin · Nature Microbiology',
+    content: `
+<h4>🔬 Le microbiome — un organe oublié</h4>
+<p>Ton intestin abrite entre <strong>38 000 milliards de bactéries</strong> — approximativement autant que de cellules humaines dans ton corps entier. Ces micro-organismes forment le <strong>microbiome intestinal</strong>, un écosystème complexe dont la diversité et la santé déterminent bien plus que ta digestion.</p>
+<p>Il ne s'agit pas d'un simple passage de nourriture. Ton intestin possède <strong>500 millions de neurones</strong> (le système nerveux entérique) qui communiquent directement avec le cerveau via le nerf vague — la connexion la plus large entre l'intestin et le cerveau central. Cette voie est bidirectionnelle, mais 80% des signaux vont de l'intestin au cerveau, pas l'inverse.</p>
+<h4>🧠 Axe intestin-cerveau : ce qui se passe</h4>
+<p>Ton microbiome produit directement des neurotransmetteurs : <strong>90% de la sérotonine</strong> du corps est produite dans l'intestin (pas dans le cerveau), ainsi que 50% de la dopamine. Les bactéries intestinales produisent aussi du GABA (neurotransmetteur anxiolytique), de la noradrénaline, et de nombreux acides gras à chaîne courte qui influencent directement l'humeur et la cognition.</p>
+<p>Des études récentes montrent des corrélations solides entre la dysbiose intestinale (déséquilibre du microbiome) et la dépression, l'anxiété, l'autisme, le TDAH et même la maladie d'Alzheimer. Ce n'est pas causal dans tous les cas — mais le lien est trop fort pour être ignoré.</p>
+<h4>📊 Les ennemis du microbiome</h4>
+<ul>
+<li><strong>Antibiotiques</strong> : nécessaires parfois, mais dévastateurs pour la diversité microbienne — 6 à 24 mois de récupération</li>
+<li><strong>Aliments ultra-transformés</strong> : appauvrissent la diversité en 3 jours mesurables</li>
+<li><strong>Sucres raffinés</strong> : nourrissent préférentiellement les bactéries pathogènes</li>
+<li><strong>Chlore dans l'eau du robinet</strong> : bactéricide — filtre l'eau si possible</li>
+<li><strong>Stress chronique</strong> : modifie directement la composition du microbiome via le cortisol</li>
+<li><strong>Manque de sommeil</strong> : 2 jours de perturbation du sommeil altèrent le microbiome</li>
+</ul>
+<h4>⚡ Protocole microbiome optimal</h4>
+<ul>
+<li><strong>30 plantes différentes par semaine</strong> : le marqueur numéro 1 de diversité microbienne selon Tim Spector. Compte : légumes, fruits, légumineuses, noix, épices, herbes</li>
+<li><strong>Aliments fermentés quotidiens</strong> : yaourt, kéfir, kimchi, choucroute, kombucha — sources directes de probiotiques vivants</li>
+<li><strong>Fibres prébiotiques</strong> : ail, oignon, poireau, asperge, topinambour — nourrissent tes bonnes bactéries</li>
+<li><strong>Polyphénols</strong> : thé vert, café noir, baies, chocolat noir 85%+ — nutriments des bactéries bénéfiques</li>
+<li><strong>Jeûne nocturne d'au moins 12h</strong> : laisse le microbiome se réguler</li>
+</ul>
+<div class="tip-quote">"Nous sommes plus bactériens qu'humains. Ce n'est pas eux qui vivent en nous — c'est nous qui vivons avec eux." — Tim Spector</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Compte combien de plantes différentes tu manges cette semaine. Note l'objectif : 30. Ajoute une herbe (origan, thym, curcuma) à chaque repas — chacune compte comme une plante.</div>`
+  },
+
+  // ─── ARTICLE 10 ───
+  {
+    theme: '🫁 Respiration & Performance',
+    title: 'Respirer correctement : l\'outil le plus sous-estimé de la biohacking',
+    source: 'James Nestor — Breath · Patrick McKeown — The Oxygen Advantage · Dr. David Servan-Schreiber',
+    content: `
+<h4>🔬 La respiration moderne est dysfonctionnelle</h4>
+<p>James Nestor, après 10 ans de recherche sur la respiration humaine, arrive à une conclusion choc : <strong>la majorité des humains modernes respirent mal</strong>. Trop vite, trop fort, par la bouche — et cette dysfonction respiratoire est à l'origine de problèmes de santé massifs et largement ignorés.</p>
+<p>Les humains préhistoriques avaient des crânes plus larges et des voies nasales plus dégagées. L'alimentation moderne (trop molle, trop transformée) a réduit notre mâchoire et rétréci nos voies respiratoires en quelques générations. Résultat : ronflements, apnée du sommeil, respiration buccale chronique, anxiété, et performance physique réduite.</p>
+<h4>👃 La respiration nasale — révolution silencieuse</h4>
+<p>La respiration par le nez n'est pas juste une préférence. Le nez est un organe de traitement de l'air hautement sophistiqué :</p>
+<ul>
+<li>Filtre 98% des particules et pathogènes</li>
+<li>Humidifie et réchauffe l'air à la température corporelle</li>
+<li>Produit du <strong>monoxyde d'azote (NO)</strong> qui dilate les vaisseaux sanguins, améliore l'oxygénation et a des propriétés antivirales</li>
+<li>Active le système nerveux parasympathique (calme) vs la bouche qui active le sympathique (stress)</li>
+<li>Permet une respiration plus lente et plus efficace — moins de respirations pour le même apport en oxygène</li>
+</ul>
+<h4>📊 Les techniques validées</h4>
+<ul>
+<li><strong>Cohérence cardiaque (6 resp./min)</strong> : 5 secondes inspire, 5 secondes expire, 5 minutes. Réduit le cortisol, régule le système nerveux autonome. La technique la mieux documentée cliniquement</li>
+<li><strong>4-7-8 (Dr. Weil)</strong> : inspire 4s, retiens 7s, expire 8s. Active puissamment le parasympathique. 4 cycles avant de dormir</li>
+<li><strong>Buteyko</strong> : apprendre à respirer moins, pas plus. Réduit l'hyperventilation chronique</li>
+<li><strong>Box breathing (Navy SEALs)</strong> : 4s inspire, 4s retiens, 4s expire, 4s retiens. Contrôle du stress en situation de haute pression</li>
+<li><strong>Wim Hof</strong> : hyperventilation contrôlée suivie de rétention — effet de montée d'adrénaline et d'alcalinité</li>
+</ul>
+<h4>⚡ Protocole quotidien</h4>
+<ul>
+<li><strong>Matin</strong> : 5 min de cohérence cardiaque avant de regarder ton téléphone</li>
+<li><strong>Exercice physique</strong> : respiration nasale exclusive, même si inconfortable au début</li>
+<li><strong>Stress aigu</strong> : expiration longue (double de l'inspiration) — active immédiatement le frein vagal</li>
+<li><strong>Nuit</strong> : taping labial (bande médicale sur la bouche) si tu ronfles ou respires par la bouche</li>
+<li><strong>Avant une tâche importante</strong> : 5 grandes respirations nasales lentes — augmente l'oxygénation cérébrale</li>
+</ul>
+<div class="tip-quote">"Changer la façon dont tu respires changera ta vie. C'est la chose la moins chère et la plus puissante que tu puisses faire pour ta santé." — James Nestor</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Ferme la bouche. Respire par le nez exclusivement pendant les 30 prochaines minutes. Observe si c'est difficile — si oui, c'est un signal fort que tu respirais mal.</div>`
+  },
+
+  // ─── ARTICLE 11 ───
+  {
+    theme: '💪 Zone 2 & Longévité',
+    title: 'L\'entraînement Zone 2 : la clé oubliée de la performance et de la longévité',
+    source: 'Iñigo San Millán (Stanford) · Peter Attia — Outlive · Tour de France research',
+    content: `
+<h4>🔬 Qu'est-ce que la Zone 2 ?</h4>
+<p>La Zone 2 correspond à une intensité d'effort où tu utilises principalement le système aérobie pour produire de l'énergie — ta fréquence cardiaque est à environ 60–70% de ton maximum, et tu peux maintenir une conversation sans être trop essoufflé. C'est entre la marche rapide et le jogging léger pour la plupart des gens.</p>
+<p>Iñigo San Millán, physiologiste de Stanford qui travaille avec les meilleurs cyclistes du monde (dont Tadej Pogačar), a passé 20 ans à étudier ce zone. Sa conclusion : <strong>c'est la zone d'entraînement la plus importante pour la santé métabolique et la longévité</strong>, et la plus négligée par les sportifs amateurs qui vont trop fort ou pas assez.</p>
+<h4>🔋 Pourquoi la Zone 2 est si puissante</h4>
+<p>À cette intensité, tes cellules musculaires utilisent principalement les <strong>mitochondries de type I (fibres lentes)</strong> — les plus efficaces, les plus nombreuses dans les muscles entraînés, et celles qui brûlent les graisses comme carburant principal. C'est le stimulus optimal pour :</p>
+<ul>
+<li><strong>Biogenèse mitochondriale</strong> : augmentation du nombre et de la taille des mitochondries</li>
+<li><strong>Flexibilité métabolique</strong> : capacité à switcher entre glucides et graisses selon les besoins</li>
+<li><strong>Santé cardiovasculaire</strong> : renforcement du cœur et des vaisseaux sans stress excessif</li>
+<li><strong>Santé mitochondriale</strong> : amélioration de l'efficacité de la chaîne respiratoire</li>
+<li><strong>Gestion du glucose</strong> : réduction de la résistance à l'insuline</li>
+</ul>
+<h4>📊 Les données qui parlent</h4>
+<ul>
+<li>Le VO2max (capacité aérobie maximale) est le prédicteur de mortalité le plus puissant connu — plus que le tabac ou le diabète</li>
+<li>Passer du quintile le plus bas au quintile moyen de VO2max réduit le risque de mortalité de <strong>45%</strong></li>
+<li>Les cyclistes professionnels font <strong>80% de leur volume d'entraînement en Zone 2</strong></li>
+<li>45 min de Zone 2, 3–4x/semaine : amélioration mesurable de la santé mitochondriale en 8 semaines</li>
+</ul>
+<h4>⚡ Comment trouver ta Zone 2</h4>
+<ul>
+<li><strong>Test parole</strong> : tu peux tenir une conversation de quelques phrases sans t'arrêter, mais tu ne chanterais pas</li>
+<li><strong>FC approximative</strong> : 180 - ton âge (formule grossière mais utile)</li>
+<li><strong>Lactate sanguin</strong> : entre 1,7 et 2 mmol/L (mesure précise avec lactomètre)</li>
+<li>Activités adaptées : vélo (le meilleur — régulier et mesurable), marche rapide en côte, natation, elliptique</li>
+</ul>
+<div class="tip-quote">"Si vous ne faites qu'une chose pour votre santé à long terme, faites de la Zone 2 régulièrement. Rien d'autre ne s'en approche en termes de retour sur investissement." — Peter Attia</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Marche rapide ou vélo à intensité légère pendant 30 minutes. Vérifie : tu dois pouvoir parler en phrases complètes. Si tu es trop essoufflé, ralentis. C'est contre-intuitif — mais c'est exactement ce qu'il faut faire.</div>`
+  },
+
+  // ─── ARTICLE 12 ───
+  {
+    theme: '🔥 Discipline & Identité',
+    title: 'La discipline comme identité : leçons de ceux qui ont repoussé leurs limites',
+    source: 'David Goggins — Can\'t Hurt Me · Jocko Willink — Discipline Equals Freedom · James Clear — Atomic Habits',
+    content: `
+<h4>🔬 Le mythe de la motivation</h4>
+<p>La motivation est un sentiment. Les sentiments varient. Construire sa vie sur la motivation, c'est construire sur du sable. David Goggins, ancien Navy SEAL qui a passé de l'obésité à l'un des athlètes d'endurance les plus durs du monde, est catégorique : <strong>la motivation ne sert à rien</strong> à long terme. Ce qui compte, c'est la discipline — et la discipline est une compétence qui s'entraîne.</p>
+<p>Jocko Willink, commandant Navy SEAL et auteur de "Discipline Equals Freedom", va plus loin : <strong>la discipline crée la liberté</strong>. Ce n'est pas une contrainte — c'est l'unique chemin vers une vie que tu contrôles vraiment. Chaque fois que tu cèdes à l'impulsion, tu renforces l'habitude de la capitulation. Chaque fois que tu tiens, tu renforces l'identité du quelqu'un qui tient.</p>
+<h4>🧠 Le concept du "Cookie Jar" — Goggins</h4>
+<p>Goggins a développé un concept puissant : le "Cookie Jar". Dans les moments de faiblesse extrême, pendant un ultra-marathon ou une période difficile, il puise mentalement dans une collection de victoires passées — des moments où il a dépassé ses limites, souffert et tenu.</p>
+<p>Ces souvenirs ne sont pas de la nostalgie. Ils sont une <strong>preuve neurologique</strong> que tu es capable de plus que ce que ton cerveau te dit dans le moment de douleur. Le cerveau ment pour te protéger — il déclenche l'envie d'arrêter à 40% de ta capacité réelle. C'est ce que Goggins appelle le "gouverneur" — et il est possible de le repousser.</p>
+<h4>🔄 L'identité avant les actions — James Clear</h4>
+<p>James Clear dans Atomic Habits propose le changement le plus profond : au lieu de te fixer des objectifs ("je veux courir un marathon"), <strong>change ton identité</strong> ("je suis quelqu'un qui court"). Chaque action devient alors une preuve de qui tu es, pas un effort vers ce que tu veux.</p>
+<ul>
+<li>Objectif : "Je veux arrêter de fumer" → faible, orienté privation</li>
+<li>Identité : "Je ne suis pas fumeur" → puissant, orienté être</li>
+</ul>
+<h4>⚡ Protocole construction de la discipline</h4>
+<ul>
+<li><strong>Commence petit, tiens toujours</strong> : une pompe par jour vaut mieux que 100 pompes 3 fois par semaine avec des manques</li>
+<li><strong>Règle des 2 minutes</strong> : si la tâche prend moins de 2 minutes, fais-la maintenant. Sinon, commence 2 minutes dessus</li>
+<li><strong>Environnement design</strong> : élimine les frictions pour les bonnes habitudes, ajoute des frictions pour les mauvaises</li>
+<li><strong>Le journal de victoires</strong> : note chaque soir 1 chose difficile que tu as faite. Construit le Cookie Jar</li>
+<li><strong>Ne jamais manquer deux fois</strong> : une fois c'est un accident. Deux fois c'est le début d'une nouvelle habitude</li>
+<li><strong>Récupère ta matinée</strong> : les 2 premières heures du matin sans téléphone, sans décision passive — ton meilleur capital cognitif</li>
+</ul>
+<div class="tip-quote">"La douleur est inévitable. La souffrance est optionnelle. Mais les gens confondent les deux et choisissent le confort. Le confort est l'ennemi de la croissance." — David Goggins</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Identifie la chose que tu repousses depuis le plus longtemps. Fais-en 5 minutes maintenant — juste 5 minutes. Le démarrage est toujours la partie la plus difficile. Après 5 minutes, tu continueras.</div>`
+  },
+
+  // ─── ARTICLE 13 ───
+  {
+    theme: '🌌 Spiritualité & Connexion',
+    title: 'La connexion à quelque chose de plus grand : neuroscience et sens',
+    source: 'Joe Dispenza — Breaking the Habit of Being Yourself · Viktor Frankl — Man\'s Search for Meaning · Andrew Newberg, Jefferson University',
+    content: `
+<h4>🔬 La spiritualité vue par la neuroscience</h4>
+<p>Andrew Newberg, neuroscientifique à Jefferson University, a scanné le cerveau de centaines de méditants, pratiquants religieux et personnes en état mystique. Sa conclusion : les expériences de connexion profonde, de transcendance et de spiritualité sont des <strong>phénomènes neurologiques réels et mesurables</strong> — pas des illusions ou des croyances naïves.</p>
+<p>Pendant la méditation profonde et les états de connexion spirituelle, le <strong>cortex préfrontal</strong> (siège de l'ego, de la séparation, du "je") montre une réduction d'activité significative, tandis que des zones liées à l'unité, à la compassion et à la paix s'activent. Ce n'est pas une expérience "mystique" inexplicable — c'est un état biologique accessible.</p>
+<h4>🎯 Le sens comme force biologique</h4>
+<p>Viktor Frankl, psychiatre qui a survécu aux camps de concentration nazis, a observé que ceux qui survivaient n'étaient pas nécessairement les plus forts physiquement. C'étaient ceux qui avaient un <strong>sens, un pourquoi</strong> — un projet, une personne à retrouver, une mission à accomplir.</p>
+<p>La neurobiologie confirme : avoir un sens fort de sa mission augmente la résilience face au stress, réduit le risque de dépression, et est associé à une vie plus longue dans les études épidémiologiques. Le mot japonais <strong>"Ikigai"</strong> — la raison d'être — est cité comme l'un des facteurs de la longévité exceptionnelle des Okinawaïens.</p>
+<h4>🧬 Joe Dispenza — recâbler l'identité</h4>
+<p>Joe Dispenza (controversé mais appuyé sur de vraies études) postule que nous sommes prisonniers de notre identité passée parce que notre cerveau rejoue constamment les mêmes circuits émotionnels. La méditation de connexion — se projeter dans un futur voulu avec une émotion intense et présente — crée de nouvelles connexions synaptiques.</p>
+<p>Le mécanisme neurologique : les neurones qui tirent ensemble se câblent ensemble. Visualiser un futur avec une émotion authentique (pas une pensée sèche) active les mêmes voies que si ce futur se produisait réellement. Ce n'est pas de la pensée magique — c'est de la neuroplasticité dirigée.</p>
+<h4>⚡ Pratiques de connexion quotidienne</h4>
+<ul>
+<li><strong>Méditation matinale 10–20 min</strong> : assis, yeux fermés, focus sur la respiration. Quand l'esprit divague, revenir sans jugement. C'est l'entraînement de l'attention</li>
+<li><strong>Gratitude profonde</strong> : non pas une liste, mais 1 à 2 minutes de ressentir physiquement la gratitude pour quelque chose de spécifique</li>
+<li><strong>Intention quotidienne</strong> : chaque matin, qui veux-tu être aujourd'hui ? Pas ce que tu veux faire — qui tu veux être</li>
+<li><strong>Nature et silence</strong> : 20 minutes dans un environnement naturel sans écran réduit le cortisol de 21%</li>
+<li><strong>Service aux autres</strong> : les études montrent que les actes de générosité activent le circuit de récompense plus que les plaisirs personnels</li>
+</ul>
+<div class="tip-quote">"Celui qui a un pourquoi peut supporter n'importe quel comment." — Friedrich Nietzsche, cité par Viktor Frankl</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Ferme les yeux 5 minutes. Pose-toi cette question : "Quelle version de moi veux-je devenir dans 5 ans ?" Ne pense pas — ressens. Laisse venir une image, une émotion. Note une phrase qui résume cette vision.</div>`
+  },
+
+  // ─── ARTICLE 14 ───
+  {
+    theme: '🧠 Deep Work & Focus',
+    title: 'Deep Work : reprendre le contrôle de ton attention à l\'ère de la distraction',
+    source: 'Cal Newport — Deep Work · Gloria Mark, UC Irvine · Johann Hari — Stolen Focus',
+    content: `
+<h4>🔬 La crise de l'attention</h4>
+<p>Gloria Mark de l'UC Irvine a mesuré avec précision comment les gens travaillent. Résultat choc : la durée d'attention soutenue moyenne sur une tâche a chuté de <strong>2,5 minutes en 2004</strong> à <strong>47 secondes en 2023</strong>. Ce n'est pas une question de génération ou de "cerveau moderne" — c'est le résultat direct de notre exposition aux outils numériques conçus pour capturer et fragmenter l'attention.</p>
+<p>Cal Newport de Georgetown appelle cette capacité à se concentrer profondément sur une tâche difficile le <strong>Deep Work</strong> — et il prédit que c'est la compétence la plus précieuse du 21e siècle, précisément parce qu'elle devient de plus en plus rare tandis que la valeur économique de la maîtrise cognitive augmente.</p>
+<h4>🧠 Ce que la distraction fait au cerveau</h4>
+<p>Chaque interruption ne coûte pas seulement le temps de l'interruption. Mark a mesuré qu'il faut en moyenne <strong>23 minutes</strong> pour retrouver un état de concentration profonde après une distraction. Et pendant ces 23 minutes, le travail produit est de qualité inférieure.</p>
+<p>Les notifications activent le circuit dopaminergique de l'anticipation — chaque ping est une promesse potentielle de récompense sociale. Ton cerveau est littéralement <strong>entraîné à chercher la distraction</strong>, même quand tu essaies de te concentrer. Ce n'est pas un manque de volonté — c'est de la neurologie.</p>
+<h4>📊 Les règles du Deep Work</h4>
+<ul>
+<li><strong>Blocs de temps protégés</strong> : 90 à 120 minutes sans interruption, pas de notifications, pas de téléphone visible</li>
+<li><strong>Rituels de démarrage</strong> : même lieu, même heure, même signal (café, musique instrumentale) — conditionne le cerveau à entrer en état de focus</li>
+<li><strong>Pas de multitâche</strong> : le cerveau ne multitâche pas — il switche rapidement, et chaque switch a un coût cognitif</li>
+<li><strong>Le téléphone hors de vue</strong> : une étude de l'UT Austin montre que la simple présence d'un téléphone visible (même éteint) réduit la capacité cognitive de 10%</li>
+<li><strong>Inbox time</strong> : vérifier ses emails 2 à 3 fois par jour à heures fixes, pas en continu</li>
+</ul>
+<h4>⚡ Protocole Deep Work quotidien</h4>
+<ul>
+<li>Identifie ta tâche la plus importante la veille au soir</li>
+<li>Travaille dessus en premier, avant d'ouvrir emails et réseaux</li>
+<li>Bloque 90 min minimum sans aucune interruption — téléphone dans une autre pièce</li>
+<li>Pause de 10–15 min entre les blocs (marche, étirements — pas de scroll)</li>
+<li>Arrête le Deep Work à heure fixe — la récupération est aussi importante</li>
+<li>Construis progressivement : commence par 30 min et augmente semaine après semaine</li>
+</ul>
+<div class="tip-quote">"La capacité à faire du Deep Work devient de plus en plus rare et en même temps de plus en plus précieuse. Ceux qui la cultivent s'épanouiront." — Cal Newport</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Avant d'ouvrir ton téléphone ou tes emails, fais 25 minutes (un Pomodoro) sur ta tâche la plus importante. Téléphone dans une autre pièce. Timer. Rien d'autre. Note ce que tu as accompli.</div>`
+  },
+
+  // ─── ARTICLE 15 ───
+  {
+    theme: '🔥 Inflammation & Alimentation',
+    title: 'L\'inflammation chronique : le feu silencieux qui accélère ton vieillissement',
+    source: 'Dr. Mark Hyman · Peter Attia — Outlive · David Sinclair — Lifespan',
+    content: `
+<h4>🔬 Deux types d'inflammation</h4>
+<p>L'inflammation <strong>aiguë</strong> est ton alliée. Quand tu te blesses, elle déclenche la réparation : afflux de globules blancs, chaleur, gonflement — le corps fait son travail. Elle dure des heures à quelques jours et disparaît.</p>
+<p>L'inflammation <strong>chronique de bas grade</strong> est ton ennemi silencieux. Elle est invisible, sans symptôme clair pendant des années, mais elle détériore lentement les vaisseaux sanguins, les tissus cérébraux, et accélère le vieillissement cellulaire. Peter Attia l'appelle "inflammaging" — le vieillissement par l'inflammation. Elle est à la racine des maladies cardiovasculaires, du diabète de type 2, des cancers, de la neurodégénérescence et de nombreuses pathologies auto-immunes.</p>
+<h4>🍔 Les sources d'inflammation chronique</h4>
+<ul>
+<li><strong>Huiles végétales raffinées</strong> (tournesol, maïs, soja) : riches en oméga-6 pro-inflammatoires — ratio oméga-6/oméga-3 idéal = 4:1, moderne = 20:1 voire 40:1</li>
+<li><strong>Sucres raffinés et glucides transformés</strong> : pics glycémiques répétés déclenchent une réponse inflammatoire</li>
+<li><strong>Aliments ultra-transformés</strong> : additifs, émulsifiants, colorants — perturbent le microbiome et déclenchent l'inflammation intestinale</li>
+<li><strong>Manque de sommeil</strong> : augmente l'IL-6 et le TNF-alpha (cytokines pro-inflammatoires)</li>
+<li><strong>Stress chronique</strong> : le cortisol chronique devient pro-inflammatoire</li>
+<li><strong>Alcool</strong> : métabolisé en acétaldéhyde — directement inflammatoire</li>
+<li><strong>Tabac</strong> : inflammation des voies respiratoires et systémique</li>
+</ul>
+<h4>🥗 Les anti-inflammatoires naturels les plus puissants</h4>
+<ul>
+<li><strong>Oméga-3 (EPA/DHA)</strong> : poissons gras, graines de lin — les anti-inflammatoires alimentaires les plus documentés</li>
+<li><strong>Curcumine + poivre noir</strong> : aussi puissant que certains anti-inflammatoires non stéroïdiens</li>
+<li><strong>Polyphénols</strong> : baies, thé vert, café, chocolat noir — activent les gènes anti-inflammatoires</li>
+<li><strong>Huile d'olive extra-vierge</strong> : l'oléocanthal a les mêmes mécanismes que l'ibuprofène</li>
+<li><strong>Légumes crucifères</strong> : brocoli, chou — activent le gène Nrf2, maître régulateur antioxydant</li>
+<li><strong>Jeûne intermittent</strong> : réduit significativement les marqueurs inflammatoires</li>
+</ul>
+<div class="tip-quote">"Toutes les maladies chroniques commencent par l'inflammation. Toutes les solutions commencent par la cuisine." — Dr. Mark Hyman</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Remplace l'huile de cuisson habituelle par de l'huile d'olive extra-vierge (cuisson basse température) ou de la graisse de coco. Un changement simple, un impact anti-inflammatoire immédiat.</div>`
+  },
+
+  // ─── ARTICLE 16 ───
+  {
+    theme: '⚖️ Cortisol & Stress',
+    title: 'Comprendre et dompter ton cortisol pour préserver ta vitalité',
+    source: 'Robert Sapolsky — Why Zebras Don\'t Get Ulcers · Andrew Huberman · Hans Selye',
+    content: `
+<h4>🔬 Le cortisol : ami ou ennemi ?</h4>
+<p>Le cortisol est souvent diabolisé. La réalité est plus nuancée : c'est une hormone essentielle à la vie. Produite par les glandes surrénales, elle régule le métabolisme, module la réponse immunitaire, mobilise l'énergie en cas de besoin, et participe à des dizaines de processus physiologiques quotidiens.</p>
+<p>Le problème n'est pas le cortisol — c'est le <strong>cortisol chroniquement élevé</strong>. Robert Sapolsky de Stanford a passé 30 ans à étudier le stress. Sa conclusion : les animaux sauvages connaissent le stress intense (prédateur) mais bref. Les humains modernes connaissent un stress de faible intensité mais <strong>permanent et abstrait</strong> — et c'est cela qui détruit la santé.</p>
+<h4>💥 Ce que le cortisol chronique fait à ton corps</h4>
+<ul>
+<li><strong>Cerveau</strong> : détruit les neurones de l'hippocampe (mémoire), réduit le cortex préfrontal — tu deviens littéralement moins intelligent sous stress chronique</li>
+<li><strong>Muscles</strong> : catabolisme musculaire — le cortisol convertit les protéines musculaires en glucose</li>
+<li><strong>Testostérone</strong> : antagoniste direct — cortisol élevé = testostérone basse</li>
+<li><strong>Immunité</strong> : suppression du système immunitaire avec le temps</li>
+<li><strong>Prise de poids abdominale</strong> : le cortisol favorise le stockage de graisse viscérale</li>
+<li><strong>Sommeil</strong> : cortisol élevé le soir empêche la montée de mélatonine</li>
+<li><strong>Digestion</strong> : inhibe les fonctions digestives non urgentes — source de troubles intestinaux</li>
+</ul>
+<h4>📊 La courbe de Selye</h4>
+<p>Hans Selye a décrit le syndrome général d'adaptation : <strong>alarme → résistance → épuisement</strong>. Le corps peut résister au stress chronique pendant des mois ou des années en s'adaptant — avant d'effondrer brusquement quand les réserves surrénaliennes s'épuisent. La <strong>fatigue surrénalienne</strong> est réelle et sous-diagnostiquée.</p>
+<h4>⚡ Protocole régulation du cortisol</h4>
+<ul>
+<li><strong>Sommeil de qualité</strong> : le cortisol matinal (CAR) est bénéfique — c'est le pic nocturne qui est toxique</li>
+<li><strong>Zone 2 régulière</strong> : réduit la réponse cortisolémique au stress dans le temps</li>
+<li><strong>Cohérence cardiaque</strong> : 5 min, 3x/jour — régule directement l'axe HPA (hypothalamo-hypophyso-surrénalien)</li>
+<li><strong>Ashwagandha</strong> : adaptogène validé scientifiquement, réduit le cortisol de 14–28% en 60 jours</li>
+<li><strong>Contrôle des stimulants</strong> : café après 9h et avant 14h. La caféine amplifie la réponse cortisolémique</li>
+<li><strong>Frontières claires</strong> : apprendre à dire non est une stratégie de santé, pas de l'égoïsme</li>
+<li><strong>Nature et silence quotidien</strong> : même 10 minutes réduisent les marqueurs du stress</li>
+</ul>
+<div class="tip-quote">"Les zèbres n'ont pas d'ulcères. Parce qu'ils ne ruminent pas sur les prédateurs qu'ils ont vus la semaine dernière." — Robert Sapolsky</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Identifie la source de stress la plus chronique dans ta vie. Tu ne peux peut-être pas l'éliminer ce matin — mais peux-tu en réduire l'exposition de 20% ? Une frontière, une décision, une conversation.</div>`
+  },
+
+  // ─── ARTICLE 17 ───
+  {
+    theme: '🌅 Gratitude & Neurochimie',
+    title: 'La gratitude recâble ton cerveau : neuroscience d\'une pratique ancienne',
+    source: 'Martin Seligman — Learned Optimism · UCLA Mindfulness Research Center · Robert Emmons',
+    content: `
+<h4>🔬 La gratitude n'est pas de la pensée positive naïve</h4>
+<p>La gratitude authentiquement pratiquée active des mécanismes neurochimiques précis. Robert Emmons, chercheur principal en psychologie de la gratitude à UC Davis, a mené plus de 20 années d'études. Ses résultats : les personnes qui pratiquent la gratitude de façon régulière rapportent <strong>25% de bien-être subjectif en plus</strong>, dorment mieux, font plus d'exercice, et ont des marqueurs biologiques de santé améliorés.</p>
+<p>Ce n'est pas un placebo. Les mécanismes neurochimiques sont identifiables : la gratitude stimule la production de <strong>dopamine, sérotonine et ocytocine</strong> — les mêmes neurotransmetteurs ciblés par les antidépresseurs les plus prescrits, mais sans effets secondaires.</p>
+<h4>🧠 Comment le cerveau traite la gratitude</h4>
+<p>L'IRM fonctionnelle montre que penser avec gratitude à quelqu'un active le <strong>cortex préfrontal médian</strong> et le <strong>cortex cingulaire antérieur</strong> — zones liées à la régulation émotionnelle, à l'empathie et au jugement moral. Elle désactive l'amygdale (centre de la peur et du stress).</p>
+<p>La pratique régulière crée de la <strong>neuroplasticité</strong> dans ces zones. Après 8 semaines de pratique quotidienne, les scanners montrent des changements structurels mesurables dans le cortex préfrontal. Tu ne "penses" pas différemment — ton cerveau <strong>est</strong> différent.</p>
+<h4>📊 Ce que disent les études</h4>
+<ul>
+<li>Journal de gratitude 3x/semaine → +25% de bien-être subjectif en 6 semaines</li>
+<li>Lettre de gratitude envoyée → augmentation immédiate du bonheur du donneur ET du receveur</li>
+<li>Gratitude avant de dormir → endormissement plus rapide, sommeil plus profond</li>
+<li>Pratique 3 semaines → réduction mesurable des symptômes dépressifs et anxieux</li>
+<li>Personnes reconnaissantes → 7 à 9% de moins de maladies inflammatoires</li>
+</ul>
+<h4>⚡ Protocole gratitude efficace</h4>
+<ul>
+<li><strong>Qualité sur quantité</strong> : 1 chose spécifique ressentie profondément vaut plus que 10 items listés mécaniquement</li>
+<li><strong>La nouveauté compte</strong> : ton cerveau s'adapte aux mêmes stimuli. Cherche de nouvelles choses chaque jour</li>
+<li><strong>Le corps, pas juste les pensées</strong> : ressens physiquement la gratitude dans ta poitrine pendant 30 à 60 secondes</li>
+<li><strong>Personnes spécifiques</strong> : la gratitude envers des personnes précises est plus puissante que la gratitude abstraite</li>
+<li><strong>Soir > Matin</strong> : la gratitude avant de dormir améliore la qualité du sommeil et réduit la rumination nocturne</li>
+<li><strong>Lettre non envoyée</strong> : écrire une lettre de gratitude détaillée à quelqu'un, même sans l'envoyer, produit des effets durables</li>
+</ul>
+<div class="tip-quote">"La gratitude n'est pas une pensée positive. C'est une reconnaissance honnête de ce qui est bon dans ta vie — et ce choix change tout." — Robert Emmons</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Pense à une personne qui a eu un impact positif dans ta vie. Ferme les yeux 1 minute et revis un moment précis avec elle. Ressens-le. Envoie-lui un message aujourd'hui — même court.</div>`
+  },
+
+  // ─── ARTICLE 18 ───
+  {
+    theme: '🧊 Récupération & Régénération',
+    title: 'La récupération est de l\'entraînement : l\'art de la régénération active',
+    source: 'Peter Attia — Outlive · Kelly Starrett — Built to Move · Stan Efferding',
+    content: `
+<h4>🔬 Le paradigme inversé</h4>
+<p>La plupart des gens pensent que la récupération est le temps que tu ne t'entraînes pas. La réalité physiologique est différente : la récupération est le moment où l'adaptation se produit. L'entraînement crée le stimulus — c'est le repos et la récupération qui permettent au corps de s'adapter au stress et de devenir plus fort.</p>
+<p>Sans récupération suffisante, l'entraînement n'est pas neutre — il est délétère. Le syndrome de surentraînement est réel : cortisol chroniquement élevé, testostérone basse, immunité supprimée, performance en déclin, blessures à répétition. Peter Attia observe que la majorité des amateurs s'entraînent trop fort trop souvent, et récupèrent trop peu.</p>
+<h4>🔄 Les piliers de la récupération</h4>
+<p><strong>Sommeil :</strong> 80% de la croissance musculaire et de la réparation tissulaire se produit pendant le sommeil profond (onde delta), via la libération d'hormone de croissance. Supprimer le sommeil supprime littéralement les bénéfices de l'entraînement.</p>
+<p><strong>Nutrition de récupération :</strong> La fenêtre anabolique post-effort est réelle mais moins urgente qu'on le croyait. Ce qui compte : <strong>protéines suffisantes</strong> (1,6 à 2,2g/kg/jour), hydratation, et antioxydants pour neutraliser le stress oxydatif de l'effort.</p>
+<p><strong>Gestion du système nerveux :</strong> L'entraînement intense fatigue non seulement les muscles mais le système nerveux central. Les signes : baisse de motivation, sommeil perturbé, variabilité de fréquence cardiaque (VFC) basse, irritabilité. La VFC est le marqueur le plus précis de récupération du SNS.</p>
+<h4>📊 Outils de récupération active</h4>
+<ul>
+<li><strong>Marche légère</strong> : 20–30 min active la circulation sans stress supplémentaire — meilleure récupération active documentée</li>
+<li><strong>Contraste chaud/froid</strong> : alternance sauna (15–20 min) et eau froide (2–3 min) — améliore la circulation et réduit l'inflammation</li>
+<li><strong>Massage et foam rolling</strong> : réduit les DOMS (douleurs musculaires différées) de 30%</li>
+<li><strong>Stretching passif</strong> : 10–15 min de stretching statique le soir améliore la qualité du sommeil</li>
+<li><strong>Respiration para-sympathique</strong> : 5 min de cohérence cardiaque post-entraînement accélère le retour au repos</li>
+</ul>
+<h4>⚡ Stratégie hebdomadaire</h4>
+<ul>
+<li>3–4 jours d'entraînement intense maximum</li>
+<li>1 jour de récupération active (marche, mobilité, natation légère)</li>
+<li>1–2 jours de repos complet</li>
+<li>VFC le matin : en dessous de ta baseline = jour léger ou repos</li>
+</ul>
+<div class="tip-quote">"Le sommeil est l'acte le plus efficace d'amélioration de performance que la science ait jamais découvert. Pas de médicament, pas de supplément, pas de technologie ne s'en approche." — Matthew Walker</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Évalue honnêtement ta récupération cette semaine. As-tu dormi 7h+ chaque nuit ? Sinon, avant de planifier ta prochaine séance intense, priorise une nuit de sommeil complète.</div>`
+  },
+
+  // ─── ARTICLE 19 ───
+  {
+    theme: '🥩 Protéines & Muscle',
+    title: 'Les protéines : bien au-delà de la musculation — le macronutriment de la longévité',
+    source: 'Stuart Phillips, McMaster University · Peter Attia — Outlive · Gabrielle Lyon — Forever Strong',
+    content: `
+<h4>🔬 Le muscle : un organe de longévité</h4>
+<p>Le muscle squelettique n'est pas seulement un tissu de performance. C'est un <strong>organe endocrine actif</strong> qui sécrète des myokines — des protéines de signalisation qui influencent le cerveau, le foie, les os, le tissu adipeux et le système immunitaire. Un muscle abondant et fonctionnel est un marqueur puissant de longévité et de résistance aux maladies.</p>
+<p>Gabrielle Lyon, médecin spécialisée en médecine musculaire, propose un paradigme différent : au lieu de s'obséder sur l'excès de graisse comme problème central, elle identifie <strong>l'insuffisance musculaire (dynapénie et sarcopénie)</strong> comme la vraie épidémie silencieuse. La perte musculaire liée à l'âge commence à 30 ans et s'accélère après 50 — avec des conséquences massives sur la santé métabolique, osseuse et cognitive.</p>
+<h4>🥩 Combien de protéines vraiment ?</h4>
+<p>Les recommandations officielles (0,8g/kg/jour) sont conçues pour prévenir la déficience, pas pour optimiser. Les recherches actuelles de Stuart Phillips et Peter Attia convergent vers <strong>1,6 à 2,2g par kg de poids corporel par jour</strong> pour la synthèse protéique maximale et la protection musculaire.</p>
+<p>Pour un homme de 80kg : <strong>128 à 176g de protéines par jour</strong>. C'est significativement plus que ce que la plupart des gens consomment, même ceux qui "mangent bien".</p>
+<h4>⏰ Distribution dans la journée</h4>
+<ul>
+<li>Le corps ne stocke pas les protéines — la synthèse protéique nécessite un apport régulier</li>
+<li>Vise <strong>30 à 50g de protéines par repas</strong> — c'est le seuil qui active maximalement mTOR et la synthèse musculaire</li>
+<li>En dessous de 20g par repas : stimulus insuffisant pour la synthèse musculaire, surtout après 40 ans</li>
+<li>Distribution sur 3–4 repas > grande dose unique</li>
+</ul>
+<h4>📊 Sources de protéines optimales</h4>
+<ul>
+<li><strong>Viandes maigres</strong> : poulet, dinde, bœuf (préférer nourri à l'herbe) — profil d'acides aminés complet</li>
+<li><strong>Œufs</strong> : la référence en biodisponibilité — 6g/œuf, leucine optimale pour déclencher mTOR</li>
+<li><strong>Poissons</strong> : saumon, thon, sardines — protéines + oméga-3</li>
+<li><strong>Fromage blanc 0%</strong> : 10g/100g, caséine à absorption lente — idéal au coucher</li>
+<li><strong>Légumineuses</strong> : bonnes mais incomplètes — combiner avec céréales pour un profil complet</li>
+<li><strong>Whey protéine</strong> : pratique et efficace post-entraînement, riche en leucine</li>
+</ul>
+<div class="tip-quote">"Le muscle est la monnaie de la longévité. Plus tu en as, plus tu as de réserve métabolique pour faire face aux défis de l'âge." — Gabrielle Lyon</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Calcule ton apport en protéines d'hier. Pèse ta portion de ce matin. Si tu es sous 1,6g/kg, commence par ajouter des œufs ou du fromage blanc au petit-déjeuner. La synthèse musculaire commence ici.</div>`
+  },
+
+  // ─── ARTICLE 20 ───
+  {
+    theme: '🌟 Vision & Mission de Vie',
+    title: 'Avoir une vision claire : le substrat neurologique du sens et de la direction',
+    source: 'Viktor Frankl · Simon Sinek — Start With Why · Brendon Burchard — High Performance Habits',
+    content: `
+<h4>🔬 Le cerveau a besoin d'une cible</h4>
+<p>Le système d'activation réticulaire ascendant (SARA) est un réseau neuronal qui filtre les millions de stimuli que tu reçois chaque seconde pour ne laisser passer que ceux qui sont <strong>pertinents pour tes buts</strong>. C'est pourquoi, quand tu penses à acheter une voiture rouge, tu en vois partout — elles étaient là avant, mais ton SARA ne les filtrait pas.</p>
+<p>Une vision claire et précise de ce que tu veux construire programme littéralement ton SARA pour détecter les opportunités, informations et connexions alignées avec cette vision. Sans direction claire, le SARA ne sait pas quoi chercher — et il laisse passer l'essentiel.</p>
+<h4>🎯 Le "Pourquoi" comme source d'énergie biologique</h4>
+<p>Simon Sinek a popularisé le concept du "Golden Circle" : Start With Why. Mais la neurologie derrière est solide. Le <strong>cortex limbique</strong> — siège des émotions, de la loyauté, de la motivation profonde — ne comprend pas le langage, mais il répond aux valeurs, aux croyances et au sens. C'est là que réside la motivation durable.</p>
+<p>Les études de Brendon Burchard sur les "high performers" montrent que la clarté sur la vision et les valeurs est le prédicteur numéro 1 de performance soutenue et d'épanouissement — devant l'intelligence, les compétences techniques ou les ressources.</p>
+<h4>📊 Logique de la vision à long terme</h4>
+<ul>
+<li>Les personnes avec un sens fort de leur mission vivent en moyenne <strong>7 ans de plus</strong> — études de l'Université Rush, Chicago</li>
+<li>Clarté de vision → réduction de la procrastination de 41% dans les études de psychologie comportementale</li>
+<li>Objectifs écrits → 42% plus de chances de les atteindre (Dr. Gail Matthews, Dominican University)</li>
+<li>Vision à 10 ans → meilleure tolérance aux difficultés à court terme (perspective temporelle)</li>
+</ul>
+<h4>⚡ Exercice de vision — à faire une fois profondément</h4>
+<ul>
+<li><strong>Les 4 dimensions</strong> : santé, relations, travail/mission, finances/liberté. Où veux-tu être dans 10 ans dans chacune ?</li>
+<li><strong>Écris-le en présent</strong> : "Je suis..., j'ai..., je vis..." — active le cerveau comme si c'était déjà réel</li>
+<li><strong>Sois précis</strong> : "Je veux être en forme" est inutile. "Je cours un 10km en moins de 50 min et je pèse 78kg" est un programme pour le SARA</li>
+<li><strong>Revois-la chaque matin</strong> : 5 minutes à lire et ressentir ta vision recalibre la direction de toute ta journée</li>
+<li><strong>Identifie le prochain pas</strong> : chaque grand voyage se fait d'un pas à la fois. Quel est le seul pas qui compte aujourd'hui ?</li>
+</ul>
+<div class="tip-quote">"Une vie sans sens est une vie à la dérive. Et une vie à la dérive arrive toujours dans des ports que tu n'aurais pas choisis." — Viktor Frankl, adapté</div>
+<div class="tip-action"><strong>⚡ Action ce matin</strong>Prends 5 minutes et écris une phrase pour chacun des 4 domaines (santé, relations, mission, liberté) : où veux-tu être dans 5 ans ? Sois précis, écris au présent. Ceci est ton programme neurologique pour aujourd'hui.</div>`
+  },
 
   // 💪 MOUVEMENT
   { theme:'💪 Mouvement', text:'150 minutes d\'activité modérée par semaine réduisent le risque de mortalité toutes causes de 35%. C\'est 22 min/jour.', source:'OMS 2020' },
@@ -2144,35 +2926,59 @@ const TIPS = [
   { theme:'🫁 Respiration', text:'La cohérence cardiaque (6 respirations/minute pendant 5 min) est la technique de gestion du stress la mieux documentée cliniquement en France.', source:'Dr. David Servan-Schreiber' },
 ];
 
-let _todayTip = null;
-let _todayTipIdx = -1;
-
 function getDayIndex() {
   const d = new Date();
   const start = new Date(d.getFullYear(), 0, 0);
   const diff = d - start;
   const oneDay = 1000 * 60 * 60 * 24;
-  return Math.floor(diff / oneDay) % TIPS.length;
+  return Math.floor(diff / oneDay);
 }
 
-function loadTip() {
-  _todayTipIdx = getDayIndex();
-  _todayTip = TIPS[_todayTipIdx];
+function loadTips() {
+  const dayIdx = getDayIndex();
+  const n = ARTICLES.length;
+  const i1 = (dayIdx * 2) % n;
+  const i2 = (dayIdx * 2 + 1) % n;
 
   const d = new Date();
   const dateStr = String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
 
-  document.getElementById('tipTheme').textContent = _todayTip.theme;
-  document.getElementById('tipDate').textContent = dateStr;
-  document.getElementById('tipText').textContent = _todayTip.text;
-  document.getElementById('tipSource').textContent = _todayTip.source ? '— Source : ' + _todayTip.source : '';
-
-  // Vérifier si déjà sauvegardé
   const lib = getLibrary();
-  const already = lib.some(t => t.idx === _todayTipIdx);
-  const btn = document.getElementById('tipSaveBtn');
-  if (already) { btn.textContent = '✅ Dans ta bibliothèque'; btn.classList.add('saved'); }
-  else { btn.textContent = '📌 Garder dans ma bibliothèque'; btn.classList.remove('saved'); }
+  const wrap = document.getElementById('tipsWrap');
+
+  wrap.innerHTML = [i1, i2].map(idx => {
+    const a = ARTICLES[idx];
+    const saved = lib.some(t => t.idx === idx);
+    return `
+    <div class="tip-card" id="tipCard${idx}">
+      <div class="tip-title">
+        <span class="tip-theme-badge">${a.theme}</span>
+        <span class="tip-date-badge">${dateStr}</span>
+        <div class="tip-title-text">${a.title}</div>
+        <button class="tip-save-btn ${saved ? 'saved' : ''}" onclick="saveTip(${idx})" id="tipSaveBtn${idx}">
+          ${saved ? '✅ Sauvegardé' : '📌 Garder'}
+        </button>
+      </div>
+      <button class="tip-toggle" onclick="toggleTip(${idx})">
+        <span class="tip-toggle-label">Lire l'article complet</span>
+        <span class="tip-toggle-arrow">▼</span>
+      </button>
+      <div class="tip-body-wrap" id="tipBody${idx}">
+        <div class="tip-body">${a.content}</div>
+        ${a.source ? `<div class="tip-footer">— Source : ${a.source}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleTip(idx) {
+  const card = document.getElementById('tipCard' + idx);
+  const body = document.getElementById('tipBody' + idx);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  card.classList.toggle('expanded', !isOpen);
+  const label = card.querySelector('.tip-toggle-label');
+  if (label) label.textContent = isOpen ? 'Lire l\'article complet' : 'Réduire';
 }
 
 function getLibrary() {
@@ -2183,21 +2989,21 @@ function saveLibrary(lib) {
   try { localStorage.setItem('cockpit_tip_library', JSON.stringify(lib)); } catch {}
 }
 
-function saveTip() {
+function saveTip(idx) {
   const lib = getLibrary();
-  const already = lib.some(t => t.idx === _todayTipIdx);
+  const already = lib.some(t => t.idx === idx);
   if (already) return;
+  const a = ARTICLES[idx];
   const d = new Date();
   lib.unshift({
-    idx: _todayTipIdx,
-    theme: _todayTip.theme,
-    text: _todayTip.text,
+    idx: idx,
+    theme: a.theme,
+    title: a.title,
     date: String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0')
   });
   saveLibrary(lib);
-  const btn = document.getElementById('tipSaveBtn');
-  btn.textContent = '✅ Dans ta bibliothèque';
-  btn.classList.add('saved');
+  const btn = document.getElementById('tipSaveBtn' + idx);
+  if (btn) { btn.textContent = '✅ Sauvegardé'; btn.classList.add('saved'); }
   renderLibrary();
 }
 
@@ -2211,18 +3017,48 @@ function renderLibrary() {
   const grid = document.getElementById('libraryGrid');
   const lib = getLibrary();
   if (lib.length === 0) {
-    grid.innerHTML = '<div class="lib-empty">📭 Aucun conseil sauvegardé.<br>Utilise le bouton 📌 pour en garder.</div>';
+    grid.innerHTML = '<div class="lib-empty">📭 Aucun article sauvegardé.<br>Utilise le bouton 📌 pour en garder.</div>';
     return;
   }
   grid.innerHTML = lib.map((t, i) => `
     <div class="lib-item">
       <div class="lib-item-body">
         <div class="lib-item-theme">${t.theme}</div>
-        <div class="lib-item-text">${t.text}</div>
+        <div class="lib-item-text">${t.title || t.text || ''}</div>
         <div class="lib-item-date">${t.date}</div>
       </div>
       <button class="lib-del-btn" onclick="deleteTip(${i})" title="Supprimer">✕</button>
     </div>`).join('');
+}
+
+// ── PROGRAMME SPORTIF ÉDITABLE ──
+function loadRoutine() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('cockpit_routine') || '{}');
+    ['pompes','squats','tractions','crunchs'].forEach(ex => {
+      const el = document.getElementById('ex-' + ex);
+      if (el && saved[ex]) el.value = saved[ex];
+    });
+  } catch {}
+}
+
+function markRoutineDirty() {
+  const btn = document.getElementById('saveRoutineBtn');
+  if (btn) btn.style.display = 'inline-block';
+}
+
+function saveRoutine() {
+  const data = {};
+  ['pompes','squats','tractions','crunchs'].forEach(ex => {
+    const el = document.getElementById('ex-' + ex);
+    if (el) data[ex] = el.value;
+  });
+  try { localStorage.setItem('cockpit_routine', JSON.stringify(data)); } catch {}
+  const btn = document.getElementById('saveRoutineBtn');
+  if (btn) {
+    btn.textContent = '✅ Sauvegardé !';
+    setTimeout(() => { btn.textContent = '💾 Sauvegarder mes paliers'; btn.style.display = 'none'; }, 2000);
+  }
 }
 
 // ── SERVICE WORKER ──
