@@ -1337,6 +1337,10 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   font-size: 0.58rem; font-weight: 700; background: rgba(231,76,60,0.12);
   color: #e74c3c; border-radius: 4px; padding: 1px 5px; margin-left: 4px; white-space: nowrap;
 }
+/* Règle enfreinte → ligne rouge */
+.rule-row-broken { background: rgba(231,76,60,0.09) !important; }
+.rule-row-broken td { color: #c0392b !important; font-weight: 600; }
+.rule-row-broken input[type="checkbox"] { accent-color: #e74c3c; }
 
 </style>
 </head>
@@ -1478,7 +1482,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td colspan="9">🌅 Morning routine — <span style="font-weight:400;color:#7a90aa">8 pts total</span></td>
       </tr>
       <tr class="sub-habit" data-habit="h1a">
-        <td>🏋️ WOD <span class="w-badge w4">×4</span></td>
+        <td>🏋️ WOD <span class="w-badge w4">×3</span></td>
         <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
@@ -1489,7 +1493,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="pct-cell" id="pct-h1a">—</td>
       </tr>
       <tr class="sub-habit" data-habit="h1b">
-        <td>🧘 Méditation <span class="w-badge w1">×1</span></td>
+        <td>🧘 Méditation <span class="w-badge w1">×1.5</span></td>
         <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
@@ -1500,7 +1504,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td class="pct-cell" id="pct-h1b">—</td>
       </tr>
       <tr class="sub-habit" data-habit="h1c">
-        <td>📖 Lecture <span class="w-badge w3">×3</span></td>
+        <td>📖 Lecture <span class="w-badge w3">×2</span></td>
         <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
@@ -1582,49 +1586,6 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   </table>
 </div>
 
-<!-- ══ TÂCHES IMPORTANTES ══ -->
-<div class="sec">📋 Tâches importantes</div>
-<div class="card">
-  <table class="tasks-table">
-    <thead>
-      <tr>
-        <th style="text-align:left;padding-left:16px;width:26%">Sujet</th>
-        <th style="width:13%">Catégorie</th>
-        <th style="width:7%">Prio</th>
-        <th style="text-align:left;padding-left:8px;width:27%">Prochaine action</th>
-        <th style="width:13%">Échéance</th>
-        <th style="width:14%">Statut</th>
-      </tr>
-    </thead>
-    <tbody id="tasksBody">
-      <tr>
-        <td><input class="inline-input" type="text" placeholder="Ex: Vente scooter" oninput="saveWeekData()"></td>
-        <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#7ec8e3;">Perso</span></td>
-        <td class="prio-h">🔴</td>
-        <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
-        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
-      </tr>
-      <tr>
-        <td><input class="inline-input" type="text" placeholder="Ex: Carte grise" oninput="saveWeekData()"></td>
-        <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#e74c3c;">Admin</span></td>
-        <td class="prio-h">🔴</td>
-        <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
-        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
-      </tr>
-      <tr>
-        <td><input class="inline-input" type="text" placeholder="Ex: Prévisionnel Q2"></td>
-        <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#27ae60;">Finance</span></td>
-        <td class="prio-m">🟡</td>
-        <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
-        <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-        <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="add-btn" onclick="addTask()">+ Ajouter une tâche</button>
-</div>
 
 <!-- ══ NOTES QUOTIDIENNES ══ -->
 <div class="sec">🗒️ Leçon / réflexion du jour</div>
@@ -1634,7 +1595,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 
 <script>
 // ── VERSION — NE JAMAIS effacer les données utilisateur lors d'une mise à jour ──
-const COCKPIT_VERSION = '8';
+const COCKPIT_VERSION = '10';
 (function migrateVersion() {
   try {
     // On note simplement la version — jamais d'effacement des données
@@ -1692,9 +1653,9 @@ function animCb(cb) {
 // ── HABITUDES & POIDS ──
 // Morning routine sous-habitudes
 const MR_HABITS = [
-  { id:'h1a', w:4 }, // WOD         ×4
-  { id:'h1b', w:1 }, // méditation  ×1
-  { id:'h1c', w:3 }, // lecture     ×3
+  { id:'h1a', w:3   }, // WOD         ×3
+  { id:'h1b', w:1.5 }, // méditation  ×1.5
+  { id:'h1c', w:2   }, // lecture     ×2
 ];
 // Autres habitudes
 const HABITS = [
@@ -1707,8 +1668,9 @@ const DEFAULT_RULES = [
   { id: 'r1', label: '🚬 Pas fumer avant 13h',     penalty: 3   },
   { id: 'r2', label: '🥃 Pas d\'alcool fort',        penalty: 1   },
   { id: 'r3', label: '🕓 Jamais alcool avant 16h',  penalty: 2   },
-  { id: 'r4', label: '🍻 Max 2 pintes / jour',      penalty: 1.5 },
+  { id: 'r4', label: '🍻 Max 2 pintes / jour',      penalty: 0   },
   { id: 'r5', label: '😴 7h de sommeil',             penalty: 2.5 },
+  { id: 'r6', label: '🏠 Pas fumer à l\'intérieur', penalty: 1.5 },
 ];
 let RULES = [];
 
@@ -1718,6 +1680,16 @@ function loadRules() {
     RULES = saved ? JSON.parse(saved) : [...DEFAULT_RULES];
   } catch(e) { RULES = [...DEFAULT_RULES]; }
   if (!RULES.length) RULES = [...DEFAULT_RULES];
+  // Ajoute automatiquement les nouvelles règles DEFAULT manquantes
+  DEFAULT_RULES.forEach(dr => {
+    if (!RULES.find(r => r.id === dr.id)) {
+      RULES.push(dr);
+    }
+    // Met à jour le libellé et la pénalité si changés
+    const existing = RULES.find(r => r.id === dr.id);
+    if (existing) { existing.label = dr.label; existing.penalty = dr.penalty; }
+  });
+  saveRules();
 }
 
 function saveRules() {
@@ -1735,9 +1707,10 @@ function buildRulesTable() {
     <th>Impact</th><th></th>
   </tr></thead><tbody>`;
   RULES.forEach(rule => {
-    html += `<tr data-rule="${rule.id}"><td>${rule.label}<span class="penalty-tag">−${rule.penalty}pts</span></td>`;
+    const tag = rule.penalty > 0 ? `<span class="penalty-tag">−${rule.penalty}pts</span>` : `<span class="penalty-tag" style="background:rgba(180,180,180,0.12);color:#aaa">suivi</span>`;
+    html += `<tr data-rule="${rule.id}"><td>${rule.label}${tag}</td>`;
     for (let d = 0; d < 7; d++) {
-      html += `<td><input type="checkbox" class="rule-cb" data-rule="${rule.id}" onchange="calc(this)"></td>`;
+      html += `<td><input type="checkbox" class="rule-cb" data-rule="${rule.id}" onchange="onRuleCb(this)"></td>`;
     }
     html += `<td class="pct-cell" id="pct-${rule.id}">—</td>`;
     html += `<td><button class="del-rule-btn" onclick="deleteRule('${rule.id}')" title="Supprimer">×</button></td></tr>`;
@@ -1746,6 +1719,12 @@ function buildRulesTable() {
   container.innerHTML = html;
   // Ré-applique le data-col pour le mode mobile
   document.querySelectorAll('#rulesContainer table').forEach(t => t.setAttribute('data-col', VIEW_DAY));
+}
+
+function onRuleCb(cb) {
+  const row = cb.closest('tr');
+  if (row) row.classList.toggle('rule-row-broken', cb.checked);
+  calc(cb);
 }
 
 function addRule() {
@@ -1803,8 +1782,14 @@ function calc(triggerEl) {
     const cell = document.getElementById('pct-' + rule.id);
     if (cell) {
       const pts = broken * rule.penalty;
-      cell.textContent = broken > 0 ? '−' + pts.toFixed(1) + 'pts' : '✓';
-      cell.style.color = broken === 0 ? '#27ae60' : broken <= 2 ? '#f39c12' : '#e74c3c';
+      if (broken === 0) {
+        cell.textContent = '✓'; cell.style.color = '#27ae60';
+      } else if (rule.penalty === 0) {
+        cell.textContent = broken + '×'; cell.style.color = '#aaa';
+      } else {
+        cell.textContent = '−' + pts.toFixed(1) + 'pts';
+        cell.style.color = broken <= 2 ? '#f39c12' : '#e74c3c';
+      }
     }
     weekPenalty += broken * rule.penalty;
   });
@@ -2012,9 +1997,6 @@ function saveWeekData() {
   document.querySelectorAll('[data-weed]').forEach((n, d) => data[`weed_${d}`] = n.value);
   document.querySelectorAll('[data-km]').forEach((n, d) => data[`km_${d}`] = n.value);
   document.querySelectorAll('[data-work]').forEach((n, d) => data[`work_${d}`] = n.value);
-  // Tâches
-  document.querySelectorAll('.tasks-table input[type="text"], .tasks-table input[type="date"]').forEach((t,i) => data[`tk${i}`] = t.value);
-  document.querySelectorAll('.tasks-table select').forEach((s,i) => data[`sel${i}`] = s.selectedIndex);
   // Notes quotidiennes
   document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => data[`ta${i}`] = t.value);
   // Scores journaliers
@@ -2031,16 +2013,15 @@ function loadWeekData() {
       document.querySelectorAll(`input[data-habit="${id}"]`).forEach((cb, d) => { cb.checked = !!data[`h_${id}_${d}`]; });
     });
     RULES.forEach(rule => {
-      document.querySelectorAll(`input[data-rule="${rule.id}"]`).forEach((cb, d) => { cb.checked = !!data[`r_${rule.id}_${d}`]; });
+      document.querySelectorAll(`input[data-rule="${rule.id}"]`).forEach((cb, d) => {
+        cb.checked = !!data[`r_${rule.id}_${d}`];
+        const row = cb.closest('tr');
+        if (row) row.classList.toggle('rule-row-broken', cb.checked);
+      });
     });
     document.querySelectorAll('[data-weed]').forEach((n, d) => n.value = data[`weed_${d}`] ?? '');
     document.querySelectorAll('[data-km]').forEach((n, d) => n.value = data[`km_${d}`] ?? '');
     document.querySelectorAll('[data-work]').forEach((n, d) => n.value = data[`work_${d}`] ?? '');
-    document.querySelectorAll('.tasks-table input[type="text"], .tasks-table input[type="date"]').forEach((t,i) => t.value = data[`tk${i}`] || '');
-    document.querySelectorAll('.tasks-table select').forEach((s,i) => {
-      const idx = data[`sel${i}`];
-      if (idx !== undefined && idx !== null) { s.selectedIndex = idx; s.className = 'status-sel s' + idx; }
-    });
     document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => t.value = data[`ta${i}`] || '');
   } else {
     [...MR_HABITS, ...HABITS].forEach(({id}) => {
@@ -2096,7 +2077,7 @@ function highlightDay() {
       col === TODAY_IDX && WEEK_START.toDateString() === getMonday(NOW).toDateString());
   });
   // Mobile: set data-col on all day-tables for CSS column targeting
-  document.querySelectorAll('table:not(.tasks-table)').forEach(t => t.setAttribute('data-col', VIEW_DAY));
+  document.querySelectorAll('table').forEach(t => t.setAttribute('data-col', VIEW_DAY));
   updateDayPicker();
 }
 
@@ -2157,7 +2138,7 @@ function changeDay(delta) {
 
 // ── SCORE JOURNALIER ──
 function calcDayScore(d) {
-  // Morning routine (h1a ×4, h1b ×1, h1c ×3)
+  // Morning routine (h1a ×3, h1b ×1.5, h1c ×2)
   let mrEarned = 0;
   MR_HABITS.forEach(({id, w}) => {
     const boxes = document.querySelectorAll(`input[data-habit="${id}"]`);
@@ -2259,21 +2240,6 @@ function calcDayScore(d) {
   return { score: dayScore, hasData: dayHasData };
 }
 
-// ── ADD TASK ──
-function addTask() {
-  const tbody = document.getElementById('tasksBody');
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><input class="inline-input" type="text" placeholder="Nouvelle tâche..." oninput="saveWeekData()"></td>
-    <td style="text-align:center"><span style="font-size:0.75rem;font-weight:700;color:#7ec8e3;">Perso</span></td>
-    <td class="prio-m">🟡</td>
-    <td><input class="inline-input" type="text" placeholder="Action suivante..." oninput="saveWeekData()"></td>
-    <td><input type="date" style="border:none;outline:none;background:transparent;font-size:0.75rem;color:#888;width:100%" onchange="saveWeekData()"></td>
-    <td><select class="status-sel s0" onchange="this.className='status-sel s'+this.selectedIndex; saveWeekData()"><option>À faire</option><option>En cours</option><option>Fait ✓</option><option>Bloqué</option></select></td>`;
-  tbody.appendChild(tr);
-  tr.querySelector('input').focus();
-}
-
 // ── INIT ──
 buildNotes();
 loadRules();
@@ -2283,7 +2249,7 @@ loadRoutine();
 updateWeekLabel();
 highlightDay();
 calc();
-document.querySelectorAll('table:not(.tasks-table)').forEach(t => t.setAttribute('data-col', VIEW_DAY));
+document.querySelectorAll('table').forEach(t => t.setAttribute('data-col', VIEW_DAY));
 
 // (scroll compact supprimé — sticky affiche uniquement le score du jour)
 
