@@ -702,15 +702,20 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   font-size: 0.74rem;
   color: #3a3f5c;
   resize: none;
-  height: 72px;
+  min-height: 72px;
   outline: none;
   font-family: inherit;
   line-height: 1.45;
   width: 100%;
   transition: border-color 0.15s, box-shadow 0.15s;
   background: #fafbff;
+  overflow-y: hidden;
+  display: block;
 }
-.day-note textarea:focus { border-color: #5ba8d4; background: white; box-shadow: 0 0 0 3px rgba(91,168,212,0.12); }
+.day-note textarea:focus {
+  border-color: #5ba8d4; background: white;
+  box-shadow: 0 0 0 3px rgba(91,168,212,0.12);
+}
 .day-note textarea::placeholder { color: #c8cdd8; font-style: italic; }
 
 /* ════════════════════════════════════════
@@ -1333,6 +1338,143 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
   font-family: inherit; transition: background 0.15s; display: block;
 }
 .add-rule-btn:hover { background: rgba(91,168,212,0.18); }
+
+/* ════ CITATION DU JOUR ════ */
+.daily-quote-card {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #0d1b3e 0%, #1a2d6e 45%, #0d3a5e 100%);
+  border-radius: 20px; padding: 22px 20px 18px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(126,200,227,0.18);
+  box-shadow: 0 8px 32px rgba(13,27,62,0.28);
+  animation: dqFadeIn 0.6s ease;
+}
+@keyframes dqFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.dq-bg-orb {
+  position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(126,200,227,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.dq-day-badge {
+  display: inline-block; font-size: 0.58rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(126,200,227,0.7); margin-bottom: 10px;
+  background: rgba(126,200,227,0.08); border-radius: 20px;
+  padding: 3px 10px; border: 1px solid rgba(126,200,227,0.15);
+}
+.dq-emoji { font-size: 1.5rem; display: block; margin-bottom: 8px; }
+.dq-quote {
+  font-size: 0.88rem; font-weight: 600; color: #fff;
+  line-height: 1.6; font-style: italic; letter-spacing: 0.01em;
+  margin-bottom: 12px; position: relative; z-index: 1;
+}
+.dq-author {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+  color: rgba(126,200,227,0.65); text-transform: uppercase;
+}
+.dq-mark {
+  position: absolute; bottom: -10px; right: 16px;
+  font-size: 6rem; color: rgba(126,200,227,0.06);
+  font-family: Georgia, serif; line-height: 1;
+  pointer-events: none; user-select: none;
+}
+
+/* ════ SETTINGS MODAL ════ */
+.settings-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(13,27,62,0.72); z-index: 999;
+  align-items: flex-end; justify-content: center;
+}
+.settings-overlay.open { display: flex; }
+.settings-modal {
+  background: #fff; border-radius: 24px 24px 0 0;
+  width: 100%; max-width: 520px; max-height: 88vh;
+  overflow-y: auto; padding: 24px 18px 40px;
+  box-shadow: 0 -10px 50px rgba(0,0,0,0.28);
+}
+.settings-modal-header {
+  display: flex; align-items: center; margin-bottom: 18px;
+}
+.settings-modal-header h2 {
+  font-size: 1rem; font-weight: 800; color: #0d1b3e; margin: 0;
+}
+.settings-close-btn {
+  margin-left: auto; background: #f0f4ff; border: none;
+  border-radius: 50%; width: 30px; height: 30px;
+  font-size: 0.9rem; cursor: pointer; color: #4a5f7a;
+  display: flex; align-items: center; justify-content: center;
+}
+.settings-section { margin-bottom: 20px; }
+.settings-section h3 {
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em;
+  color: #7a90aa; text-transform: uppercase; margin: 0 0 10px;
+  padding-bottom: 6px; border-bottom: 1.5px solid #eef1f8;
+}
+.settings-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 0; border-bottom: 1px solid #f5f7fa;
+}
+.settings-item-label {
+  flex: 1; font-size: 0.82rem; color: #0d1b3e;
+  background: #f5f7fa; border: 1.5px solid #e0e6f0;
+  border-radius: 7px; padding: 6px 9px; font-family: inherit;
+}
+.settings-item-pts {
+  width: 58px; font-size: 0.85rem; color: #0d1b3e;
+  background: #f0f4ff; border: 1.5px solid #c5d5f0;
+  border-radius: 7px; padding: 6px 8px; text-align: center;
+  font-family: inherit; font-weight: 700;
+}
+.settings-item-unit {
+  font-size: 0.7rem; color: #7a90aa; font-weight: 600; width: 22px;
+}
+.settings-total-box {
+  background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 20px;
+  border: 1.5px solid #c5d5f0;
+}
+.settings-total-line {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem; color: #4a5f7a; margin-bottom: 5px;
+}
+.settings-total-main {
+  font-size: 1rem; font-weight: 800; color: #0d1b3e;
+  border-top: 1.5px solid #c5d5f0; padding-top: 8px; margin-top: 4px;
+}
+.settings-save-btn {
+  width: 100%; padding: 15px; margin-top: 8px;
+  background: linear-gradient(135deg, #0d3a8e, #1a6fd4);
+  color: white; border: none; border-radius: 14px;
+  font-size: 0.92rem; font-weight: 800; cursor: pointer;
+  font-family: inherit; letter-spacing: 0.02em;
+}
+.settings-del-btn {
+  background: none; border: none; cursor: pointer;
+  color: #e74c3c; font-size: 1rem; padding: 0 2px; opacity: 0.6;
+}
+.settings-del-btn:hover { opacity: 1; }
+/* Floating settings button */
+.fab-settings {
+  position: fixed; bottom: 24px; right: 20px; z-index: 900;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, #0d3a8e, #1a6fd4);
+  border: none; cursor: pointer; font-size: 1.15rem;
+  box-shadow: 0 4px 18px rgba(13,58,142,0.35);
+  display: flex; align-items: center; justify-content: center;
+  color: white; transition: transform 0.15s;
+}
+.fab-settings:hover { transform: scale(1.08); }
+/* MR collapsible */
+.mr-toggle-btn {
+  background: rgba(91,168,212,0.12); border: none; border-radius: 50%;
+  width: 20px; height: 20px; cursor: pointer; font-size: 0.6rem;
+  color: #5ba8d4; margin-left: 6px; transition: transform 0.2s;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.routines-table .mr-sub { display: table-row; }
+.routines-table.mr-collapsed .mr-sub { display: none; }
+
 .penalty-tag {
   font-size: 0.58rem; font-weight: 700; background: rgba(231,76,60,0.12);
   color: #e74c3c; border-radius: 4px; padding: 1px 5px; margin-left: 4px; white-space: nowrap;
@@ -1352,13 +1494,16 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
     <h1>🎯 Cockpit Personnel</h1>
     <p>Alex · Suivi hebdomadaire</p>
   </div>
-  <div class="header-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-    <div style="display:flex;align-items:center;gap:6px;">
-      <button class="day-nav-btn" onclick="changeWeek(-1)" title="Semaine précédente">‹</button>
-      <input class="week-input" type="text" id="weekLabel" placeholder="Semaine du…">
-      <button class="day-nav-btn" onclick="changeWeek(1)" title="Semaine suivante">›</button>
-    </div>
+  <div class="header-right" style="display:flex;align-items:center;gap:6px;">
+    <button class="day-nav-btn" onclick="changeWeek(-1)" title="Semaine précédente">‹</button>
+    <input class="week-input" type="text" id="weekLabel" placeholder="Semaine du…">
+    <button class="day-nav-btn" onclick="changeWeek(1)" title="Semaine suivante">›</button>
   </div>
+</div>
+
+<!-- ══ BOUTON PARAMÈTRES ══ -->
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+  <button onclick="openSettings()" style="background:#fff;border:1.5px solid #c5d5f0;border-radius:20px;padding:7px 16px;color:#0d3a8e;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(13,58,142,0.1);display:flex;align-items:center;gap:6px;">⚙️ Paramètres scoring</button>
 </div>
 
 <!-- ══ SCORES 10J GLISSANTS (scrollable) ══ -->
@@ -1375,6 +1520,16 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
       <div class="rolling-strip" id="rollingStrip"></div>
     </div>
   </div>
+</div>
+
+<!-- ══ CITATION DU JOUR ══ -->
+<div class="daily-quote-card" id="dailyQuoteCard">
+  <div class="dq-bg-orb"></div>
+  <div class="dq-day-badge" id="dqDayBadge">Jour — / 365</div>
+  <div class="dq-emoji" id="dqEmoji">✨</div>
+  <div class="dq-quote" id="dqQuote">…</div>
+  <div class="dq-author" id="dqAuthor">—</div>
+  <div class="dq-mark">"</div>
 </div>
 
 <!-- ══ STICKY : SCORE DU JOUR UNIQUEMENT ══ -->
@@ -1441,7 +1596,10 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 <div class="sec">⚡ Règles de vie <span style="font-weight:400;font-size:0.65rem;color:#bbb;margin-left:4px">coché = enfreinte (pénalité)</span></div>
 <div class="card">
   <div id="rulesContainer"></div>
-  <button class="add-rule-btn" onclick="addRule()">+ Ajouter une règle</button>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <button class="add-rule-btn" style="flex:1" onclick="addRuleFromSettings()">+ Ajouter une règle</button>
+    <button class="add-rule-btn" style="flex:0 0 auto;width:44px;font-size:1rem" onclick="openSettings()" title="Paramètres scoring">⚙️</button>
+  </div>
 </div>
 
 <!-- ══ PROGRAMME SPORTIF ══ -->
@@ -1463,7 +1621,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 <!-- ══ ROUTINE QUOTIDIENNE ══ -->
 <div class="sec">🌱 Routine quotidienne <span style="font-weight:400;font-size:0.65rem;color:#bbb;margin-left:4px">coché = fait</span></div>
 <div class="card">
-  <table>
+  <table class="routines-table">
     <thead>
       <tr>
         <th>Habitude</th>
@@ -1479,9 +1637,9 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
     </thead>
     <tbody>
       <tr class="habit-group-header">
-        <td colspan="9">🌅 Morning routine — <span style="font-weight:400;color:#7a90aa">8 pts total</span></td>
+        <td colspan="9">🌅 Morning routine <button class="mr-toggle-btn" id="mrToggleBtn" onclick="toggleMR()">▼</button> — <span id="mrTotalLabel" style="font-weight:400;color:#7a90aa">6.5 pts total</span></td>
       </tr>
-      <tr class="sub-habit" data-habit="h1a">
+      <tr class="sub-habit mr-sub" data-habit="h1a">
         <td>🏋️ WOD <span class="w-badge w4">×3</span></td>
         <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
@@ -1492,7 +1650,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td><input type="checkbox" data-habit="h1a" onchange="calc(this)"></td>
         <td class="pct-cell" id="pct-h1a">—</td>
       </tr>
-      <tr class="sub-habit" data-habit="h1b">
+      <tr class="sub-habit mr-sub" data-habit="h1b">
         <td>🧘 Méditation <span class="w-badge w1">×1.5</span></td>
         <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
@@ -1503,7 +1661,7 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td><input type="checkbox" data-habit="h1b" onchange="calc(this)"></td>
         <td class="pct-cell" id="pct-h1b">—</td>
       </tr>
-      <tr class="sub-habit" data-habit="h1c">
+      <tr class="sub-habit mr-sub" data-habit="h1c">
         <td>📖 Lecture <span class="w-badge w3">×2</span></td>
         <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h1c" onchange="calc(this)"></td>
@@ -1535,6 +1693,17 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
         <td><input type="checkbox" data-habit="h5" onchange="calc(this)"></td>
         <td><input type="checkbox" data-habit="h5" onchange="calc(this)"></td>
         <td class="pct-cell" id="pct-h5">—</td>
+      </tr>
+      <tr data-habit="h6">
+        <td id="lbl-h6">🧠 Deep Focus <span class="w-badge">×2</span></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td><input type="checkbox" data-habit="h6" onchange="calc(this)"></td>
+        <td class="pct-cell" id="pct-h6">—</td>
       </tr>
       <tr>
         <td>🌿 Weed <span style="font-size:0.67rem;color:#bbb;font-weight:400">(joints)</span> <span class="w-badge w3">−1/joint &gt;3</span></td>
@@ -1591,15 +1760,39 @@ tfoot td:first-child { text-align: left; padding-left: 20px; font-size: 0.67rem;
 <div class="sec">🗒️ Leçon / réflexion du jour</div>
 <div class="daily-notes" id="dailyNotes"></div>
 
+<!-- ══ DATA TOOLS ══ -->
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px;">
+  <button onclick="exportStats()" style="flex:1;min-width:120px;padding:10px 14px;background:linear-gradient(135deg,#0d1b3e,#1a3a6e);color:#7ec8e3;border:1.5px solid rgba(126,200,227,0.25);border-radius:12px;font-family:inherit;font-size:0.8rem;font-weight:700;cursor:pointer;letter-spacing:0.3px;">📊 Mes statistiques</button>
+  <button onclick="exportData()" style="flex:1;min-width:100px;padding:10px 14px;background:#f5f7fc;color:#555e7a;border:1.5px solid #dde2f0;border-radius:12px;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer;">💾 Exporter</button>
+  <button onclick="importData()" style="flex:1;min-width:100px;padding:10px 14px;background:#f5f7fc;color:#555e7a;border:1.5px solid #dde2f0;border-radius:12px;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer;">📥 Importer</button>
+</div>
+
 <div class="pts-flash" id="ptsFlash"></div>
 
 <script>
-// ── VERSION — NE JAMAIS effacer les données utilisateur lors d'une mise à jour ──
-const COCKPIT_VERSION = '10';
+// ══════════════════════════════════════════════════════════════
+// ⚠️ RÈGLE ABSOLUE — NE JAMAIS SUPPRIMER LES DONNÉES UTILISATEUR
+// Toute mise à jour, amélioration ou refactoring DOIT conserver :
+//   - cockpit_YYYY_MM_DD  (données hebdomadaires)
+//   - cockpit_rules        (règles personnalisées)
+//   - cockpit_habits_v2    (poids habitudes)
+//   - cockpit_scoring_params (paramètres scoring)
+//   - cockpit_routine      (programme sportif)
+// JAMAIS de localStorage.clear() ou removeItem() sur ces clés.
+// ══════════════════════════════════════════════════════════════
+const COCKPIT_VERSION = '14';
 (function migrateVersion() {
   try {
-    // On note simplement la version — jamais d'effacement des données
     localStorage.setItem('cockpit_version', COCKPIT_VERSION);
+    // Backup automatique de toutes les données à chaque mise à jour
+    const backup = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('cockpit_')) backup[k] = localStorage.getItem(k);
+    }
+    if (Object.keys(backup).length > 0) {
+      localStorage.setItem('cockpit_backup_' + COCKPIT_VERSION, JSON.stringify(backup));
+    }
   } catch(e) {}
 })();
 
@@ -1653,14 +1846,15 @@ function animCb(cb) {
 // ── HABITUDES & POIDS ──
 // Morning routine sous-habitudes
 const MR_HABITS = [
-  { id:'h1a', w:3   }, // WOD         ×3
-  { id:'h1b', w:1.5 }, // méditation  ×1.5
-  { id:'h1c', w:2   }, // lecture     ×2
+  { id:'h1a', label:'🏋️ WOD',        w:3   },
+  { id:'h1b', label:'🧘 Méditation',  w:1.5 },
+  { id:'h1c', label:'📖 Lecture',     w:2   },
 ];
 // Autres habitudes
 const HABITS = [
-  { id:'h2', w:1.5 }, // 7000 pas   ×1.5
-  { id:'h5', w:1   }, // escaliers  ×1
+  { id:'h2', label:'👟 7 000 pas',   w:1.5 },
+  { id:'h5', label:'🏢 Escaliers',   w:1   },
+  { id:'h6', label:'🧠 Deep Focus',  w:2   },
 ];
 
 // ── RÈGLES DYNAMIQUES ──
@@ -1673,6 +1867,380 @@ const DEFAULT_RULES = [
   { id: 'r6', label: '🏠 Pas fumer à l\'intérieur', penalty: 1.5 },
 ];
 let RULES = [];
+
+// ── PARAMÈTRES SCORING AVANCÉ ──
+const DEFAULT_SCORING_PARAMS = {
+  capital: 0,
+  weed:  { threshold: 3, penaltyPerUnit: 1, bonusIfZero: 0.5 },
+  km:    [ { min: 0.1, bonus: 0.5 }, { min: 5, bonus: 0.5 }, { min: 8, bonus: 2.5 } ],
+  work:  { penaltyBelow: 3, penalty: 2, bonusAbove: 7, bonus: 2 }
+};
+let SCORING_PARAMS = JSON.parse(JSON.stringify(DEFAULT_SCORING_PARAMS));
+// ── 365 CITATIONS DU JOUR ──
+const QUOTES = [
+  {e:"🔥",q:"La discipline est le pont entre les objectifs et les accomplissements.",a:"Jim Rohn"},
+  {e:"⚡",q:"Ce n'est pas ce que tu fais de temps en temps qui façonne ta vie, c'est ce que tu fais constamment.",a:"Anthony Robbins"},
+  {e:"🏆",q:"Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",a:"Winston Churchill"},
+  {e:"💪",q:"La douleur que tu ressens aujourd'hui sera la force que tu ressentiras demain.",a:"Arnold Schwarzenegger"},
+  {e:"🌅",q:"Chaque matin tu as deux choix : continuer à dormir avec tes rêves, ou te lever et les réaliser.",a:"Fabio Viviani"},
+  {e:"🧠",q:"Le corps accomplit ce que l'esprit croit.",a:"Napoleon Hill"},
+  {e:"⚔️",q:"Sois dur avec toi-même, la vie le sera moins.",a:"Épictète"},
+  {e:"🌊",q:"On ne contrôle pas les vagues, mais on peut apprendre à surfer.",a:"Jon Kabat-Zinn"},
+  {e:"🎯",q:"Un homme qui maîtrise son corps maîtrise sa vie.",a:"Socrate"},
+  {e:"🦁",q:"Le lion ne se retourne pas quand le chien aboie.",a:"Proverbe africain"},
+  {e:"💎",q:"La réputation se construit par des milliers de petits actes.",a:"Confucius"},
+  {e:"🌙",q:"Le sommeil est l'arme secrète des champions.",a:"Matthew Walker"},
+  {e:"🚀",q:"Visualise ta plus haute version de toi et commence à y aller dès maintenant.",a:"Dr. Joe Dispenza"},
+  {e:"🔑",q:"La santé n'est pas tout, mais sans la santé tout n'est rien.",a:"Arthur Schopenhauer"},
+  {e:"⚡",q:"Ton futur se crée par ce que tu fais aujourd'hui, pas demain.",a:"Robert Kiyosaki"},
+  {e:"🏋️",q:"La force ne vient pas des capacités physiques. Elle vient d'une volonté indomptable.",a:"Gandhi"},
+  {e:"🌿",q:"Prends soin de ton corps. C'est le seul endroit où tu vis.",a:"Jim Rohn"},
+  {e:"🎯",q:"Ce que tu penses, tu le deviens. Ce que tu ressens, tu l'attires. Ce que tu imagines, tu le crées.",a:"Bouddha"},
+  {e:"🔥",q:"La motivation te fait démarrer, l'habitude te fait continuer.",a:"Jim Ryun"},
+  {e:"💡",q:"Si tu te lèves fatigué de vivre, couche-toi différent.",a:"Anonyme"},
+  {e:"⚔️",q:"L'homme fort n'est pas celui qui ne tombe jamais, mais celui qui se relève à chaque fois.",a:"Prophète Muhammad"},
+  {e:"🧬",q:"Ton corps est le reflet de ton mode de vie.",a:"Anonyme"},
+  {e:"🌅",q:"Gagne le matin et tu gagneras ta journée.",a:"Tim Ferriss"},
+  {e:"🏆",q:"Les champions ne naissent pas dans les salles de sport. Ils naissent de quelque chose qu'ils ont à l'intérieur.",a:"Muhammad Ali"},
+  {e:"💪",q:"Chaque rep, chaque set, chaque kilomètre — tu construis l'homme que tu vas devenir.",a:"David Goggins"},
+  {e:"🧠",q:"Le secret du changement est de concentrer toute ton énergie non pas à combattre l'ancien, mais à construire le nouveau.",a:"Socrate"},
+  {e:"🌿",q:"Un corps bien entraîné demande moins d'énergie pour les tâches quotidiennes et en libère pour la création.",a:"Peter Attia"},
+  {e:"⭐",q:"Vise la lune. Même si tu rates, tu atterriras parmi les étoiles.",a:"Norman Vincent Peale"},
+  {e:"🔥",q:"La douleur est temporaire. La fierté est pour toujours.",a:"Navy SEALs"},
+  {e:"💎",q:"La discipline pesant des grammes, le regret pèse des tonnes.",a:"Jim Rohn"},
+  {e:"🦁",q:"Fais de ta vie un chef-d'œuvre.",a:"Tony Robbins"},
+  {e:"⚡",q:"Énergie, focus, discipline — ce sont les trois piliers d'une vie extraordinaire.",a:"Robin Sharma"},
+  {e:"🌊",q:"Reste calme. Tu es plus fort que tu ne le penses.",a:"Anonyme"},
+  {e:"🎯",q:"La clarté précède la maîtrise.",a:"Robin Sharma"},
+  {e:"🚀",q:"Ne compte pas les jours. Fais que les jours comptent.",a:"Muhammad Ali"},
+  {e:"🏋️",q:"Le talent peut échouer là où la discipline réussit.",a:"Ralph Waldo Emerson"},
+  {e:"🌙",q:"Dors comme un athlete de haut niveau — ton cerveau fait le travail la nuit.",a:"Andrew Huberman"},
+  {e:"💡",q:"L'esprit est comme un muscle — il se fortifie avec l'exercice.",a:"Marcus Aurelius"},
+  {e:"🔑",q:"Ce sont nos choix qui révèlent ce que nous sommes vraiment, bien plus que nos capacités.",a:"J.K. Rowling"},
+  {e:"⚔️",q:"Sois le changement que tu souhaites voir dans le monde.",a:"Gandhi"},
+  {e:"🧬",q:"Optimise ton énergie, pas ton temps.",a:"Peter Attia"},
+  {e:"🌅",q:"Chaque jour est une chance de devenir meilleur qu'hier.",a:"Anonyme"},
+  {e:"🏆",q:"La médiocrité est confortable. L'excellence l'est aussi — une fois qu'on s'y habitue.",a:"Mark Twain"},
+  {e:"💪",q:"Fais ce qui est difficile et la vie sera facile. Fais ce qui est facile et la vie sera difficile.",a:"Confucius"},
+  {e:"🧠",q:"La pleine conscience n'est pas de penser moins — c'est de penser avec plus de clarté.",a:"Jon Kabat-Zinn"},
+  {e:"🌿",q:"Mange bien, bouge tous les jours, dors suffisamment. Le reste suit.",a:"Anonyme"},
+  {e:"⭐",q:"La vie se rétrécit ou s'élargit en proportion de son courage.",a:"Anaïs Nin"},
+  {e:"🔥",q:"Personne ne se souvient des personnes ordinaires.",a:"Anonyme"},
+  {e:"💎",q:"Il n'y a pas de raccourcis vers un endroit qui mérite d'être atteint.",a:"Beverly Sills"},
+  {e:"🦁",q:"La grandeur et la madness partagent la même adresse.",a:"Anonyme"},
+  {e:"⚡",q:"Vis comme si tu devais mourir demain. Apprends comme si tu devais vivre pour toujours.",a:"Gandhi"},
+  {e:"🌊",q:"La quiétude est un superpouvoir dans un monde de chaos.",a:"Robin Sharma"},
+  {e:"🎯",q:"Une heure de travail profond vaut une journée de travail ordinaire.",a:"Cal Newport"},
+  {e:"🚀",q:"Petits progrès quotidiens = grands résultats.",a:"James Clear"},
+  {e:"🏋️",q:"L'entraînement ne tue pas. C'est le manque d'entraînement qui tue.",a:"Anonyme"},
+  {e:"🌙",q:"Une mauvaise nuit de sommeil efface les effets d'une bonne journée d'entraînement.",a:"Matthew Walker"},
+  {e:"💡",q:"Écoute ton corps — il te parle avant de te crier dessus.",a:"Anonyme"},
+  {e:"🔑",q:"Le futur appartient à ceux qui croient en la beauté de leurs rêves.",a:"Eleanor Roosevelt"},
+  {e:"⚔️",q:"Les difficultés fortifient l'esprit, comme le travail fortifie le corps.",a:"Sénèque"},
+  {e:"🧬",q:"Tu es la moyenne des cinq personnes que tu fréquentes le plus.",a:"Jim Rohn"},
+  {e:"🌅",q:"Ce matin est une nouvelle chance. Saisis-la.",a:"Anonyme"},
+  {e:"🏆",q:"Gagne dans ta tête d'abord.",a:"Anonyme"},
+  {e:"💪",q:"Le corps réalise ce que l'esprit autorise.",a:"Anonyme"},
+  {e:"🧠",q:"La méditation est l'art de ne rien faire et de tout comprendre.",a:"Anonyme"},
+  {e:"🌿",q:"Respire. Tu n'es pas aussi pressé que tu le crois.",a:"Anonyme"},
+  {e:"⭐",q:"Ce que tu nourris grandit. Ce que tu ignores meurt. Nourris le bon loup.",a:"Proverbe Cherokee"},
+  {e:"🔥",q:"Deviens obsédé ou sois ordinaire.",a:"Grant Cardone"},
+  {e:"💎",q:"Le calme est une superpuissance.",a:"Anonyme"},
+  {e:"🦁",q:"Ne dis jamais que tu ne peux pas. Dis que tu ne sais pas encore.",a:"Anonyme"},
+  {e:"⚡",q:"La vitesse n'a d'importance que si tu cours dans la bonne direction.",a:"Anonyme"},
+  {e:"🌊",q:"La plus grande victoire est de te vaincre toi-même.",a:"Platon"},
+  {e:"🎯",q:"Concentre-toi sur les progrès, pas sur la perfection.",a:"Anonyme"},
+  {e:"🚀",q:"L'identité précède le comportement. Décide qui tu es d'abord.",a:"James Clear"},
+  {e:"🏋️",q:"Soulève du lourd. Pense clairement. Vis intensément.",a:"Anonyme"},
+  {e:"🌙",q:"Recharge-toi comme ton téléphone — chaque nuit.",a:"Anonyme"},
+  {e:"💡",q:"La lecture est à l'esprit ce que l'exercice est au corps.",a:"Richard Steele"},
+  {e:"🔑",q:"Tes habitudes d'aujourd'hui sont ton destin de demain.",a:"Anonyme"},
+  {e:"⚔️",q:"Un homme préparé vaut mille surpris.",a:"Proverbe espagnol"},
+  {e:"🧬",q:"L'inflammation est la racine de tous les maux. Lutte contre elle chaque jour.",a:"Dr. Mark Hyman"},
+  {e:"🌅",q:"La matinée est plus sage que la soirée.",a:"Proverbe russe"},
+  {e:"🏆",q:"La gloire n'est pas dans le fait de ne jamais tomber, mais dans le fait de toujours se relever.",a:"Confucius"},
+  {e:"💪",q:"Fais de la sueur ton ami.",a:"Anonyme"},
+  {e:"🧠",q:"La paix intérieure commence lorsque tu choisis de ne pas permettre aux autres de contrôler tes émotions.",a:"Anonyme"},
+  {e:"🌿",q:"Chaque pas de marche est un vote pour ta santé.",a:"Anonyme"},
+  {e:"⭐",q:"Sois tellement occupé à construire tes propres rêves que tu n'as pas le temps d'avoir peur.",a:"Anonyme"},
+  {e:"🔥",q:"Souffrir est temporaire. Renoncer dure pour toujours.",a:"Lance Armstrong"},
+  {e:"💎",q:"Les grandes choses ne se font pas par impulsion, mais par une série de petites choses réunies.",a:"Vincent van Gogh"},
+  {e:"🦁",q:"Ce qui ne te tue pas te rend plus fort.",a:"Nietzsche"},
+  {e:"⚡",q:"Construis une vie que tu n'as pas besoin de fuir.",a:"Anonyme"},
+  {e:"🌊",q:"L'eau douce porte le bateau, l'eau amère le submerge. Reste dans la fluidité.",a:"Anonyme"},
+  {e:"🎯",q:"La mise au point laser bat la diffusion générale à chaque fois.",a:"Gary Keller"},
+  {e:"🚀",q:"Ta vie se résume aux décisions que tu prends et à l'action que tu prends.",a:"Tony Robbins"},
+  {e:"🏋️",q:"La force physique est la mère du courage.",a:"Nassim Taleb"},
+  {e:"🌙",q:"Une nuit réparatrice transforme le problème en solution.",a:"John Steinbeck"},
+  {e:"💡",q:"La curiosité est le moteur de l'évolution personnelle.",a:"Anonyme"},
+  {e:"🔑",q:"La vraie liberté, c'est la maîtrise de soi.",a:"Épictète"},
+  {e:"⚔️",q:"Accepte le défi pour que tu puisses ressentir l'exaltation de la victoire.",a:"George S. Patton"},
+  {e:"🧬",q:"Le microbiome est ton deuxième cerveau. Nourris-le bien.",a:"Dr. David Perlmutter"},
+  {e:"🌅",q:"Commence là où tu es. Utilise ce que tu as. Fais ce que tu peux.",a:"Arthur Ashe"},
+  {e:"🏆",q:"Ne souhaite pas que c'était plus facile. Souhaite être meilleur.",a:"Jim Rohn"},
+  {e:"💪",q:"Chaque entraînement, tu dépasses la version d'hier.",a:"Anonyme"},
+  {e:"🧠",q:"Ce que tu penses en privé détermine ta vie en public.",a:"Robin Sharma"},
+  {e:"🌿",q:"Le jeûne est le plus grand des remèdes — le médecin intérieur.",a:"Paracelse"},
+  {e:"⭐",q:"Ose rêver grand. Puis ose le réaliser.",a:"Anonyme"},
+  {e:"🔥",q:"Les gens qui réussissent ont peur aussi. Ils le font quand même.",a:"Carol Burnett"},
+  {e:"💎",q:"Chaque décision que tu prends est un vote pour le type de personne que tu veux devenir.",a:"James Clear"},
+  {e:"🦁",q:"Ne sois pas une copie, sois un original.",a:"Judy Garland"},
+  {e:"⚡",q:"L'énergie suit l'attention. Dirige ton attention avec sagesse.",a:"Anonyme"},
+  {e:"🌊",q:"L'adaptabilité est la compétence de survie ultime.",a:"Anonyme"},
+  {e:"🎯",q:"Un objectif sans plan n'est qu'un souhait.",a:"Antoine de Saint-Exupéry"},
+  {e:"🚀",q:"Les 1% d'amélioration quotidienne créent 37x de croissance en un an.",a:"James Clear"},
+  {e:"🏋️",q:"Chaque rep compte. Chaque kilomètre compte. Tout compte.",a:"Anonyme"},
+  {e:"🌙",q:"La récupération est aussi importante que l'entraînement.",a:"Anonyme"},
+  {e:"💡",q:"Lire une heure par jour est le billet pour le succès.",a:"Earl Nightingale"},
+  {e:"🔑",q:"La maîtrise vient de la pratique délibérée quotidienne.",a:"Anders Ericsson"},
+  {e:"⚔️",q:"Dans la vie, il y a deux types de douleur : la douleur de la discipline ou la douleur du regret.",a:"Jim Rohn"},
+  {e:"🧬",q:"Bouge tous les jours. Ton cerveau a besoin d'oxygène.",a:"John Ratey"},
+  {e:"🌅",q:"Le matin appartient aux gens qui se lèvent tôt.",a:"Anonyme"},
+  {e:"🏆",q:"Travaille dur en silence. Laisse ton succès faire le bruit.",a:"Frank Ocean"},
+  {e:"💪",q:"La vraie transformation commence quand tu ne peux plus reculer.",a:"Anonyme"},
+  {e:"🧠",q:"Le stress mal géré détruit le cerveau. Gère-le.",a:"Robert Sapolsky"},
+  {e:"🌿",q:"Mange des aliments vrais. Pas trop. Principalement des plantes.",a:"Michael Pollan"},
+  {e:"⭐",q:"Tu es capable de plus que tu ne le crois.",a:"Anonyme"},
+  {e:"🔥",q:"Fais de chaque seconde une œuvre d'art.",a:"Anonyme"},
+  {e:"💎",q:"La confiance se construit en tenant ses promesses à soi-même.",a:"Anonyme"},
+  {e:"🦁",q:"Rugis doucement, mais rugis.",a:"Anonyme"},
+  {e:"⚡",q:"La vitesse de ton succès est limitée par ta capacité à apprendre vite.",a:"Anonyme"},
+  {e:"🌊",q:"Laisse aller ce qui ne te sert plus. La légèreté est une force.",a:"Anonyme"},
+  {e:"🎯",q:"Ce qui se mesure s'améliore.",a:"Peter Drucker"},
+  {e:"🚀",q:"Quand tu penses abandonner, souviens-toi pourquoi tu as commencé.",a:"Anonyme"},
+  {e:"🏋️",q:"L'entraînement est un acte d'amour envers soi.",a:"Anonyme"},
+  {e:"🌙",q:"La nuit porte conseil parce que le cerveau consolide pendant le sommeil.",a:"Matthew Walker"},
+  {e:"💡",q:"Apprends quelque chose de nouveau chaque jour. C'est ainsi que les légendes sont faites.",a:"Anonyme"},
+  {e:"🔑",q:"La liberté réside dans la maîtrise de tes désirs, pas dans leur satisfaction.",a:"Épictète"},
+  {e:"⚔️",q:"L'obstacle est le chemin.",a:"Marc Aurèle"},
+  {e:"🧬",q:"Tes mitochondries sont tes moteurs. Alimente-les correctement.",a:"Dr. Terry Wahls"},
+  {e:"🌅",q:"Ce que tu fais de tes matins définit ta vie.",a:"Hal Elrod"},
+  {e:"🏆",q:"La médiocrité est choisie, l'excellence aussi.",a:"Anonyme"},
+  {e:"💪",q:"Sois le type d'homme que tu aurais voulu rencontrer à 20 ans.",a:"Anonyme"},
+  {e:"🧠",q:"Médite 20 minutes par jour. Si tu n'as pas le temps, médite 1 heure.",a:"Proverbe Zen"},
+  {e:"🌿",q:"La nature est la meilleure pharmacie.",a:"Hippocrate"},
+  {e:"⭐",q:"Chaque expert a un jour été un débutant.",a:"Helen Hayes"},
+  {e:"🔥",q:"Ne compte pas les heures, fais que chaque heure compte.",a:"Anonyme"},
+  {e:"💎",q:"Le caractère se révèle dans les choix difficiles.",a:"Anonyme"},
+  {e:"🦁",q:"Attaque chaque journée comme si ta vie en dépendait.",a:"Anonyme"},
+  {e:"⚡",q:"L'élan est la force la plus puissante. Lance-toi.",a:"Anonyme"},
+  {e:"🌊",q:"La profondeur de ta pratique détermine la hauteur de ta performance.",a:"Anonyme"},
+  {e:"🎯",q:"Vivez selon votre propre définition du succès.",a:"Anonyme"},
+  {e:"🚀",q:"Ce que tu fais quand personne ne regarde — voilà qui tu es vraiment.",a:"Anonyme"},
+  {e:"🏋️",q:"La zone de confort est l'ennemi de la croissance.",a:"Anonyme"},
+  {e:"🌙",q:"Dors tôt, lève-toi tôt. La nature favorise les lève-tôt.",a:"Proverbe anglais"},
+  {e:"💡",q:"La lecture est la forme la moins chère de transformation.",a:"Anonyme"},
+  {e:"🔑",q:"Ta santé est ton investissement le plus rentable.",a:"Anonyme"},
+  {e:"⚔️",q:"La peur est un outil. La maîtriser est une compétence.",a:"Anonyme"},
+  {e:"🧬",q:"L'exercice est la molécule magique pour le cerveau.",a:"John Ratey"},
+  {e:"🌅",q:"Chaque nouvelle aurore est une invitation à recommencer mieux.",a:"Anonyme"},
+  {e:"🏆",q:"Établis des standards tellement élevés que les autres ne peuvent même pas te voir.",a:"Anonyme"},
+  {e:"💪",q:"L'homme qui déplace des montagnes commence en transportant de petites pierres.",a:"Confucius"},
+  {e:"🧠",q:"Entraîne ton esprit comme tu entraînes ton corps.",a:"Anonyme"},
+  {e:"🌿",q:"Chaque aliment que tu manges est soit un remède soit un poison.",a:"Hippocrate"},
+  {e:"⭐",q:"Ose être la meilleure version de toi-même.",a:"Anonyme"},
+  {e:"🔥",q:"La passion sans discipline est juste de l'énergie gaspillée.",a:"Anonyme"},
+  {e:"💎",q:"Garde ta vision claire même quand ta route est sombre.",a:"Anonyme"},
+  {e:"🦁",q:"Sois féroce dans ta poursuite de ce qui enflamme ton âme.",a:"Anonyme"},
+  {e:"⚡",q:"La puissance vient de la capacité à agir sans l'approbation des autres.",a:"Anonyme"},
+  {e:"🌊",q:"Trouve la paix au milieu du chaos.",a:"Anonyme"},
+  {e:"🎯",q:"Chaque habitude est un vote pour l'identité que tu veux incarner.",a:"James Clear"},
+  {e:"🚀",q:"Le mental est l'outil le plus puissant que tu possèdes. Affûte-le.",a:"Anonyme"},
+  {e:"🏋️",q:"Le corps garde la mémoire. Entraîne-le à se souvenir de la force.",a:"Bessel van der Kolk"},
+  {e:"🌙",q:"Le sommeil profond est le plus puissant des anti-inflammatoires.",a:"Dr. Rhonda Patrick"},
+  {e:"💡",q:"L'intelligence sans sagesse est une arme sans direction.",a:"Anonyme"},
+  {e:"🔑",q:"La connaissance de soi est le début de toute sagesse.",a:"Aristote"},
+  {e:"⚔️",q:"L'adversité est la pierre qui aiguise l'épée de l'âme.",a:"Anonyme"},
+  {e:"🧬",q:"La neuroplasticité signifie que tu peux littéralement reconstruire ton cerveau.",a:"Dr. Joe Dispenza"},
+  {e:"🌅",q:"Lève-toi avec détermination. Couche-toi avec satisfaction.",a:"Anonyme"},
+  {e:"🏆",q:"La réputation est ce que les autres pensent de toi. Le caractère est ce que tu es.",a:"John Wooden"},
+  {e:"💪",q:"Les abdominaux se font en cuisine. La vie se fait dans la discipline.",a:"Anonyme"},
+  {e:"🧠",q:"Le cerveau change à travers les expériences. Fais en sorte que les tiennes soient bonnes.",a:"Anonyme"},
+  {e:"🌿",q:"Ralentis pour aller plus vite. La nature ne se presse pas.",a:"Lao Tseu"},
+  {e:"⭐",q:"Si tu savais combien tu es fort, rien ne t'arrêterait.",a:"Anonyme"},
+  {e:"🔥",q:"Ne cherche pas la facilité. Cherche la capacité.",a:"Anonyme"},
+  {e:"💎",q:"L'or se purifie dans le feu. L'homme dans les épreuves.",a:"Confucius"},
+  {e:"🦁",q:"La taille du combat dans le chien compte plus que la taille du chien dans le combat.",a:"Dwight D. Eisenhower"},
+  {e:"⚡",q:"Sois la personne la plus discipline que tu connaisses.",a:"Jocko Willink"},
+  {e:"🌊",q:"Navigue avec l'intention. La dérive appartient aux bateaux sans capitaine.",a:"Anonyme"},
+  {e:"🎯",q:"Ce sur quoi tu te concentres s'étend.",a:"T. Harv Eker"},
+  {e:"🚀",q:"L'urgence crée l'excellence. Agis maintenant.",a:"Anonyme"},
+  {e:"🏋️",q:"Purifie-toi par le mouvement. Le corps en mouvement est une prière.",a:"Anonyme"},
+  {e:"🌙",q:"Honore le repos comme tu honores l'effort.",a:"Anonyme"},
+  {e:"💡",q:"Un livre par mois = 12 mentors par an.",a:"Anonyme"},
+  {e:"🔑",q:"Le bonheur n'est pas une destination, c'est une façon de voyager.",a:"Margaret Lee Runbeck"},
+  {e:"⚔️",q:"Affronte ta peur et elle disparaît. Fuis-la et elle grandit.",a:"Anonyme"},
+  {e:"🧬",q:"Chaque cellule de ton corps renouvelle en 7 ans. Tu es en perpétuelle renaissance.",a:"Anonyme"},
+  {e:"🌅",q:"Ce matin, quelqu'un quelque part t'envierait ta vie.",a:"Anonyme"},
+  {e:"🏆",q:"La persévérance est le génie du travail.",a:"Napoléon Bonaparte"},
+  {e:"💪",q:"Bâtis ta force autour de ta vie, pas ta vie autour de ta faiblesse.",a:"Anonyme"},
+  {e:"🧠",q:"Maîtrise ton esprit ou il te maîtrisera.",a:"Horace"},
+  {e:"🌿",q:"Le corps humain est une machine extraordinaire. Traite-la avec respect.",a:"Anonyme"},
+  {e:"⭐",q:"Ton potentiel est infini. Tes limites sont construites dans ta tête.",a:"Anonyme"},
+  {e:"🔥",q:"Génère ta propre énergie. Sois ta propre source.",a:"Anonyme"},
+  {e:"💎",q:"La vraie richesse, c'est la santé.",a:"Virgile"},
+  {e:"🦁",q:"Soit tu domines la journée, soit la journée te domine.",a:"Anonyme"},
+  {e:"⚡",q:"L'urgence sans l'anxiété — voilà le secret de la performance.",a:"Anonyme"},
+  {e:"🌊",q:"Celui qui connaît les autres est sage. Celui qui se connaît lui-même est éclairé.",a:"Lao Tseu"},
+  {e:"🎯",q:"Les bonnes habitudes sont difficiles à former et faciles à vivre avec. Les mauvaises sont faciles à former et difficiles à vivre avec.",a:"Jim Rohn"},
+  {e:"🚀",q:"Construis, n'imite pas. Crée, ne consomme pas.",a:"Anonyme"},
+  {e:"🏋️",q:"La sueur est ton corps qui pleure de joie.",a:"Anonyme"},
+  {e:"🌙",q:"La qualité du sommeil détermine la qualité de la vie éveillée.",a:"Arianna Huffington"},
+  {e:"💡",q:"Chaque jour sans apprentissage est un jour perdu.",a:"Anonyme"},
+  {e:"🔑",q:"L'essentiel est invisible aux yeux.",a:"Antoine de Saint-Exupéry"},
+  {e:"⚔️",q:"Tempe-toi comme de l'acier — par la chaleur et la pression.",a:"Anonyme"},
+  {e:"🧬",q:"L'exposition au froid renforce le mental autant que le corps.",a:"Wim Hof"},
+  {e:"🌅",q:"Le lever du soleil est un rappel que les nouvelles chances arrivent chaque jour.",a:"Anonyme"},
+  {e:"🏆",q:"Fais quelque chose aujourd'hui dont tu seras fier demain.",a:"Anonyme"},
+  {e:"💪",q:"Soulève. Mange. Dors. Recommence. Simple mais pas facile.",a:"Anonyme"},
+  {e:"🧠",q:"Le flow state est disponible à ceux qui font le travail d'abord.",a:"Mihaly Csikszentmihalyi"},
+  {e:"🌿",q:"La marche est la meilleure médecine.",a:"Hippocrate"},
+  {e:"⭐",q:"Crois en ce que tu es capable de devenir.",a:"Anonyme"},
+  {e:"🔥",q:"Vis comme si chaque jour était le premier jour du reste de ta vie.",a:"Anonyme"},
+  {e:"💎",q:"La précision dans les petites choses prépare la grandeur dans les grandes.",a:"Anonyme"},
+  {e:"🦁",q:"La bravoure n'est pas l'absence de peur, mais le jugement que quelque chose d'autre est plus important.",a:"Ambrose Redmoon"},
+  {e:"⚡",q:"La maîtrise est le chemin entre l'incompétence et l'excellence.",a:"George Leonard"},
+  {e:"🌊",q:"Surfe sur l'adversité. Elle t'emmène plus loin que le calme.",a:"Anonyme"},
+  {e:"🎯",q:"Fais de chaque action une déclaration de qui tu es.",a:"Anonyme"},
+  {e:"🚀",q:"L'action massive efface toute peur.",a:"Grant Cardone"},
+  {e:"🏋️",q:"Ta forme physique est ton uniforme d'excellence.",a:"Anonyme"},
+  {e:"🌙",q:"Prépare ta victoire de demain en te reposant bien ce soir.",a:"Anonyme"},
+  {e:"💡",q:"Investis dans ton cerveau. Le retour sur investissement est illimité.",a:"Benjamin Franklin"},
+  {e:"🔑",q:"Être discipliné, c'est être libre.",a:"Anonyme"},
+  {e:"⚔️",q:"Les batailles de la vie ne sont pas gagnées par les plus forts ou les plus rapides, mais par ceux qui pensent qu'ils peuvent.",a:"Napoleon Hill"},
+  {e:"🧬",q:"Le BDNF produit par l'exercice est la meilleure drogue légale pour le cerveau.",a:"John Ratey"},
+  {e:"🌅",q:"Ce que tu sèmes à l'aube, tu le récoltes au crépuscule.",a:"Proverbe persan"},
+  {e:"🏆",q:"Deviens la personne que tu devais être.",a:"Anonyme"},
+  {e:"💪",q:"Construis ton empire une habitude à la fois.",a:"Anonyme"},
+  {e:"🧠",q:"La gratitude est l'antidote à l'anxiété.",a:"Tony Robbins"},
+  {e:"🌿",q:"Chaque bouchée est une décision pour ou contre ta vitalité.",a:"Anonyme"},
+  {e:"⭐",q:"Sois la raison pour laquelle quelqu'un croit en la bonté humaine.",a:"Anonyme"},
+  {e:"🔥",q:"La détermination est plus forte que le talent.",a:"Anonyme"},
+  {e:"💎",q:"Construit lentement. Construit solidement.",a:"Anonyme"},
+  {e:"🦁",q:"Avance. Même si c'est difficile. Surtout quand c'est difficile.",a:"Anonyme"},
+  {e:"⚡",q:"Tu n'as pas à être extrême. Tu dois être constant.",a:"Anonyme"},
+  {e:"🌊",q:"Chaque vague revient à la mer plus forte. Toi aussi.",a:"Anonyme"},
+  {e:"🎯",q:"La précision de ta vision détermine la précision de tes résultats.",a:"Anonyme"},
+  {e:"🚀",q:"Les rêves ne sont que des objectifs sans date.",a:"Anonyme"},
+  {e:"🏋️",q:"Le corps que tu as dans 5 ans est construit par ce que tu fais aujourd'hui.",a:"Anonyme"},
+  {e:"🌙",q:"Fais de ta chambre un sanctuaire de récupération.",a:"Anonyme"},
+  {e:"💡",q:"La sagesse est l'expérience de la douleur bien digérée.",a:"Anonyme"},
+  {e:"🔑",q:"Concentre-toi sur ce que tu peux contrôler. Lâche le reste.",a:"Marc Aurèle"},
+  {e:"⚔️",q:"L'ennemi le plus redoutable est celui qui dort à l'intérieur de toi.",a:"Anonyme"},
+  {e:"🧬",q:"Chaque bonne décision alimentaire est un investissement dans ton futur moi.",a:"Dr. Mark Hyman"},
+  {e:"🌅",q:"Commence ta journée avec intention. Finis-la avec gratitude.",a:"Anonyme"},
+  {e:"🏆",q:"Les champions font ce que les autres ne veulent pas faire.",a:"Anonyme"},
+  {e:"💪",q:"La force est la capacité de briser une barre de chocolat en quatre morceaux avec tes mains nues et de n'en manger qu'un.",a:"Judith Viorst"},
+  {e:"🧠",q:"La pensée positive sans action positive ne produit rien.",a:"Anonyme"},
+  {e:"🌿",q:"La connexion avec la nature est un reset pour l'esprit.",a:"Anonyme"},
+  {e:"⭐",q:"Poursuis l'excellence. Le succès te suivra.",a:"Anonyme"},
+  {e:"🔥",q:"Un corps fort forge un esprit fort.",a:"Juvénal"},
+  {e:"💎",q:"Chaque sacrifice que tu fais aujourd'hui est un cadeau à ton futur toi.",a:"Anonyme"},
+  {e:"🦁",q:"La grandeur ne se construit pas dans les moments faciles.",a:"Anonyme"},
+  {e:"⚡",q:"Les gens extraordinaires ont des habitudes ordinaires exécutées de façon extraordinaire.",a:"Anonyme"},
+  {e:"🌊",q:"Reste humble. Reste affamé. Reste focused.",a:"Anonyme"},
+  {e:"🎯",q:"La vie est trop courte pour rester ordinaire.",a:"Anonyme"},
+  {e:"🚀",q:"N'attends pas l'inspiration. L'action crée l'inspiration.",a:"Frank Tibolt"},
+  {e:"🏋️",q:"Deviens inconfortable régulièrement. C'est là que la croissance vit.",a:"Anonyme"},
+  {e:"🌙",q:"Dors avec les loups pour rugir comme un lion au matin.",a:"Anonyme"},
+  {e:"💡",q:"Apprends à silence ton mental. C'est là que naît la créativité.",a:"Anonyme"},
+  {e:"🔑",q:"La paix intérieure est une victoire plus grande que toute conquête extérieure.",a:"Anonyme"},
+  {e:"⚔️",q:"Chaque jour est un combat. Gagne-le.",a:"Anonyme"},
+  {e:"🧬",q:"La zone 2 cardiaque est la fontaine de jouvence moderne.",a:"Peter Attia"},
+  {e:"🌅",q:"Ton potentiel se réveille avec toi chaque matin.",a:"Anonyme"},
+  {e:"🏆",q:"Ce n'est pas qui tu es qui te retient, c'est qui tu penses ne pas être.",a:"Denis Waitley"},
+  {e:"💪",q:"Personne ne peut te voler ce que tu as construit de l'intérieur.",a:"Anonyme"},
+  {e:"🧠",q:"Quand tu maîtrises ton esprit, tu maîtrises ta vie.",a:"Napoleon Hill"},
+  {e:"🌿",q:"Hydrate-toi. 70% de ton corps est eau. Traite-le bien.",a:"Anonyme"},
+  {e:"⭐",q:"Crois en toi même quand personne d'autre ne le fait.",a:"Anonyme"},
+  {e:"🔥",q:"Brûle avec passion ou gèle dans la médiocrité.",a:"Anonyme"},
+  {e:"💎",q:"Sois le diamant qui quelqu'un avait essayé de déformer.",a:"Anonyme"},
+  {e:"🦁",q:"Le respect se gagne. La loyauté se construit. La confiance se mérite.",a:"Anonyme"},
+  {e:"⚡",q:"Ne t'adapte pas à l'environnement. Construis l'environnement qui te convient.",a:"Anonyme"},
+  {e:"🌊",q:"Va avec le courant de ta vraie nature.",a:"Anonyme"},
+  {e:"🎯",q:"Sois obsédé par ton objectif ou quelqu'un d'autre te dira comment vivre.",a:"Anonyme"},
+  {e:"🚀",q:"L'excellence est un habit, pas un acte.",a:"Aristote"},
+  {e:"🏋️",q:"Fais de la salle ton temple.",a:"Anonyme"},
+  {e:"🌙",q:"Le repos est productif. La récupération est stratégique.",a:"Anonyme"},
+  {e:"💡",q:"La connaissance multipliée par l'action égale le pouvoir.",a:"Napoleon Hill"},
+  {e:"🔑",q:"L'autodiscipline est le fondement de toutes les vertus.",a:"Thomas á Kempis"},
+  {e:"⚔️",q:"Forge-toi dans le silence et surprends-les avec tes résultats.",a:"Anonyme"},
+  {e:"🧬",q:"La respiration profonde active le système nerveux parasympathique — ton mode guérison.",a:"Andrew Huberman"},
+  {e:"🌅",q:"Chaque journée bien commencée est à moitié gagnée.",a:"Proverbe anglais"},
+  {e:"🏆",q:"Construis quelque chose dont tu seras fier dans 10 ans.",a:"Anonyme"},
+  {e:"💪",q:"Le courage n'est pas l'absence de doute — c'est agir malgré lui.",a:"Anonyme"},
+  {e:"🧠",q:"La discipline de pensée est la discipline de vie.",a:"Anonyme"},
+  {e:"🌿",q:"Prendre soin de soi n'est pas égoïste. C'est vital.",a:"Anonyme"},
+  {e:"⭐",q:"Tu mérites la vie que tu travailles pour obtenir.",a:"Anonyme"},
+  {e:"🔥",q:"Enthousiasme + Discipline = Indestructible.",a:"Anonyme"},
+  {e:"💎",q:"Il faut souffrir pour être beau — et il faut souffrir pour être fort.",a:"Anonyme"},
+  {e:"🦁",q:"Les lions ne dorment pas longtemps. Le monde n'attend pas.",a:"Anonyme"},
+  {e:"⚡",q:"Élimine le superflu. Amplifie l'essentiel.",a:"Anonyme"},
+  {e:"🌊",q:"Donne plus que tu ne prends. Sème plus que tu ne récoltes.",a:"Anonyme"},
+  {e:"🎯",q:"Un plan A + travail acharné + adaptation = succès.",a:"Anonyme"},
+  {e:"🚀",q:"L'impossible d'aujourd'hui est le possible de demain.",a:"Nelson Mandela"},
+  {e:"🏋️",q:"Dépasse ta limite d'hier.",a:"Anonyme"},
+  {e:"🌙",q:"Le rêve nourrit l'âme. Le sommeil nourrit le rêve.",a:"Anonyme"},
+  {e:"💡",q:"La connaissance de soi vaut plus que toute autre connaissance.",a:"Socrate"},
+  {e:"🔑",q:"Ce que tu es aujourd'hui est le résultat de toutes tes décisions passées.",a:"Anonyme"},
+  {e:"⚔️",q:"Il n'y a pas d'ennemi plus redoutable que la procrastination.",a:"Anonyme"},
+  {e:"🧬",q:"Le jeûne intermittent réinitialise ton métabolisme comme un reboot.",a:"Dr. Jason Fung"},
+  {e:"🌅",q:"Accueille le matin comme une invitation à créer.",a:"Anonyme"},
+  {e:"🏆",q:"Sois meilleur qu'hier. Moins bon que demain.",a:"Anonyme"},
+  {e:"💪",q:"Fais de ta vie une légende.",a:"Anonyme"},
+  {e:"🧠",q:"La gratitude transforme ce que tu as en assez.",a:"Anonyme"},
+  {e:"🌿",q:"Le silence est un bain pour l'âme.",a:"Anonyme"},
+  {e:"⭐",q:"Illumine ta propre route et tu guideras les autres.",a:"Anonyme"},
+  {e:"🔥",q:"Construis la vie que tu veux pendant que tu en as encore les forces.",a:"Anonyme"},
+  {e:"💎",q:"Le vrai luxe, c'est la vitalité.",a:"Anonyme"},
+  {e:"🦁",q:"Chaque obstacle brisé te rend plus redoutable.",a:"Anonyme"},
+  {e:"⚡",q:"Moins de bruit. Plus d'action.",a:"Anonyme"},
+  {e:"🌊",q:"La mer ne demande pas d'autorisation pour être profonde.",a:"Anonyme"},
+  {e:"🎯",q:"Qui tu choisis d'être est plus important que ce que tu choisis de faire.",a:"Anonyme"},
+  {e:"🚀",q:"Choisis la douleur de la discipline plutôt que la douleur du regret.",a:"Anonyme"},
+  {e:"🏋️",q:"L'effort constant est la clé de toute transformation.",a:"Anonyme"},
+  {e:"🌙",q:"Endors-toi avec reconnaissance. Réveille-toi avec ambition.",a:"Anonyme"},
+  {e:"💡",q:"Ta vie ne s'améliore pas par hasard. Elle s'améliore par changement.",a:"Jim Rohn"},
+  {e:"🔑",q:"La discipline crée la liberté.",a:"Anonyme"},
+  {e:"⚔️",q:"Lutte jusqu'à ce que ton dernier souffle devienne ta première victoire.",a:"Anonyme"},
+  {e:"🧬",q:"Chaque pas de 7000 augmente ta longévité de façon mesurable.",a:"Harvard Study"},
+  {e:"🌅",q:"Le soleil se lève pour toi aussi. Utilise-le.",a:"Anonyme"},
+  {e:"🏆",q:"La compétition la plus importante est avec toi-même.",a:"Anonyme"},
+];
+
+// ── AFFICHAGE CITATION DU JOUR ──
+function renderDailyQuote() {
+  const start = new Date(new Date().getFullYear(), 0, 0);
+  const diff  = new Date() - start;
+  const dayOfYear = Math.floor(diff / 86400000);
+  const idx   = (dayOfYear - 1 + QUOTES.length) % QUOTES.length;
+  const q     = QUOTES[idx];
+  const el    = document.getElementById('dailyQuoteCard');
+  if (!el) return;
+  document.getElementById('dqDayBadge').textContent = `Jour ${dayOfYear} / 365`;
+  document.getElementById('dqEmoji').textContent    = q.e;
+  document.getElementById('dqQuote').textContent    = `« ${q.q} »`;
+  document.getElementById('dqAuthor').textContent   = `— ${q.a}`;
+  // Couleur de fond qui varie selon le jour
+  const gradients = [
+    'linear-gradient(135deg,#0d1b3e,#1a2d6e,#0d3a5e)',
+    'linear-gradient(135deg,#1a0d3e,#3d1a6e,#2d0d5e)',
+    'linear-gradient(135deg,#0d2e1b,#1a6e2d,#0d5e3a)',
+    'linear-gradient(135deg,#3e1a0d,#6e2d1a,#5e0d0d)',
+    'linear-gradient(135deg,#1a2e3e,#1a4e6e,#0d3e5e)',
+  ];
+  el.style.background = gradients[dayOfYear % gradients.length];
+}
+
+function loadScoringParams() {
+  try {
+    const s = localStorage.getItem('cockpit_scoring_params');
+    if (s) SCORING_PARAMS = JSON.parse(s);
+  } catch(e) { SCORING_PARAMS = JSON.parse(JSON.stringify(DEFAULT_SCORING_PARAMS)); }
+}
+function saveScoringParams() {
+  try { localStorage.setItem('cockpit_scoring_params', JSON.stringify(SCORING_PARAMS)); } catch(e) {}
+}
 
 function loadRules() {
   try {
@@ -1750,6 +2318,205 @@ function deleteRule(id) {
   buildRulesTable();
   loadWeekData();
   calc(null);
+}
+
+// ── HABITS CONFIG — sauvegarde/chargement des poids ──
+function loadHabitsConfig() {
+  try {
+    const saved = localStorage.getItem('cockpit_habits_v2');
+    if (!saved) return;
+    const {mr, h} = JSON.parse(saved);
+    if (mr) mr.forEach(s => { const x = MR_HABITS.find(i => i.id === s.id); if (x) { x.w = s.w; x.label = s.label; } });
+    if (h)  h.forEach(s  => { const x = HABITS.find(i => i.id === s.id);    if (x) { x.w = s.w; x.label = s.label; } });
+  } catch(e) {}
+}
+function saveHabitsConfig() {
+  try {
+    localStorage.setItem('cockpit_habits_v2', JSON.stringify({
+      mr: MR_HABITS.map(({id,label,w}) => ({id,label,w})),
+      h:  HABITS.map(({id,label,w}) => ({id,label,w}))
+    }));
+  } catch(e) {}
+}
+function updateHabitLabels() {
+  MR_HABITS.forEach(h => {
+    const c = document.querySelector(`tr.sub-habit[data-habit="${h.id}"] td:first-child`);
+    if (c) c.innerHTML = `${h.label} <span class="w-badge">×${h.w}</span>`;
+  });
+  HABITS.forEach(h => {
+    const c = document.querySelector(`tr[data-habit="${h.id}"] td:first-child`);
+    if (c) c.innerHTML = `${h.label} <span class="w-badge">×${h.w}</span>`;
+  });
+  const mrTotal = MR_HABITS.reduce((s,h) => s + h.w, 0);
+  const lbl = document.getElementById('mrTotalLabel');
+  if (lbl) lbl.textContent = mrTotal.toFixed(1) + ' pts total';
+}
+
+// ── MR COLLAPSIBLE ──
+let _mrCollapsed = false;
+function toggleMR() {
+  _mrCollapsed = !_mrCollapsed;
+  const t = document.querySelector('table.routines-table');
+  if (t) t.classList.toggle('mr-collapsed', _mrCollapsed);
+  const btn = document.getElementById('mrToggleBtn');
+  if (btn) btn.textContent = _mrCollapsed ? '▶' : '▼';
+}
+
+// ── SETTINGS MODAL ──
+function openSettings() {
+  buildRulesTable();
+  renderSettings();
+  document.getElementById('settingsOverlay').classList.add('open');
+}
+function closeSettings() {
+  document.getElementById('settingsOverlay').classList.remove('open');
+}
+function renderSettings() {
+  refreshSettingsTotal();
+  let html = '';
+  // MR section
+  html += `<div class="settings-section"><h3>🌅 Morning Routine</h3>`;
+  MR_HABITS.forEach(h => {
+    html += `<div class="settings-item">
+      <input class="settings-item-label" data-stype="mr" data-id="${h.id}" value="${h.label||''}">
+      <input type="number" class="settings-item-pts" data-stype="mr" data-id="${h.id}" value="${h.w}" min="0" max="20" step="0.5" oninput="refreshSettingsTotal()">
+      <span class="settings-item-unit">pts</span>
+    </div>`;
+  });
+  html += `</div>`;
+  // Habitudes
+  html += `<div class="settings-section"><h3>💪 Habitudes</h3>`;
+  HABITS.forEach(h => {
+    html += `<div class="settings-item">
+      <input class="settings-item-label" data-stype="habit" data-id="${h.id}" value="${h.label||''}">
+      <input type="number" class="settings-item-pts" data-stype="habit" data-id="${h.id}" value="${h.w}" min="0" max="20" step="0.5" oninput="refreshSettingsTotal()">
+      <span class="settings-item-unit">pts</span>
+    </div>`;
+  });
+  html += `</div>`;
+  // Règles
+  // Scoring avancé
+  const SP = SCORING_PARAMS;
+  html += `<div class="settings-section"><h3>⚡ Capital & Scoring avancé</h3>
+    <div class="settings-item">
+      <span class="settings-item-label" style="background:none;border:none;padding:0">Capital de départ <span style="font-size:0.65rem;color:#aaa">(0 = auto)</span></span>
+      <input type="number" class="settings-item-pts" id="sp-capital" value="${SP.capital}" min="0" max="200" step="1" oninput="refreshSettingsTotal()">
+      <span class="settings-item-unit">pts</span>
+    </div>
+  </div>`;
+
+  html += `<div class="settings-section"><h3>🌿 Weed</h3>
+    <div class="settings-item"><span class="settings-item-label" style="background:none;border:none;padding:0;font-size:0.78rem">Neutre jusqu'à</span>
+      <input type="number" class="settings-item-pts" id="sp-weed-threshold" value="${SP.weed.threshold}" min="0" max="20" step="1">
+      <span class="settings-item-unit">joints</span></div>
+    <div class="settings-item"><span class="settings-item-label" style="background:none;border:none;padding:0;font-size:0.78rem">Pénalité / joint au-delà</span>
+      <input type="number" class="settings-item-pts" id="sp-weed-penalty" value="${SP.weed.penaltyPerUnit}" min="0" max="10" step="0.5">
+      <span class="settings-item-unit">pts</span></div>
+    <div class="settings-item"><span class="settings-item-label" style="background:none;border:none;padding:0;font-size:0.78rem">Bonus si 0 joint</span>
+      <input type="number" class="settings-item-pts" id="sp-weed-bonus" value="${SP.weed.bonusIfZero}" min="0" max="10" step="0.5">
+      <span class="settings-item-unit">pts</span></div>
+  </div>`;
+
+  html += `<div class="settings-section"><h3>🏃 Course (bonus cumulatifs)</h3>
+    ${SP.km.map((t,i) => `
+    <div class="settings-item">
+      <span style="font-size:0.72rem;color:#4a5f7a;white-space:nowrap">Si ≥</span>
+      <input type="number" class="settings-item-pts" id="sp-km-min-${i}" value="${t.min}" min="0" max="100" step="0.5">
+      <span class="settings-item-unit">km →</span>
+      <input type="number" class="settings-item-pts" id="sp-km-bonus-${i}" value="${t.bonus}" min="0" max="20" step="0.5">
+      <span class="settings-item-unit">pts</span>
+    </div>`).join('')}
+  </div>`;
+
+  html += `<div class="settings-section"><h3>💼 Travail</h3>
+    <div class="settings-item"><span class="settings-item-label" style="background:none;border:none;padding:0;font-size:0.78rem">Pénalité si &lt;</span>
+      <input type="number" class="settings-item-pts" id="sp-work-pbelow" value="${SP.work.penaltyBelow}" min="0" max="24" step="0.5">
+      <span class="settings-item-unit">h →</span>
+      <input type="number" class="settings-item-pts" id="sp-work-penalty" value="${SP.work.penalty}" min="0" max="20" step="0.5">
+      <span class="settings-item-unit">pts</span></div>
+    <div class="settings-item"><span class="settings-item-label" style="background:none;border:none;padding:0;font-size:0.78rem">Bonus si &gt;</span>
+      <input type="number" class="settings-item-pts" id="sp-work-babove" value="${SP.work.bonusAbove}" min="0" max="24" step="0.5">
+      <span class="settings-item-unit">h →</span>
+      <input type="number" class="settings-item-pts" id="sp-work-bonus" value="${SP.work.bonus}" min="0" max="20" step="0.5">
+      <span class="settings-item-unit">pts</span></div>
+  </div>`;
+
+  html += `<div class="settings-section"><h3>⚠️ Règles (pénalités si cochées)</h3>`;
+  RULES.forEach(r => {
+    html += `<div class="settings-item">
+      <input class="settings-item-label" data-stype="rule" data-id="${r.id}" value="${r.label||''}">
+      <input type="number" class="settings-item-pts" data-stype="rule" data-id="${r.id}" value="${r.penalty}" min="0" max="20" step="0.5">
+      <span class="settings-item-unit">pts</span>
+      <button class="settings-del-btn" onclick="deleteRuleFromSettings('${r.id}')">×</button>
+    </div>`;
+  });
+  html += `<button class="add-rule-btn" style="margin-top:10px" onclick="addRuleFromSettings()">+ Ajouter une règle</button>`;
+  html += `</div>`;
+  document.getElementById('settingsBody').innerHTML = html;
+}
+function refreshSettingsTotal() {
+  const mrPts  = [...document.querySelectorAll('.settings-item-pts[data-stype="mr"]')].reduce((s,el) => s+parseFloat(el.value||0), 0);
+  const habPts = [...document.querySelectorAll('.settings-item-pts[data-stype="habit"]')].reduce((s,el) => s+parseFloat(el.value||0), 0);
+  const total  = MR_HABITS.reduce((s,h)=>s+h.w,0) + HABITS.reduce((s,h)=>s+h.w,0);
+  const live   = mrPts + habPts;
+  const box = document.getElementById('settingsTotal');
+  if (!box) return;
+  box.innerHTML = `
+    <div class="settings-total-line"><span>Morning routine</span><span>${mrPts>0?mrPts.toFixed(1):MR_HABITS.reduce((s,h)=>s+h.w,0).toFixed(1)} pts</span></div>
+    <div class="settings-total-line"><span>Habitudes</span><span>${habPts>0?habPts.toFixed(1):HABITS.reduce((s,h)=>s+h.w,0).toFixed(1)} pts</span></div>
+    <div class="settings-total-line settings-total-main"><span>TOTAL = 100%</span><span>${(live||total).toFixed(1)} pts</span></div>
+  `;
+}
+function saveSettings() {
+  document.querySelectorAll('.settings-item-pts[data-stype="mr"]').forEach(el => {
+    const h = MR_HABITS.find(x => x.id === el.dataset.id); if (h) h.w = parseFloat(el.value)||0;
+  });
+  document.querySelectorAll('.settings-item-label[data-stype="mr"]').forEach(el => {
+    const h = MR_HABITS.find(x => x.id === el.dataset.id); if (h) h.label = el.value.trim();
+  });
+  document.querySelectorAll('.settings-item-pts[data-stype="habit"]').forEach(el => {
+    const h = HABITS.find(x => x.id === el.dataset.id); if (h) h.w = parseFloat(el.value)||0;
+  });
+  document.querySelectorAll('.settings-item-label[data-stype="habit"]').forEach(el => {
+    const h = HABITS.find(x => x.id === el.dataset.id); if (h) h.label = el.value.trim();
+  });
+  document.querySelectorAll('.settings-item-pts[data-stype="rule"]').forEach(el => {
+    const r = RULES.find(x => x.id === el.dataset.id); if (r) r.penalty = parseFloat(el.value)||0;
+  });
+  document.querySelectorAll('.settings-item-label[data-stype="rule"]').forEach(el => {
+    const r = RULES.find(x => x.id === el.dataset.id); if (r) r.label = el.value.trim();
+  });
+  // Scoring params
+  const cap = parseFloat(document.getElementById('sp-capital')?.value ?? 0);
+  SCORING_PARAMS.capital = isNaN(cap) ? 0 : cap;
+  SCORING_PARAMS.weed.threshold    = parseFloat(document.getElementById('sp-weed-threshold')?.value ?? 3);
+  SCORING_PARAMS.weed.penaltyPerUnit = parseFloat(document.getElementById('sp-weed-penalty')?.value ?? 1);
+  SCORING_PARAMS.weed.bonusIfZero  = parseFloat(document.getElementById('sp-weed-bonus')?.value ?? 0.5);
+  SCORING_PARAMS.km.forEach((t,i) => {
+    const minEl = document.getElementById(`sp-km-min-${i}`);
+    const bonEl = document.getElementById(`sp-km-bonus-${i}`);
+    if (minEl) t.min   = parseFloat(minEl.value) || 0;
+    if (bonEl) t.bonus = parseFloat(bonEl.value) || 0;
+  });
+  SCORING_PARAMS.work.penaltyBelow = parseFloat(document.getElementById('sp-work-pbelow')?.value ?? 3);
+  SCORING_PARAMS.work.penalty      = parseFloat(document.getElementById('sp-work-penalty')?.value ?? 2);
+  SCORING_PARAMS.work.bonusAbove   = parseFloat(document.getElementById('sp-work-babove')?.value ?? 7);
+  SCORING_PARAMS.work.bonus        = parseFloat(document.getElementById('sp-work-bonus')?.value ?? 2);
+  saveScoringParams();
+  saveHabitsConfig(); saveRules(); updateHabitLabels(); buildRulesTable(); loadWeekData(); calc(null);
+  closeSettings();
+}
+function deleteRuleFromSettings(id) {
+  RULES = RULES.filter(r => r.id !== id); saveRules(); renderSettings();
+}
+function addRuleFromSettings() {
+  const label = prompt('Nom de la règle :');
+  if (!label?.trim()) return;
+  const penStr = prompt('Pénalité en pts si enfreinte (ex: 2) :', '1');
+  const penalty = parseFloat(penStr);
+  if (isNaN(penalty) || penalty < 0) return;
+  RULES.push({ id:'r'+Date.now(), label:label.trim(), penalty });
+  saveRules(); renderSettings();
 }
 
 function calc(triggerEl) {
@@ -2022,7 +2789,10 @@ function loadWeekData() {
     document.querySelectorAll('[data-weed]').forEach((n, d) => n.value = data[`weed_${d}`] ?? '');
     document.querySelectorAll('[data-km]').forEach((n, d) => n.value = data[`km_${d}`] ?? '');
     document.querySelectorAll('[data-work]').forEach((n, d) => n.value = data[`work_${d}`] ?? '');
-    document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => t.value = data[`ta${i}`] || '');
+    document.querySelectorAll('#dailyNotes textarea').forEach((t,i) => {
+      t.value = data[`ta${i}`] || '';
+      if (t.value) taResize(t);
+    });
   } else {
     [...MR_HABITS, ...HABITS].forEach(({id}) => {
       document.querySelectorAll(`input[data-habit="${id}"]`).forEach(cb => cb.checked = false);
@@ -2063,9 +2833,15 @@ function buildNotes() {
         </div>
         <span class="day-note-score ds-empty" id="dns-${i}">—</span>
       </div>
-      <textarea placeholder="Leçon du jour..." oninput="saveWeekData()"></textarea>`;
+      <textarea placeholder="Leçon du jour..." oninput="taResize(this);saveWeekData()"></textarea>`;
     container.appendChild(el);
   });
+}
+
+// ── AUTO-RESIZE TEXTAREA ──
+function taResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.max(72, el.scrollHeight) + 'px';
 }
 
 // ── HIGHLIGHT COLONNE ACTIVE ──
@@ -2160,35 +2936,41 @@ function calcDayScore(d) {
     if (boxes[d] && boxes[d].checked) rulePenalty += rule.penalty;
   });
 
-  // Weed — neutre ≤3, pénalité −1% / joint au-delà de 3
+  // Weed — paramétrable
+  const SP = SCORING_PARAMS;
   const weedInputs = document.querySelectorAll('[data-weed]');
-  const joints = parseFloat((weedInputs[d] && weedInputs[d].value) || 0);
-  const weedPenalty = joints > 3 ? (joints - 3) : 0;
+  const weedRaw = weedInputs[d] ? weedInputs[d].value : '';
+  const joints = weedRaw !== '' ? parseFloat(weedRaw) : null;
+  const weedPenalty = (joints !== null && joints > SP.weed.threshold)
+    ? (joints - SP.weed.threshold) * SP.weed.penaltyPerUnit : 0;
+  const weedBonus = (joints === 0) ? SP.weed.bonusIfZero : 0;
 
-  // Course — bonus +1.5% si ≥5km, neutre sinon
+  // Course — bonus cumulatifs paramétrables
   const kmInputs = document.querySelectorAll('[data-km]');
   const km = parseFloat((kmInputs[d] && kmInputs[d].value) || 0);
-  const kmBonus = km >= 5 ? 1.5 : 0;
+  let kmBonus = 0;
+  SP.km.forEach(tier => { if (km >= tier.min) kmBonus += tier.bonus; });
 
-  // Travail — Lun–Ven · <3h = −2% · >7h = +2% · vide = neutre
+  // Travail — paramétrable · vide = neutre
   const workInputs = document.querySelectorAll('[data-work]');
   const hRaw = (workInputs[d] && workInputs[d].value) || '';
   const h = hRaw !== '' ? parseFloat(hRaw) : null;
   let workEffect = 0;
-  if (d < 5 && h !== null) {
-    if (h < 3) workEffect = -2;
-    else if (h > 7) workEffect = 2;
+  if (h !== null) {
+    if (h > 0 && h < SP.work.penaltyBelow) workEffect = -SP.work.penalty;
+    else if (h > SP.work.bonusAbove) workEffect = SP.work.bonus;
   }
 
   const dayHasData = mrEarned > 0 || hEarned > 0 || rulePenalty > 0
-    || joints > 0 || km > 0 || (h !== null && h > 0);
+    || joints !== null || km > 0 || (h !== null && h > 0);
 
   let dayScore = 0;
   if (dayHasData) {
-    const mrMax = 8; // 4+1+3
-    const dayMax = mrMax + hMax; // max depuis les habitudes
+    const mrMax = MR_HABITS.reduce((s, {w}) => s + w, 0);
+    const autoMax = mrMax + hMax;
+    const dayMax = SP.capital > 0 ? SP.capital : autoMax;
     const baseScore = dayMax > 0 ? (mrEarned + hEarned) / dayMax * 100 : 0;
-    dayScore = Math.round(baseScore - rulePenalty - weedPenalty + kmBonus + workEffect);
+    dayScore = Math.round(baseScore - rulePenalty - weedPenalty + weedBonus + kmBonus + workEffect);
   }
 
   const dsClass = !dayHasData ? 'ds-empty' : dayScore > 100 ? 'ds-boss' : dayScore >= 80 ? 'ds-great' : dayScore >= 50 ? 'ds-good' : 'ds-low';
@@ -2243,7 +3025,11 @@ function calcDayScore(d) {
 // ── INIT ──
 buildNotes();
 loadRules();
+loadHabitsConfig();
+loadScoringParams();
+renderDailyQuote();
 buildRulesTable();
+updateHabitLabels();
 loadWeekData();
 loadRoutine();
 updateWeekLabel();
@@ -2251,7 +3037,15 @@ highlightDay();
 calc();
 document.querySelectorAll('table').forEach(t => t.setAttribute('data-col', VIEW_DAY));
 
-// (scroll compact supprimé — sticky affiche uniquement le score du jour)
+// ── PROTECTION DONNÉES — SAUVEGARDE AUTOMATIQUE ──
+// 1. Sauvegarde à la fermeture/navigation de l'app
+window.addEventListener('beforeunload', () => { try { saveWeekData(); } catch(e) {} });
+// 2. Sauvegarde automatique toutes les 60 secondes
+setInterval(() => { try { saveWeekData(); } catch(e) {} }, 60000);
+// 3. Sauvegarde sur perte de focus (passage à une autre app sur mobile)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') { try { saveWeekData(); } catch(e) {} }
+});
 
 // ── PROGRAMME SPORTIF ÉDITABLE ──
 function loadRoutine() {
@@ -2357,6 +3151,184 @@ function resetHistory() {
   alert('✅ Sauvegarde téléchargée + historique effacé.\nTa semaine en cours, ta bibliothèque et ton programme sont intacts.');
   location.reload();
 }
+
+// ── EXPORT STATISTIQUES ──
+function exportStats() {
+  const DAY_SHORT = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+  // Collecter toutes les semaines
+  const weekKeys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && /^cockpit_\d{4}_\d{2}_\d{2}$/.test(k)) weekKeys.push(k);
+  }
+  weekKeys.sort();
+
+  if (!weekKeys.length) { alert('Aucune donnée enregistrée.'); return; }
+
+  const weeks = weekKeys.map(wk => {
+    try {
+      const data = JSON.parse(localStorage.getItem(wk));
+      const [y, m, d] = wk.replace('cockpit_','').split('_');
+      const label = `${d}/${m}/${y}`;
+      const days = [];
+      for (let i = 0; i < 7; i++) {
+        days.push({
+          hasData: !!data[`hasData${i}`],
+          score: data[`score${i}`] ?? null,
+          note: data[`ta${i}`] || ''
+        });
+      }
+      const valid = days.filter(d => d.hasData && d.score !== null);
+      const avg = valid.length ? Math.round(valid.reduce((s,d)=>s+d.score,0)/valid.length) : null;
+      const best = valid.length ? Math.max(...valid.map(d=>d.score)) : null;
+      const daysActive = valid.length;
+      return { label, days, avg, best, daysActive };
+    } catch(e) { return null; }
+  }).filter(Boolean);
+
+  // Calculs globaux
+  const allScores = weeks.flatMap(w => w.days.filter(d=>d.hasData && d.score!==null).map(d=>d.score));
+  const globalAvg = allScores.length ? Math.round(allScores.reduce((a,b)=>a+b,0)/allScores.length) : 0;
+  const globalBest = allScores.length ? Math.max(...allScores) : 0;
+  const totalDays = allScores.length;
+
+  function scoreColor(s) {
+    if (s === null || !s && s!==0) return '#ccc';
+    if (s > 100) return '#f1c40f';
+    if (s >= 80)  return '#2ecc71';
+    if (s >= 50)  return '#3498db';
+    return '#e74c3c';
+  }
+  function scoreLabel(s) {
+    if (s === null) return '—';
+    if (s > 100) return s+'% 🏆';
+    if (s >= 80)  return s+'% ✅';
+    if (s >= 50)  return s+'% 👍';
+    return s+'% ❌';
+  }
+
+  const weekRows = weeks.map(w => {
+    const dayCells = w.days.map((d,i) => {
+      if (!d.hasData) return `<td style="color:#ccc;font-size:0.75rem;text-align:center;padding:6px 4px;">—</td>`;
+      const c = scoreColor(d.score);
+      const pct = d.score !== null ? d.score : 0;
+      return `<td style="text-align:center;padding:6px 4px;">
+        <div style="font-size:0.78rem;font-weight:700;color:${c}">${d.score !== null ? d.score+'%' : '—'}</div>
+        <div style="margin-top:3px;height:4px;border-radius:2px;background:#eee;overflow:hidden">
+          <div style="height:100%;width:${Math.min(100,Math.max(0,pct))}%;background:${c};border-radius:2px"></div>
+        </div>
+      </td>`;
+    }).join('');
+
+    const noteLines = w.days.map((d,i) => d.note
+      ? `<div style="margin-bottom:6px"><strong style="font-size:0.65rem;color:#7ec8e3;text-transform:uppercase;letter-spacing:.5px">${DAY_SHORT[i]}</strong> <span style="font-size:0.73rem;color:#dde">${d.note.replace(/</g,'&lt;').replace(/\n/g,' ')}</span></div>`
+      : '').filter(Boolean).join('');
+
+    const avgC = scoreColor(w.avg);
+    return `
+      <tr style="border-bottom:1px solid #1e2d5a">
+        <td style="padding:10px 8px;font-size:0.8rem;font-weight:700;color:#7ec8e3;white-space:nowrap">Sem. ${w.label}</td>
+        ${dayCells}
+        <td style="padding:10px 8px;text-align:center">
+          <span style="font-size:0.85rem;font-weight:800;color:${avgC}">${w.avg !== null ? w.avg+'%' : '—'}</span>
+          <div style="font-size:0.6rem;color:#7ec8e3;margin-top:2px">${w.daysActive}j actif${w.daysActive>1?'s':''}</div>
+        </td>
+      </tr>
+      ${noteLines ? `<tr style="border-bottom:1px solid #162050"><td colspan="9" style="padding:6px 12px 10px 16px;background:rgba(10,20,50,0.4)">${noteLines}</td></tr>` : ''}
+    `;
+  }).join('');
+
+  const html = `<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📊 Cockpit Stats — Alex</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Inter',sans-serif; background:#0d1525; color:#e8edf8; padding:24px; min-height:100vh; }
+  h1 { font-size:1.5rem; font-weight:900; color:#fff; letter-spacing:.3px; }
+  h1 span { color:#7ec8e3; }
+  .subtitle { font-size:.8rem; color:#7ec8e3; margin-top:4px; opacity:.8; }
+  .cards { display:flex; gap:14px; flex-wrap:wrap; margin:20px 0; }
+  .card { flex:1; min-width:120px; background:linear-gradient(135deg,#162050,#1a2d6e); border-radius:16px; padding:16px; border:1px solid rgba(126,200,227,.15); }
+  .card-val { font-size:2rem; font-weight:900; }
+  .card-lbl { font-size:.7rem; color:#7ec8e3; text-transform:uppercase; letter-spacing:.8px; margin-top:4px; }
+  .section { background:rgba(255,255,255,.04); border-radius:16px; padding:18px; margin-bottom:18px; border:1px solid rgba(126,200,227,.1); }
+  .section h2 { font-size:.85rem; font-weight:700; color:#7ec8e3; text-transform:uppercase; letter-spacing:.8px; margin-bottom:12px; }
+  table { width:100%; border-collapse:collapse; }
+  th { font-size:.68rem; font-weight:700; color:#7ec8e3; text-transform:uppercase; letter-spacing:.5px; padding:8px 4px; text-align:center; border-bottom:2px solid rgba(126,200,227,.2); }
+  th:first-child { text-align:left; }
+  .print-btn { background:linear-gradient(135deg,#0d1b3e,#1a3a6e); color:#7ec8e3; border:1.5px solid rgba(126,200,227,.3); border-radius:10px; padding:10px 18px; font-family:inherit; font-size:.82rem; font-weight:700; cursor:pointer; margin-right:8px; }
+  .print-btn:hover { background:#1a3a6e; }
+  @media print { .no-print { display:none; } body { background:#fff; color:#000; } }
+</style>
+</head><body>
+<div class="no-print" style="margin-bottom:20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+  <button class="print-btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+  <button class="print-btn" onclick="window.close()">✕ Fermer</button>
+</div>
+<h1>📊 Statistiques <span>Cockpit · Alex</span></h1>
+<div class="subtitle">Généré le ${new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
+
+<div class="cards">
+  <div class="card">
+    <div class="card-val" style="color:#7ec8e3">${weeks.length}</div>
+    <div class="card-lbl">Semaines suivies</div>
+  </div>
+  <div class="card">
+    <div class="card-val" style="color:${scoreColor(globalAvg)}">${globalAvg}%</div>
+    <div class="card-lbl">Score moyen</div>
+  </div>
+  <div class="card">
+    <div class="card-val" style="color:#f1c40f">${globalBest}%</div>
+    <div class="card-lbl">Meilleur jour</div>
+  </div>
+  <div class="card">
+    <div class="card-val" style="color:#2ecc71">${totalDays}</div>
+    <div class="card-lbl">Jours actifs</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📅 Détail par semaine</h2>
+  <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th style="text-align:left;padding:8px">Semaine</th>
+        ${DAY_SHORT.map(d=>`<th>${d}</th>`).join('')}
+        <th>Moy.</th>
+      </tr></thead>
+      <tbody>${weekRows}</tbody>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center;font-size:.6rem;color:rgba(126,200,227,.3);margin-top:20px;padding-top:12px;border-top:1px solid rgba(126,200,227,.08)">
+  Cockpit Personnel · Alex Bennous · ${new Date().getFullYear()}
+</div>
+</body></html>`;
+
+  const w = window.open('', '_blank', 'width=900,height=700');
+  if (w) { w.document.write(html); w.document.close(); }
+  else { alert('Autorise les pop-ups pour voir tes statistiques.'); }
+}
 </script>
+
+<!-- ══ FAB SETTINGS ══ -->
+<button class="fab-settings" onclick="openSettings()" title="Paramètres scoring">⚙️</button>
+
+<!-- ══ SETTINGS MODAL ══ -->
+<div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
+  <div class="settings-modal">
+    <div class="settings-modal-header">
+      <h2>⚙️ Paramètres Scoring</h2>
+      <button class="settings-close-btn" onclick="closeSettings()">✕</button>
+    </div>
+    <div id="settingsTotal" class="settings-total-box"></div>
+    <div id="settingsBody"></div>
+    <button class="settings-save-btn" onclick="saveSettings()">💾 Sauvegarder</button>
+  </div>
+</div>
 </body>
 </html>
